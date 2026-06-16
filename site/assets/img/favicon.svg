@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <style>
-    .bg { fill: #ffffff; }
-    .stroke { fill: none; stroke: #059669; stroke-width: 2.4; stroke-linejoin: round; }
-    @media (prefers-color-scheme: dark) {
-      .bg { fill: #0a0a0a; }
-      .stroke { stroke: #10b981; }
-    }
-  </style>
-  <rect class="bg" width="32" height="32" rx="6"/>
-  <g class="stroke">
-    <path d="M5 10 L16 5 L27 10 L27 22 L16 27 L5 22 Z"/>
-    <path d="M16 5 L16 27" stroke-opacity="0.4"/>
-    <path d="M5 10 L27 22" stroke-opacity="0.25"/>
-    <path d="M27 10 L5 22"  stroke-opacity="0.25"/>
+  <!-- Yak Skills favicon: Yaklang/Yakit identity = orange + ox horns + terminal >_ -->
+  <rect width="32" height="32" rx="6.5" fill="#ff7d23"/>
+  <g fill="none" stroke="#ffffff" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+    <!-- horns growing up from the top corners of the terminal window -->
+    <path d="M9.5 13.5 C 7 11.5, 6 8.5, 7 5.2"/>
+    <path d="M22.5 13.5 C 25 11.5, 26 8.5, 25 5.2"/>
+    <!-- terminal window -->
+    <rect x="6.5" y="13" width="19" height="13" rx="2.6"/>
+    <!-- command prompt: chevron + underscore -->
+    <polyline points="10.5,17.5 13,19.5 10.5,21.5"/>
+    <line x1="15.5" y1="21.7" x2="20.5" y2="21.7"/>
   </g>
 </svg>
