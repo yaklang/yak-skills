@@ -42,6 +42,21 @@
       matches_other: "个匹配",
       foot_readme: "中文 README",
       foot_readme_en: "English README",
+      foot_training: "训练素材",
+      foot_related: "相关",
+      learn_title: "深入学习",
+      learn_lead:
+        '需要更复杂的 Yak 代码、更系统的标准库用法、更详细的实战案例？配合训练素材仓库 <code>yaklang-ai-training-materials</code> 一起使用，与本库 SKILL 互为补充。',
+      learn_lib:
+        "100+ 标准库实战写法：codec / http / poc / fuzz / db / crawler / ssa / ai 等，每库一个目录，含可直接运行的 *-practice.yak。",
+      learn_syntax:
+        "Yaklang 语法从零到进阶：变量、闭包、f-string、错误处理 ~、面向对象等系统化案例。",
+      learn_practice:
+        "完整的渗透/安全实战脚本：端到端复杂示例，演示如何把多个库组合成真实工具。",
+      learn_articles:
+        "Yak 公众号深度文章（含截图）：热加载、前端加密对抗等，本库组合配方的灵感与依据来源。",
+      learn_foot:
+        '姊妹项目：渗透/安全攻防技能库 <a href="https://skills.hackbenchmark.com" target="_blank" rel="noopener noreferrer">skills.hackbenchmark.com</a>（<a href="https://github.com/yaklang/hack-skills" target="_blank" rel="noopener noreferrer">yaklang/hack-skills</a>）。',
     },
     en: {
       doc_title: "Yak Skills — Yaklang programming & Yak hot patch knowledge base",
@@ -81,6 +96,21 @@
       matches_other: "matches",
       foot_readme: "中文 README",
       foot_readme_en: "English README",
+      foot_training: "training materials",
+      foot_related: "related",
+      learn_title: "Go deeper",
+      learn_lead:
+        'Need more complex Yak code, more systematic stdlib usage, or more detailed hands-on cases? Pair this repo with the training-materials repo <code>yaklang-ai-training-materials</code> — they cross-reference and complement each other.',
+      learn_lib:
+        "Real-world usage of 100+ stdlibs: codec / http / poc / fuzz / db / crawler / ssa / ai, one dir per lib, with runnable *-practice.yak.",
+      learn_syntax:
+        "Yaklang syntax from zero to advanced: variables, closures, f-string, ~ error handling, OOP and systematic cases.",
+      learn_practice:
+        "Full pentest/security scripts: end-to-end complex examples composing multiple libs into real tools.",
+      learn_articles:
+        "Deep Yak articles (with screenshots): hot patch, frontend-crypto bypass and more — the source/inspiration for this repo's combo recipes.",
+      learn_foot:
+        'Sister project: offensive-security skills at <a href="https://skills.hackbenchmark.com" target="_blank" rel="noopener noreferrer">skills.hackbenchmark.com</a> (<a href="https://github.com/yaklang/hack-skills" target="_blank" rel="noopener noreferrer">yaklang/hack-skills</a>).',
     },
   };
 

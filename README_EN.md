@@ -1,8 +1,12 @@
 # Yak Skills
 
-> A composable, agent-ready knowledge base for Yaklang programming and Yak hot patching. One master entry + topic skills, each with runnable, self-testing `.yak` examples, plus CLI validators and end-to-end evidence.
+<p align="right"><a href="./README.md">中文</a> | English</p>
 
-[中文](README.md) | English
+<p align="center">
+    <img src="./assets/readme-hero-banner.jpg" alt="Yak Skills Hero Banner" width="100%" />
+</p>
+
+> A composable, agent-ready knowledge base for Yaklang programming and Yak hot patching. One master entry + topic skills, each with runnable, self-testing `.yak` examples, plus CLI validators and end-to-end evidence.
 
 Yak Skills follows the directory-style SKILL knowledge-base pattern. Distilled from the Yak official articles (`yak-project-public`) and the [yaklang.github.io](https://yaklang.com) docs, it turns the core mechanics of Yaklang programming and Yak hot patching into skills that an AI agent can load directly and a human can run directly.
 
@@ -164,6 +168,27 @@ It scans `skills/*/SKILL.md`, combines with `site/data/categories.yaml` to produ
 - Prefer `~` for error handling; verify key results with `assert`.
 - Add `// 关键词: ...` comments at key code locations for grep / AI retrieval.
 - No emojis.
+
+## Go deeper: more complex Yak code & detailed cases
+
+This repo focuses on the "hot patch / toolchain" main line — refined, agent-loadable skills. When you need **more complex Yak code, more systematic standard-library usage, or more detailed hands-on cases**, pair it with the sister repo [`yaklang/yaklang-ai-training-materials`](https://github.com/yaklang/yaklang-ai-training-materials). The SKILLs here cross-reference and complement these directories:
+
+| What you want | Where in the training-materials repo | Notes |
+|---|---|---|
+| Real-world usage of 100+ stdlibs | [`library-usage/`](https://github.com/yaklang/yaklang-ai-training-materials/tree/main/library-usage) | One dir per lib (`codec` / `http` / `poc` / `fuzz` / `db` / `crawler` / `ssa` / `ai` …) with runnable `*-practice.yak` |
+| Yaklang syntax, zero to advanced | [`basic-syntax/`](https://github.com/yaklang/yaklang-ai-training-materials/tree/main/basic-syntax) | Variables, closures, f-string, `~` error handling, OOP, systematic syntax cases |
+| Full pentest/security scripts | [`practice/`](https://github.com/yaklang/yaklang-ai-training-materials/tree/main/practice) · [`awesome-scripts/`](https://github.com/yaklang/yaklang-ai-training-materials/tree/main/awesome-scripts) | End-to-end complex scripts composing multiple libs into real tools |
+| Deep articles on hot patch / frontend crypto | [`yak-project-public/`](https://github.com/yaklang/yaklang-ai-training-materials/tree/main/yak-project-public) | Original Yak articles (with screenshots); the source/inspiration for this repo's combo recipes |
+
+> Suggested path: build the mental model and a runnable skeleton from the SKILLs here → then go to `library-usage/` / `practice/` for the more complex, library-specific details.
+
+## Related projects (sister sites)
+
+| Project | Live site | Focus |
+|---|---|---|
+| **Yak Skills** (this repo) | [skills.yaklang.io](https://skills.yaklang.io) | Yaklang programming + Yak hot patch skills |
+| **HackSkills** | [skills.hackbenchmark.com](https://skills.hackbenchmark.com) · [yaklang/hack-skills](https://github.com/yaklang/hack-skills) | Agent-facing offensive-security skills (Web/API/auth/privesc/RE/crypto …) |
+| **Training materials** | [yaklang/yaklang-ai-training-materials](https://github.com/yaklang/yaklang-ai-training-materials) | More complex Yak code, stdlib practice, detailed cases |
 
 ## License
 

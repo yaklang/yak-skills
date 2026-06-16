@@ -1,8 +1,12 @@
 # Yak Skills
 
-> 面向 AI Agent 的 Yaklang 编程与 Yak 热加载知识库。一个总入口 + 多个专题，每个 skill 都配可一键自测的 `.yak` 示例，并提供命令行验证器与端到端证据。
+<p align="right">中文 | <a href="./README_EN.md">English</a></p>
 
-中文 | [English](README_EN.md)
+<p align="center">
+    <img src="./assets/readme-hero-banner.jpg" alt="Yak Skills Hero Banner" width="100%" />
+</p>
+
+> 面向 AI Agent 的 Yaklang 编程与 Yak 热加载知识库。一个总入口 + 多个专题，每个 skill 都配可一键自测的 `.yak` 示例，并提供命令行验证器与端到端证据。
 
 Yak Skills 模仿目录式 SKILL 知识库范式，围绕 Yak 公众号文章（`yak-project-public`）与 [yaklang.github.io](https://yaklang.com) 官方文档，把 Yaklang 编程与 Yak 热加载的核心机制蒸馏成可被 AI Agent 直接加载、可被人直接运行的技能库。
 
@@ -164,6 +168,27 @@ go run common/yak/cmd/yak.go scripts/build-skills-index.yak \
 - 错误处理优先用 `~`；关键结果用 `assert` 验证。
 - 关键代码位置加 `// 关键词: ...` 注释，便于 grep 与 AI 检索。
 - 不使用 emoji。
+
+## 深入学习：更复杂的 Yak 代码与详细案例
+
+本库聚焦"热加载 / 工具链"这条主线，做的是可被 Agent 直接加载的精炼技能。当你需要 **更复杂的 Yak 代码写法、更系统的标准库用法、更详细的实战案例** 时，请配合姊妹仓库 [`yaklang/yaklang-ai-training-materials`](https://github.com/yaklang/yaklang-ai-training-materials) 一起使用——本库的 SKILL 与下列目录互相引用、互为补充：
+
+| 你想要的 | 去训练素材仓库的这里 | 说明 |
+|---|---|---|
+| 100+ 标准库的实战写法 | [`library-usage/`](https://github.com/yaklang/yaklang-ai-training-materials/tree/main/library-usage) | `codec` / `http` / `poc` / `fuzz` / `db` / `crawler` / `ssa` / `ai` 等每个库一个目录，含 `*-practice.yak` 可直接运行 |
+| Yaklang 语法从零到进阶 | [`basic-syntax/`](https://github.com/yaklang/yaklang-ai-training-materials/tree/main/basic-syntax) | 变量、闭包、f-string、错误处理 `~`、面向对象等系统化语法案例 |
+| 完整的渗透/安全实战脚本 | [`practice/`](https://github.com/yaklang/yaklang-ai-training-materials/tree/main/practice) · [`awesome-scripts/`](https://github.com/yaklang/yaklang-ai-training-materials/tree/main/awesome-scripts) | 端到端的复杂脚本，演示如何把多个库组合成真实工具 |
+| 热加载/前端加密的深度文章 | [`yak-project-public/`](https://github.com/yaklang/yaklang-ai-training-materials/tree/main/yak-project-public) | Yak 公众号原文（含截图），本库组合配方的灵感与依据来源 |
+
+> 建议路径：先用本库的 SKILL 建立心智模型与可运行骨架 → 再到 `library-usage/` / `practice/` 找对应库的更复杂写法补全细节。
+
+## 相关项目（姊妹站）
+
+| 项目 | 在线站点 | 定位 |
+|---|---|---|
+| **Yak Skills**（本库） | [skills.yaklang.io](https://skills.yaklang.io) | Yaklang 编程 + Yak 热加载技能库 |
+| **HackSkills** | [skills.hackbenchmark.com](https://skills.hackbenchmark.com) · [yaklang/hack-skills](https://github.com/yaklang/hack-skills) | 面向 Agent 的渗透/安全攻防技能库（Web/API/认证/提权/逆向/密码学等） |
+| **训练素材** | [yaklang/yaklang-ai-training-materials](https://github.com/yaklang/yaklang-ai-training-materials) | 更复杂的 Yak 代码、标准库实战、详细案例 |
 
 ## License
 
