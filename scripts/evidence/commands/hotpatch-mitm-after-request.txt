@@ -1,0 +1,31 @@
+"/tmp/yak-hotpatch" hotpatch-mitm --script "/Users/v1ll4n/Projects/yak-skills/skills/mitm-hotpatch/examples/after-request.yak" --request "/Users/v1ll4n/Projects/yak-skills/scripts/fixtures/req-generic.txt" --response "/Users/v1ll4n/Projects/yak-skills/scripts/fixtures/rsp-500.txt"
+
+[36m[INFO][0m 2026-06-16 23:46:12 [sqlite_large_db_tune:109] sqlite tuned for large project db (298.9M): cache=32M mmap=64M wal_autocheckpoint=8000
+########## MITM hot-patch validation ##########
+url: http://t.example.com/
+dropped: false (stage: )
+request-hooked: false, response-hooked: false, save-hooked: false
+save-tags: 
+
+===== origin request (len=39) =====
+GET / HTTP/1.1
+Host: t.example.com
+
+
+
+===== modified request (len=0) =====
+<empty / not changed>
+
+===== origin response (len=62) =====
+HTTP/1.1 500 Internal Server Error
+Content-Length: 5
+
+boom!
+
+===== afterRequest rewritten (len=91) =====
+HTTP/1.1 500 Internal Server Error
+Content-Length: 5
+X-Yak-Mitm: hit; status=500
+
+boom!
+

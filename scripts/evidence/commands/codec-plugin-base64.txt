@@ -1,0 +1,6 @@
+"/tmp/yak-hotpatch" codec-plugin --script "/Users/v1ll4n/Projects/yak-skills/skills/yakit-rightclick-plugin/examples/codec-base64-wrap.yak" --input "admin:123456"
+
+[36m[INFO][0m 2026-06-16 23:46:12 [sqlite_large_db_tune:109] sqlite tuned for large project db (298.9M): cache=32M mmap=64M wal_autocheckpoint=8000
+########## CODEC plugin validation ##########
+input  (len=12): admin:123456
+output (len=16): YWRtaW46MTIzNDU2

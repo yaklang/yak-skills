@@ -1,4 +1,0 @@
-[36m[INFO][0m 2026-06-16 23:11:40 [sqlite_large_db_tune:109] sqlite tuned for large project db (385.4M): cache=32M mmap=64M wal_autocheckpoint=8000
-[36m[INFO][0m 2026-06-16 23:11:40 [example-custom-failure-checker:48] start custom failure checker self test
-[36m[INFO][0m 2026-06-16 23:11:40 [example-custom-failure-checker:48] marked failed, reason: business failure: login error keyword matched
-[36m[INFO][0m 2026-06-16 23:11:40 [example-custom-failure-checker:48] custom failure checker self test passed

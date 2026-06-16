@@ -1,5 +1,0 @@
-[36m[INFO][0m 2026-06-16 23:11:40 [sqlite_large_db_tune:109] sqlite tuned for large project db (385.4M): cache=32M mmap=64M wal_autocheckpoint=8000
-[36m[INFO][0m 2026-06-16 23:11:40 [example-mirror-flow-extract-params:66] start mirror flow extract params self test
-[36m[INFO][0m 2026-06-16 23:11:40 [example-mirror-flow-extract-params:66] extracted: map[access_token:tok_xyz csrf_token:csrf-abc-123 current_status_code:200 session_id:sess_1]
-[31m[ERRO][0m 2026-06-16 23:11:40 [json:186] invalid character '<' looking for beginning of value
-[36m[INFO][0m 2026-06-16 23:11:40 [example-mirror-flow-extract-params:66] mirror flow extract params self test passed

@@ -1,7 +1,7 @@
 ---
 name: yak
 description: >-
-  yak-skills 总入口与路由。当用户要做 Yaklang 编程、Yak 热加载（MITM / Web Fuzzer / 全局）、Yakit 二次开发或 MCP 测试时，先从这里判断该进入哪个专题 skill。本页讲清三层热加载体系、YAK_MAIN 调试约定、go run 测试方法，并把请求路由到 mitm-hotpatch / webfuzzer-hotpatch / global-hotpatch / yaklang-syntax / yaklang-database。
+  yak-skills 总入口与路由。当用户要做 Yaklang 编程、Yak 热加载（MITM / Web Fuzzer / 全局）、Yakit 二次开发或 MCP 测试时，先从这里判断该进入哪个专题 skill。本页讲清三层热加载体系、YAK_MAIN 调试约定、go run 测试方法，并把请求路由到 mitm-hotpatch / webfuzzer-hotpatch / global-hotpatch / yaklang-syntax / yaklang-database / yakit-rightclick-plugin / yaklang-toolchain / yakit-data-extract-plugin。
 ---
 
 # SKILL: yak-skills 总入口
@@ -17,6 +17,9 @@ description: >-
 | 一处配置让 MITM 与所有 Fuzzer 共享：全站透明加解密、统一签名、动态 challenge、全站染色护栏 | [global-hotpatch](../global-hotpatch/SKILL.md) |
 | 写/读懂 Yaklang 语法：变量、控制流、函数、闭包、f-string、错误处理 `~` | [yaklang-syntax](../yaklang-syntax/SKILL.md) |
 | 数据持久化与查询：SQLite、键值存储、Payload 字典、项目配置 | [yaklang-database](../yaklang-database/SKILL.md) |
+| 写 Yakit 右键 codec 插件（只需 handle）、Web Fuzzer 右键编解码/插件用法 | [yakit-rightclick-plugin](../yakit-rightclick-plugin/SKILL.md) |
+| 怎么验证写的插件：go run 引擎、hotpatch-* / codec-plugin 验证命令、用仓库调试 MITM | [yaklang-toolchain](../yaklang-toolchain/SKILL.md) |
+| 从 History 提取域名/URI/Cookie 做路径扫描与 Fuzz | [yakit-data-extract-plugin](../yakit-data-extract-plugin/SKILL.md) |
 
 ## 2. 三层热加载体系（核心心智模型）
 
@@ -60,9 +63,11 @@ if YAK_MAIN {
 }
 ```
 
+> 重要：yak **不会自动调用 `func main()`**。脚本执行时只有顶层语句会从上到下运行，`func main(){}` 只是普通函数，必须被显式调用。所以入口约定是顶层写 `if YAK_MAIN { main() }`（或 `if YAK_MAIN { runSelfTest() }`），而不是直接 `main()`。直接 `main()` 会导致脚本被当作模块/插件加载时也执行自测逻辑。
+
 `YAK_MAIN` 是 yaklang 引擎注入的全局布尔变量：
 
-- `yak xxx.yak` / `go run common/yak/cmd/yak.go xxx.yak` 命令行运行：`YAK_MAIN = true` → 跑 `runSelfTest()`。
+- `yak xxx.yak` / `go run common/yak/cmd/yak.go xxx.yak` 命令行运行：引擎走 `ExecuteMain`，注入 `YAK_MAIN = true` → 跑 `runSelfTest()`。
 - yakit MITM / Fuzzer / 全局热加载窗口加载：`YAK_MAIN = false` → 只注册 hook，自测块不执行。
 
 因此：**把含自测块的完整脚本粘贴回 yakit 是绝对安全的**——yakit 不会跑你的 mock 数据。这就是"先在命令行一键自测，再粘回 yakit 使用"的安全调试闭环。

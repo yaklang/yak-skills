@@ -1,5 +1,0 @@
-[36m[INFO][0m 2026-06-16 23:11:39 [sqlite_large_db_tune:109] sqlite tuned for large project db (385.4M): cache=32M mmap=64M wal_autocheckpoint=8000
-[36m[INFO][0m 2026-06-16 23:11:39 [example-before-after-aes-cbc:64] start aes cbc bidirectional self test
-[36m[INFO][0m 2026-06-16 23:11:39 [example-before-after-aes-cbc:64] encrypted req body (base64): U0fgdOFJLm8zipBTEqPs9RLoEhwosZPglWLRE7a+zg5H6NSsFJ9/hXnRi+Mk6tPF
-[36m[INFO][0m 2026-06-16 23:11:39 [example-before-after-aes-cbc:64] decrypted rsp body: {"code":0,"txn_id":"abc123"}
-[36m[INFO][0m 2026-06-16 23:11:39 [example-before-after-aes-cbc:64] aes cbc bidirectional self test passed

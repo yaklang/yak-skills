@@ -1,0 +1,6 @@
+[36m[INFO][0m 2026-06-16 23:45:59 [sqlite_large_db_tune:109] sqlite tuned for large project db (298.9M): cache=32M mmap=64M wal_autocheckpoint=8000
+[36m[INFO][0m 2026-06-16 23:45:59 [mirror-new-website:40] start global mirror new website self test
+[36m[INFO][0m 2026-06-16 23:45:59 [mirror-new-website:40] global asset discovered: a.corp.local
+[36m[INFO][0m 2026-06-16 23:45:59 [mirror-new-website:40] global asset discovered: b.corp.local
+[36m[INFO][0m 2026-06-16 23:45:59 [mirror-new-website:40] assets: [a.corp.local b.corp.local]
+[36m[INFO][0m 2026-06-16 23:45:59 [mirror-new-website:40] global mirror new website self test passed

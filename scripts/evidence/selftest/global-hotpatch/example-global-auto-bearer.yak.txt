@@ -1,4 +1,0 @@
-[36m[INFO][0m 2026-06-16 23:11:36 [sqlite_large_db_tune:109] sqlite tuned for large project db (385.4M): cache=32M mmap=64M wal_autocheckpoint=8000
-[36m[INFO][0m 2026-06-16 23:11:36 [example-global-auto-bearer:43] start global auto bearer self test
-[36m[INFO][0m 2026-06-16 23:11:36 [example-global-auto-bearer:43] injected authorization: Bearer eyJhbGciOiJIUzI1Nidemo.payload.signature
-[36m[INFO][0m 2026-06-16 23:11:36 [example-global-auto-bearer:43] global auto bearer self test passed

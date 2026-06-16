@@ -106,10 +106,10 @@ Examples:
 
 ```bash
 printf 'POST /api/order/create HTTP/1.1\r\nHost: shop.example.com\r\nContent-Type: application/json\r\n\r\n{"amount":100}' > /tmp/req.txt
-yak hotpatch-mitm --script skills/mitm-hotpatch/example-hijack-request-modify-json.yak --request /tmp/req.txt
+yak hotpatch-mitm --script skills/mitm-hotpatch/examples/hijack-request.yak --request /tmp/req.txt
 # prints origin request / modified request / drop status / save tags as evidence
 
-yak codec-plugin --script skills/yaklang-toolchain/example-codec-rot13.yak --input "Hello, Yak!"
+yak codec-plugin --script skills/yaklang-toolchain/examples/codec-rot13.yak --input "Hello, Yak!"
 # -> output (len=11): Uryyb, Lnx!
 ```
 
@@ -121,10 +121,10 @@ The commands live in `yaklang/common/yak/cmd/yakcmds/hotpatch.go` with Go unit t
 ```bash
 # using the yaklang source engine (recommended, latest capabilities)
 cd /path/to/yaklang
-go run common/yak/cmd/yak.go /path/to/yak-skills/skills/mitm-hotpatch/example-hijack-request-modify-json.yak
+go run common/yak/cmd/yak.go /path/to/yak-skills/skills/mitm-hotpatch/examples/hijack-request.yak
 
 # or the installed engine
-yak skills/mitm-hotpatch/example-hijack-request-modify-json.yak
+yak skills/mitm-hotpatch/examples/hijack-request.yak
 ```
 
 Pass criteria: finishes within 10 seconds, all `assert` pass, all `log` output in English, ends with `... self test passed`.

@@ -1,0 +1,5 @@
+[36m[INFO][0m 2026-06-16 23:46:06 [sqlite_large_db_tune:109] sqlite tuned for large project db (298.9M): cache=32M mmap=64M wal_autocheckpoint=8000
+[36m[INFO][0m 2026-06-16 23:46:06 [collect-domain-urls:104] start collect-domain-urls self test
+[36m[INFO][0m 2026-06-16 23:46:06 [collect-domain-urls:104] unique uris: [shop.example.com/api/order/list shop.example.com/api/user/profile shop.example.com/static/app.js]
+[36m[INFO][0m 2026-06-16 23:46:06 [collect-domain-urls:104] cookies: map[shop.example.com:SESSION=abc123]
+[36m[INFO][0m 2026-06-16 23:46:06 [collect-domain-urls:104] collect-domain-urls self test passed

@@ -6,7 +6,7 @@ description: >-
 
 # SKILL: Yakit Web Fuzzer 热加载 (Hot Patch)
 
-> AI LOAD INSTRUCTION: 这是三层热加载体系中的"模块级 Web Fuzzer"专题。Web Fuzzer 热加载作用于单个 Fuzzer Tab 的发包流程，最典型的用途是"内网加密对抗"（请求加密、响应解密、签名注入）与"自动化决策"（重试、业务失败判定）。先读 Hook 签名与返回值语义，再看 `example-*.yak`，每个都可 `yak <file>` 自测。
+> AI LOAD INSTRUCTION: 这是三层热加载体系中的"模块级 Web Fuzzer"专题。Web Fuzzer 热加载作用于单个 Fuzzer Tab 的发包流程，最典型的用途是"内网加密对抗"（请求加密、响应解密、签名注入）与"自动化决策"（重试、业务失败判定）。先读 Hook 签名与返回值语义，再看 `examples/` 下按 Hook 命名的示例，每个都可 `yak <file>` 自测。
 
 ## 0. 相关路由
 
@@ -43,8 +43,8 @@ flowchart LR
 
 | 场景 | Hook | 示例 |
 |---|---|---|
-| AES-CBC 请求加密 + 响应解密 | `beforeRequest` + `afterRequest` | [example-before-after-aes-cbc.yak](example-before-after-aes-cbc.yak) |
-| timestamp+nonce+HMAC 签名注入 | `beforeRequest` | [example-sign-hmac-before-request.yak](example-sign-hmac-before-request.yak) |
+| timestamp+nonce+HMAC 签名注入 | `beforeRequest` | [examples/before-request.yak](examples/before-request.yak) |
+| AES-CBC 响应解密（Fuzzer 看明文） | `afterRequest` | [examples/after-request.yak](examples/after-request.yak) |
 
 国密（SM4-CBC / SM2 / SM3）同理，把 `codec.AESCBC*` 换成 `codec.SM4*` / `codec.Sm3` 即可。
 
@@ -54,18 +54,20 @@ flowchart LR
 
 | 场景 | Hook | 示例 |
 |---|---|---|
-| 405→POST / 429 退避 / 401 放弃 / 5xx 重试 | `retryHandler` | [example-retry-status-aware.yak](example-retry-status-aware.yak) |
-| 200 OK 但 body 含失败关键词判为失败 | `customFailureChecker` | [example-custom-failure-checker.yak](example-custom-failure-checker.yak) |
+| 405→POST / 429 退避 / 401 放弃 / 5xx 重试 | `retryHandler` | [examples/retry-handler.yak](examples/retry-handler.yak) |
+| 200 OK 但 body 含失败关键词判为失败 | `customFailureChecker` | [examples/custom-failure-checker.yak](examples/custom-failure-checker.yak) |
+| 目标未上线时用本地响应联调 | `mockHTTPRequest` | [examples/mock-http-request.yak](examples/mock-http-request.yak) |
 
 - `retryHandler` 需配合 yakit Fuzzer 的重试配置（开启重试 + 指定失败状态码）使用。
 - `customFailureChecker` 解决"协议层 200、业务层失败"的爆破筛选难题。
+- `mockHTTPRequest` 让 payload 渲染/重试/失败判定在没有真实服务时也能跑通联调。
 
 ## 4. 核心场景三：fuzztag 与关联测试
 
 | 场景 | 机制 | 示例 |
 |---|---|---|
-| 动态计算哈希 payload | `{{yak(hash|md5,admin)}}` | [example-fuzztag-hash.yak](example-fuzztag-hash.yak) |
-| 多步请求提取 token/csrf | `mirrorHTTPFlow` 返回 map → `{{params(name)}}` | [example-mirror-flow-extract-params.yak](example-mirror-flow-extract-params.yak) |
+| 动态计算哈希 payload | `{{yak(hash|md5,admin)}}` | [examples/fuzztag-handle.yak](examples/fuzztag-handle.yak) |
+| 多步请求提取 token/csrf | `mirrorHTTPFlow` 返回 map → `{{params(name)}}` | [examples/mirror-http-flow.yak](examples/mirror-http-flow.yak) |
 
 热加载里定义的普通函数 `f = func(param){ return [...] }` 即可作为 `{{yak(f|参数)}}` 标签被调用，返回数组的每个元素是一个 payload。
 
@@ -118,7 +120,13 @@ if YAK_MAIN {
 
 ```bash
 cd /Users/v1ll4n/Projects/yaklang
-go run common/yak/cmd/yak.go skills/webfuzzer-hotpatch/example-before-after-aes-cbc.yak
+go run common/yak/cmd/yak.go skills/webfuzzer-hotpatch/examples/before-request.yak
+
+# 与 Yakit gRPC 同款执行路径 (MutateHookCaller); 验证 {{yak(...)}} fuzztag:
+go build -o /tmp/yak ./common/yak/cmd/yak.go
+printf 'GET / HTTP/1.1\r\nHost: t.example.com\r\n\r\n' > /tmp/req.txt
+/tmp/yak hotpatch-webfuzzer --script skills/webfuzzer-hotpatch/examples/fuzztag-handle.yak \
+    --request /tmp/req.txt --fuzztag '{{yak(hash|md5,hello)}}'
 ```
 
 每个示例应：10 秒内完成、assert 全过、log 全英文、出现 `... self test passed`。

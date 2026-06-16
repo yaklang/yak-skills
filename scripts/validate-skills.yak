@@ -62,30 +62,52 @@ passed = 0
 failed = []
 
 // =============================================================================
-// Part 1: 遍历所有 example-*.yak 跑自测
+// Part 1: 递归遍历每个 skill 下所有 *.yak (含 examples/ 子目录) 跑 YAK_MAIN 自测
+// 关键词: recursive example discovery, examples subdir, per-hook evidence
 // =============================================================================
-log.info("=== Part 1: self-test all example-*.yak ===")
+log.info("=== Part 1: self-test all skill *.yak (recursive) ===")
+
+// 递归收集一个 skill 目录下的全部 .yak 文件 (相对 skill 目录的子路径)
+collectYak = func(skill_dir) {
+    results = []
+    var walk
+    walk = func(dir) {
+        for e in file.Ls(dir) {
+            full = file.Join(dir, e.Name)
+            if e.IsDir {
+                if str.HasPrefix(e.Name, ".") {
+                    continue
+                }
+                walk(full)
+                continue
+            }
+            if str.HasSuffix(e.Name, ".yak") {
+                results = append(results, full)
+            }
+        }
+    }
+    walk(skill_dir)
+    return results
+}
+
 for entry in file.Ls(skills_dir) {
     if !entry.IsDir {
         continue
     }
     skill = entry.Name
     skill_dir = file.Join(skills_dir, skill)
-    for f in file.Ls(skill_dir) {
-        if !str.HasPrefix(f.Name, "example-") || !str.HasSuffix(f.Name, ".yak") {
-            continue
-        }
-        path = file.Join(skill_dir, f.Name)
+    for path in collectYak(skill_dir) {
+        rel = str.TrimPrefix(path, skill_dir + "/")
         total++
         cmdline = sprintf(`"%s" "%s"`, yak_bin, path)
         r = runCmd(cmdline)
-        saveEvidence(file.Join("selftest", skill, f.Name + ".txt"), r.out)
+        saveEvidence(file.Join("selftest", skill, rel + ".txt"), r.out)
         if r.code == 0 {
             passed++
-            log.info("PASS  %s/%s", skill, f.Name)
+            log.info("PASS  %s/%s", skill, rel)
         } else {
-            failed = append(failed, sprintf("selftest %s/%s", skill, f.Name))
-            log.error("FAIL  %s/%s", skill, f.Name)
+            failed = append(failed, sprintf("selftest %s/%s", skill, rel))
+            log.error("FAIL  %s/%s", skill, rel)
         }
     }
 }
@@ -120,11 +142,14 @@ rsp500 = "HTTP/1.1 500 Internal Server Error\r\nContent-Length: 5\r\n\r\nboom!"
 fxRsp500 = file.Join(fixtures_dir, "rsp-500.txt")
 file.Save(fxRsp500, rsp500)~
 
-mitmReqModify = file.Join(skills_dir, "mitm-hotpatch", "example-hijack-request-modify-json.yak")
-mitmRspStrip = file.Join(skills_dir, "mitm-hotpatch", "example-hijack-response-strip-js.yak")
-globalColor = file.Join(skills_dir, "global-hotpatch", "example-global-flow-coloring.yak")
-wfFuzztag = file.Join(skills_dir, "webfuzzer-hotpatch", "example-fuzztag-hash.yak")
-codecRot13 = file.Join(skills_dir, "yaklang-toolchain", "example-codec-rot13.yak")
+mitmReqModify = file.Join(skills_dir, "mitm-hotpatch", "examples", "hijack-request.yak")
+mitmRspStrip = file.Join(skills_dir, "mitm-hotpatch", "examples", "hijack-response-ex.yak")
+globalColor = file.Join(skills_dir, "global-hotpatch", "examples", "hijack-save-http-flow.yak")
+wfFuzztag = file.Join(skills_dir, "webfuzzer-hotpatch", "examples", "fuzztag-handle.yak")
+codecRot13 = file.Join(skills_dir, "yaklang-toolchain", "examples", "codec-rot13.yak")
+codecBase64 = file.Join(skills_dir, "yakit-rightclick-plugin", "examples", "codec-base64-wrap.yak")
+mitmBeforeReq = file.Join(skills_dir, "mitm-hotpatch", "examples", "before-request.yak")
+mitmAfterReq = file.Join(skills_dir, "mitm-hotpatch", "examples", "after-request.yak")
 
 demos = [
     {
@@ -151,6 +176,21 @@ demos = [
         "name": "codec-plugin-rot13",
         "cmd": sprintf(`"%s" codec-plugin --script "%s" --input "Hello, Yak!"`, yak_bin, codecRot13),
         "expect": "Uryyb, Lnx!",
+    },
+    {
+        "name": "codec-plugin-base64",
+        "cmd": sprintf(`"%s" codec-plugin --script "%s" --input "admin:123456"`, yak_bin, codecBase64),
+        "expect": "YWRtaW46MTIzNDU2",
+    },
+    {
+        "name": "hotpatch-mitm-before-request",
+        "cmd": sprintf(`"%s" hotpatch-mitm --script "%s" --request "%s"`, yak_bin, mitmBeforeReq, fxReqGeneric),
+        "expect": "X-Yak-Trace-Id",
+    },
+    {
+        "name": "hotpatch-mitm-after-request",
+        "cmd": sprintf(`"%s" hotpatch-mitm --script "%s" --request "%s" --response "%s"`, yak_bin, mitmAfterReq, fxReqGeneric, fxRsp500),
+        "expect": "X-Yak-Mitm",
     },
 ]
 

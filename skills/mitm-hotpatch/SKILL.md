@@ -6,7 +6,7 @@ description: >-
 
 # SKILL: Yakit MITM 热加载 (Hot Patch)
 
-> AI LOAD INSTRUCTION: 这是 Yaklang 三层热加载体系中的"模块级 MITM"专题。MITM 热加载允许安全测试人员在不中断代理服务的情况下，用 Yaklang 代码动态接管 HTTP 流量的各个处理阶段。先读本页的 Hook 触发时机表与 forward/drop 语义，再看 `example-*.yak`，每个示例都可用 `yak <file>` 直接自测。
+> AI LOAD INSTRUCTION: 这是 Yaklang 三层热加载体系中的"模块级 MITM"专题。MITM 热加载允许安全测试人员在不中断代理服务的情况下，用 Yaklang 代码动态接管 HTTP 流量的各个处理阶段。先读本页的 Hook 触发时机表与 forward/drop 语义，再看 `examples/` 下按 Hook 命名的示例，每个示例都可用 `yak <file>` 直接自测。
 
 ## 0. 相关路由
 
@@ -75,15 +75,24 @@ http://a:8080/abc/14      http://a:8080/abc/14?x=1  http://b:8080/abc/14
 - `mirrorNewWebsitePath`：触发 5 次（`a:8080` 下 4 个不同路径 + `b:8080/abc/14`；带 query 的 `/abc/14?x=1` 仍是 `/abc/14` 不重复）。
 - `mirrorNewWebsitePathParams`：按 query 参数 **结构** 去重（参数名相同值不同不重复触发）。
 
-## 4. 四大实战场景
+## 4. 全部 Hook 示例索引（examples/，一个函数一个示例）
 
-| 场景 | Hook | 示例 |
+表中**每一个 Hook 都有独立示例 + YAK_MAIN 自测**，`yak <file>` 即可自证，证据见 `scripts/validate-skills.yak`。
+
+| Hook | 示例场景 | 文件 |
 |---|---|---|
-| 出站前改业务字段（金额/折扣） | `hijackHTTPRequest` | [example-hijack-request-modify-json.yak](example-hijack-request-modify-json.yak) |
-| 删除阻断型 JS（alert/跳转）保留调试页面 | `hijackHTTPResponseEx` | [example-hijack-response-strip-js.yak](example-hijack-response-strip-js.yak) |
-| 自动发现并收集站点新路径 | `mirrorNewWebsitePath` | [example-mirror-new-path-collect.yak](example-mirror-new-path-collect.yak) |
-| 入库前敏感词打标签 + 染色 | `hijackSaveHTTPFlow` | [example-save-flow-tag-color.yak](example-save-flow-tag-color.yak) |
-| 危险操作（DELETE/PUT）mock 护栏 | `mockHTTPRequest` | [example-mock-danger-protect.yak](example-mock-danger-protect.yak) |
+| `hijackHTTPRequest` | 出站前改 JSON 业务字段（金额） | [examples/hijack-request.yak](examples/hijack-request.yak) |
+| `hijackHTTPResponse` | 仅凭响应补安全头 + 抹版本号 | [examples/hijack-response.yak](examples/hijack-response.yak) |
+| `hijackHTTPResponseEx` | 删除阻断型 JS（alert/跳转）保留调试页面 | [examples/hijack-response-ex.yak](examples/hijack-response-ex.yak) |
+| `beforeRequest` | 出站前最后注入 Trace 头（返回值提交） | [examples/before-request.yak](examples/before-request.yak) |
+| `afterRequest` | 回写前打调试标记（返回值提交） | [examples/after-request.yak](examples/after-request.yak) |
+| `mirrorHTTPFlow` | 全量流量被动扫描敏感信息泄露 | [examples/mirror-http-flow.yak](examples/mirror-http-flow.yak) |
+| `mirrorFilteredHTTPFlow` | 仅过滤后流量按内容类型统计 | [examples/mirror-filtered-http-flow.yak](examples/mirror-filtered-http-flow.yak) |
+| `mirrorNewWebsite` | 新域名发现 → 资产清单 | [examples/mirror-new-website.yak](examples/mirror-new-website.yak) |
+| `mirrorNewWebsitePath` | 新路径发现与去重收集 | [examples/mirror-new-website-path.yak](examples/mirror-new-website-path.yak) |
+| `mirrorNewWebsitePathParams` | 新参数组合发现 → Fuzz 选靶 | [examples/mirror-new-website-path-params.yak](examples/mirror-new-website-path-params.yak) |
+| `hijackSaveHTTPFlow` | 入库前敏感词打标签 + 染色 | [examples/hijack-save-http-flow.yak](examples/hijack-save-http-flow.yak) |
+| `mockHTTPRequest` | 危险操作（DELETE/PUT）mock 护栏 | [examples/mock-http-request.yak](examples/mock-http-request.yak) |
 
 ## 5. 标准写法：hook 函数 + YAK_MAIN 自测
 
@@ -136,8 +145,13 @@ if YAK_MAIN {
 
 ```bash
 cd /Users/v1ll4n/Projects/yaklang
-go run common/yak/cmd/yak.go skills/mitm-hotpatch/example-hijack-request-modify-json.yak
-# 或已安装引擎: yak skills/mitm-hotpatch/example-hijack-request-modify-json.yak
+go run common/yak/cmd/yak.go skills/mitm-hotpatch/examples/hijack-request.yak
+# 或已安装引擎: yak skills/mitm-hotpatch/examples/hijack-request.yak
+
+# 用与 Yakit gRPC 同款执行路径在真实请求上验证:
+go build -o /tmp/yak ./common/yak/cmd/yak.go
+printf 'POST /api/order/create HTTP/1.1\r\nHost: shop.example.com\r\nContent-Type: application/json\r\n\r\n{"amount":100}' > /tmp/req.txt
+/tmp/yak hotpatch-mitm --script skills/mitm-hotpatch/examples/hijack-request.yak --request /tmp/req.txt
 ```
 
 每个示例应：10 秒内完成、所有 assert 通过、log 全英文、最终出现 `... self test passed`。

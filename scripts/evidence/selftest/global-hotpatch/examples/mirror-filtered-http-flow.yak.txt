@@ -1,0 +1,6 @@
+[36m[INFO][0m 2026-06-16 23:45:57 [sqlite_large_db_tune:109] sqlite tuned for large project db (298.9M): cache=32M mmap=64M wal_autocheckpoint=8000
+[36m[INFO][0m 2026-06-16 23:45:57 [mirror-filtered-http-flow:41] start global mirror filtered http flow self test
+[36m[INFO][0m 2026-06-16 23:45:57 [mirror-filtered-http-flow:41] focused flow: POST http://t.local/api/login
+[36m[INFO][0m 2026-06-16 23:45:57 [mirror-filtered-http-flow:41] focused flow: GET http://t.local/api/profile
+[36m[INFO][0m 2026-06-16 23:45:57 [mirror-filtered-http-flow:41] focused: [POST http://t.local/api/login GET http://t.local/api/profile]
+[36m[INFO][0m 2026-06-16 23:45:57 [mirror-filtered-http-flow:41] global mirror filtered http flow self test passed

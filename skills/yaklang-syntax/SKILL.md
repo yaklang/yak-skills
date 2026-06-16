@@ -6,7 +6,7 @@ description: >-
 
 # SKILL: Yaklang DSL 语法案例
 
-> AI LOAD INSTRUCTION: Yaklang 是为安全研究设计的 DSL，语法接近 Go 但更动态。本页给出可直接运行的语法案例与几个真实存在的"坑"（见第 5 节）。两个示例 `example-syntax-tour.yak` / `example-error-handling.yak` 都可用 `yak <file>` 自测通过。写 Yaklang 时优先参考这里而非凭空臆测语法。
+> AI LOAD INSTRUCTION: Yaklang 是为安全研究设计的 DSL，语法接近 Go 但更动态。本页给出可直接运行的语法案例与几个真实存在的"坑"（见第 5 节）。两个示例 `examples/syntax-tour.yak` / `examples/error-handling.yak` 都可用 `yak <file>` 自测通过。写 Yaklang 时优先参考这里而非凭空臆测语法。
 
 ## 0. 相关路由
 
@@ -81,7 +81,7 @@ beforeRequest = func(https, originReq, req) { return req }
 hijackHTTPRequest = (isHttps, url, req, forward, drop) => { forward(req) }
 ```
 
-完整可运行示例：[example-syntax-tour.yak](example-syntax-tour.yak)
+完整可运行示例：[examples/syntax-tour.yak](examples/syntax-tour.yak)
 
 ## 4. 字符串模板与错误处理
 
@@ -118,7 +118,7 @@ defer func {
 }
 ```
 
-完整可运行示例：[example-error-handling.yak](example-error-handling.yak)
+完整可运行示例：[examples/error-handling.yak](examples/error-handling.yak)
 
 ## 5. 真实存在的"坑"（写 Yaklang 前必读）
 
@@ -138,8 +138,8 @@ defer func {
 
 ```bash
 cd /Users/v1ll4n/Projects/yaklang
-go run common/yak/cmd/yak.go skills/yaklang-syntax/example-syntax-tour.yak
-go run common/yak/cmd/yak.go skills/yaklang-syntax/example-error-handling.yak
+go run common/yak/cmd/yak.go skills/yaklang-syntax/examples/syntax-tour.yak
+go run common/yak/cmd/yak.go skills/yaklang-syntax/examples/error-handling.yak
 ```
 
 每个示例应：assert 全过、log 全英文、出现 `... self test passed`。

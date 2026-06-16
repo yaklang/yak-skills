@@ -1,0 +1,4 @@
+[36m[INFO][0m 2026-06-16 23:46:03 [sqlite_large_db_tune:109] sqlite tuned for large project db (298.9M): cache=32M mmap=64M wal_autocheckpoint=8000
+[36m[INFO][0m 2026-06-16 23:46:03 [after-request:57] start webfuzzer after request decrypt self test
+[36m[INFO][0m 2026-06-16 23:46:03 [after-request:57] decrypted rsp body: {"code":0,"txn_id":"abc123"}
+[36m[INFO][0m 2026-06-16 23:46:03 [after-request:57] webfuzzer after request decrypt self test passed

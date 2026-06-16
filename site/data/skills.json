@@ -1,5 +1,5 @@
 {
-  "buildTime": "2026-06-16T15:11:11Z",
+  "buildTime": "2026-06-16T15:45:37Z",
   "categories": [
     {
       "description": "总入口 / 全局路由 / 调试约定",
@@ -11,7 +11,7 @@
         {
           "blobUrl": "https://github.com/yaklang/yak-skills/blob/main/skills/yak/SKILL.md",
           "category": "entry",
-          "description": "yak-skills 总入口与路由。当用户要做 Yaklang 编程、Yak 热加载（MITM / Web Fuzzer / 全局）、Yakit 二次开发或 MCP 测试时，先从这里判断该进入哪个专题 skill。本页讲清三层热加载体系、YAK_MAIN 调试约定、go run 测试方法，并把请求路由到 mitm-hotpatch / webfuzzer-hotpatch / global-hotpatch / yaklang-syntax / yaklang-database。",
+          "description": "yak-skills 总入口与路由。当用户要做 Yaklang 编程、Yak 热加载（MITM / Web Fuzzer / 全局）、Yakit 二次开发或 MCP 测试时，先从这里判断该进入哪个专题 skill。本页讲清三层热加载体系、YAK_MAIN 调试约定、go run 测试方法，并把请求路由到 mitm-hotpatch / webfuzzer-hotpatch / global-hotpatch / yaklang-syntax / yaklang-database / yakit-rightclick-plugin / yaklang-toolchain / yakit-data-extract-plugin。",
           "exampleCount": 0,
           "extraDocs": [],
           "extraLines": 0,
@@ -19,10 +19,10 @@
           "name": "yak",
           "path": "skills/yak/SKILL.md",
           "rawUrl": "https://raw.githubusercontent.com/yaklang/yak-skills/main/skills/yak/SKILL.md",
-          "skillLines": 94,
-          "skillSize": 5190,
+          "skillLines": 99,
+          "skillSize": 6138,
           "tier": "master",
-          "totalLines": 94
+          "totalLines": 99
         }
       ]
     },
@@ -37,157 +37,283 @@
           "blobUrl": "https://github.com/yaklang/yak-skills/blob/main/skills/mitm-hotpatch/SKILL.md",
           "category": "hotpatch",
           "description": "Yakit MITM 热加载 (Hot Patch) 专题。当用户需要在 MITM 中间人代理中用代码动态劫持/修改请求与响应、镜像分析流量、入库前打标签染色、或对危险操作做 mock 护栏时使用。覆盖 hijackHTTPRequest / hijackHTTPResponseEx / mirror 系列 / hijackSaveHTTPFlow / mockHTTPRequest 全部 Hook 与 forward/drop 语义。",
-          "exampleCount": 5,
+          "exampleCount": 12,
           "extraDocs": [
             {
               "kind": "example",
+              "lines": 49,
+              "name": "after-request.yak",
+              "path": "skills/mitm-hotpatch/examples/after-request.yak",
+              "size": 2026
+            },
+            {
+              "kind": "example",
+              "lines": 53,
+              "name": "before-request.yak",
+              "path": "skills/mitm-hotpatch/examples/before-request.yak",
+              "size": 2200
+            },
+            {
+              "kind": "example",
               "lines": 77,
-              "name": "example-hijack-request-modify-json.yak",
-              "path": "skills/mitm-hotpatch/example-hijack-request-modify-json.yak",
+              "name": "hijack-request.yak",
+              "path": "skills/mitm-hotpatch/examples/hijack-request.yak",
               "size": 3051
             },
             {
               "kind": "example",
               "lines": 77,
-              "name": "example-hijack-response-strip-js.yak",
-              "path": "skills/mitm-hotpatch/example-hijack-response-strip-js.yak",
+              "name": "hijack-response-ex.yak",
+              "path": "skills/mitm-hotpatch/examples/hijack-response-ex.yak",
               "size": 2974
             },
             {
               "kind": "example",
-              "lines": 60,
-              "name": "example-mirror-new-path-collect.yak",
-              "path": "skills/mitm-hotpatch/example-mirror-new-path-collect.yak",
-              "size": 2368
-            },
-            {
-              "kind": "example",
-              "lines": 77,
-              "name": "example-mock-danger-protect.yak",
-              "path": "skills/mitm-hotpatch/example-mock-danger-protect.yak",
-              "size": 2972
+              "lines": 66,
+              "name": "hijack-response.yak",
+              "path": "skills/mitm-hotpatch/examples/hijack-response.yak",
+              "size": 2578
             },
             {
               "kind": "example",
               "lines": 86,
-              "name": "example-save-flow-tag-color.yak",
-              "path": "skills/mitm-hotpatch/example-save-flow-tag-color.yak",
+              "name": "hijack-save-http-flow.yak",
+              "path": "skills/mitm-hotpatch/examples/hijack-save-http-flow.yak",
               "size": 3245
+            },
+            {
+              "kind": "example",
+              "lines": 62,
+              "name": "mirror-filtered-http-flow.yak",
+              "path": "skills/mitm-hotpatch/examples/mirror-filtered-http-flow.yak",
+              "size": 2364
+            },
+            {
+              "kind": "example",
+              "lines": 63,
+              "name": "mirror-http-flow.yak",
+              "path": "skills/mitm-hotpatch/examples/mirror-http-flow.yak",
+              "size": 2314
+            },
+            {
+              "kind": "example",
+              "lines": 79,
+              "name": "mirror-new-website-path-params.yak",
+              "path": "skills/mitm-hotpatch/examples/mirror-new-website-path-params.yak",
+              "size": 2956
+            },
+            {
+              "kind": "example",
+              "lines": 60,
+              "name": "mirror-new-website-path.yak",
+              "path": "skills/mitm-hotpatch/examples/mirror-new-website-path.yak",
+              "size": 2368
+            },
+            {
+              "kind": "example",
+              "lines": 57,
+              "name": "mirror-new-website.yak",
+              "path": "skills/mitm-hotpatch/examples/mirror-new-website.yak",
+              "size": 2080
+            },
+            {
+              "kind": "example",
+              "lines": 77,
+              "name": "mock-http-request.yak",
+              "path": "skills/mitm-hotpatch/examples/mock-http-request.yak",
+              "size": 2972
             }
           ],
-          "extraLines": 377,
+          "extraLines": 806,
           "id": "mitm-hotpatch",
           "name": "mitm-hotpatch",
           "path": "skills/mitm-hotpatch/SKILL.md",
           "rawUrl": "https://raw.githubusercontent.com/yaklang/yak-skills/main/skills/mitm-hotpatch/SKILL.md",
-          "skillLines": 151,
-          "skillSize": 8225,
+          "skillLines": 165,
+          "skillSize": 9706,
           "tier": "deep",
-          "totalLines": 528
+          "totalLines": 971
         },
         {
           "blobUrl": "https://github.com/yaklang/yak-skills/blob/main/skills/webfuzzer-hotpatch/SKILL.md",
           "category": "hotpatch",
           "description": "Yakit Web Fuzzer 热加载 (Hot Patch) 专题。当用户需要在 Web Fuzzer 单 Tab 发包时用代码自动加解密请求/响应、注入签名、智能重试、自定义业务失败判定、用 fuzztag 动态生成 payload、或从响应提取参数做关联测试时使用。覆盖 beforeRequest / afterRequest / retryHandler / customFailureChecker / mirrorHTTPFlow / mockHTTPRequest 与 {{yak(...)}} fuzztag。",
-          "exampleCount": 6,
+          "exampleCount": 7,
           "extraDocs": [
             {
               "kind": "example",
-              "lines": 67,
-              "name": "example-before-after-aes-cbc.yak",
-              "path": "skills/webfuzzer-hotpatch/example-before-after-aes-cbc.yak",
-              "size": 2737
+              "lines": 60,
+              "name": "after-request.yak",
+              "path": "skills/webfuzzer-hotpatch/examples/after-request.yak",
+              "size": 2325
+            },
+            {
+              "kind": "example",
+              "lines": 66,
+              "name": "before-request.yak",
+              "path": "skills/webfuzzer-hotpatch/examples/before-request.yak",
+              "size": 2476
             },
             {
               "kind": "example",
               "lines": 51,
-              "name": "example-custom-failure-checker.yak",
-              "path": "skills/webfuzzer-hotpatch/example-custom-failure-checker.yak",
+              "name": "custom-failure-checker.yak",
+              "path": "skills/webfuzzer-hotpatch/examples/custom-failure-checker.yak",
               "size": 2156
             },
             {
               "kind": "example",
               "lines": 54,
-              "name": "example-fuzztag-hash.yak",
-              "path": "skills/webfuzzer-hotpatch/example-fuzztag-hash.yak",
+              "name": "fuzztag-handle.yak",
+              "path": "skills/webfuzzer-hotpatch/examples/fuzztag-handle.yak",
               "size": 1956
             },
             {
               "kind": "example",
               "lines": 69,
-              "name": "example-mirror-flow-extract-params.yak",
-              "path": "skills/webfuzzer-hotpatch/example-mirror-flow-extract-params.yak",
+              "name": "mirror-http-flow.yak",
+              "path": "skills/webfuzzer-hotpatch/examples/mirror-http-flow.yak",
               "size": 2667
             },
             {
               "kind": "example",
-              "lines": 77,
-              "name": "example-retry-status-aware.yak",
-              "path": "skills/webfuzzer-hotpatch/example-retry-status-aware.yak",
-              "size": 2872
+              "lines": 53,
+              "name": "mock-http-request.yak",
+              "path": "skills/webfuzzer-hotpatch/examples/mock-http-request.yak",
+              "size": 2224
             },
             {
               "kind": "example",
-              "lines": 66,
-              "name": "example-sign-hmac-before-request.yak",
-              "path": "skills/webfuzzer-hotpatch/example-sign-hmac-before-request.yak",
-              "size": 2476
+              "lines": 77,
+              "name": "retry-handler.yak",
+              "path": "skills/webfuzzer-hotpatch/examples/retry-handler.yak",
+              "size": 2872
             }
           ],
-          "extraLines": 384,
+          "extraLines": 430,
           "id": "webfuzzer-hotpatch",
           "name": "webfuzzer-hotpatch",
           "path": "skills/webfuzzer-hotpatch/SKILL.md",
           "rawUrl": "https://raw.githubusercontent.com/yaklang/yak-skills/main/skills/webfuzzer-hotpatch/SKILL.md",
-          "skillLines": 133,
-          "skillSize": 6847,
+          "skillLines": 141,
+          "skillSize": 7399,
           "tier": "deep",
-          "totalLines": 517
+          "totalLines": 571
         },
         {
           "blobUrl": "https://github.com/yaklang/yak-skills/blob/main/skills/global-hotpatch/SKILL.md",
           "category": "hotpatch",
           "description": "Yakit 全局热加载 (Global Hot Patch) 专题。当用户需要一处配置、让 MITM 与所有 Web Fuzzer Tab 共享同一套 hook 时使用：全站透明加解密、统一签名/认证注入、动态 challenge 应答、全站染色脱敏、危险操作护栏。全局 hook 先于模块 hook 执行，同时只能启用一个。复用 beforeRequest / afterRequest / hijackHTTPRequest / hijackSaveHTTPFlow / mockHTTPRequest。",
-          "exampleCount": 4,
+          "exampleCount": 14,
           "extraDocs": [
             {
               "kind": "example",
-              "lines": 46,
-              "name": "example-global-auto-bearer.yak",
-              "path": "skills/global-hotpatch/example-global-auto-bearer.yak",
-              "size": 1856
-            },
-            {
-              "kind": "example",
               "lines": 124,
-              "name": "example-global-challenge-sign.yak",
-              "path": "skills/global-hotpatch/example-global-challenge-sign.yak",
+              "name": "advanced-challenge-sign.yak",
+              "path": "skills/global-hotpatch/examples/advanced-challenge-sign.yak",
               "size": 5701
             },
             {
               "kind": "example",
+              "lines": 94,
+              "name": "advanced-sm4-transparent.yak",
+              "path": "skills/global-hotpatch/examples/advanced-sm4-transparent.yak",
+              "size": 3731
+            },
+            {
+              "kind": "example",
+              "lines": 39,
+              "name": "after-request.yak",
+              "path": "skills/global-hotpatch/examples/after-request.yak",
+              "size": 1449
+            },
+            {
+              "kind": "example",
+              "lines": 46,
+              "name": "before-request.yak",
+              "path": "skills/global-hotpatch/examples/before-request.yak",
+              "size": 1856
+            },
+            {
+              "kind": "example",
+              "lines": 41,
+              "name": "hijack-request.yak",
+              "path": "skills/global-hotpatch/examples/hijack-request.yak",
+              "size": 1585
+            },
+            {
+              "kind": "example",
+              "lines": 53,
+              "name": "hijack-response-ex.yak",
+              "path": "skills/global-hotpatch/examples/hijack-response-ex.yak",
+              "size": 2048
+            },
+            {
+              "kind": "example",
+              "lines": 40,
+              "name": "hijack-response.yak",
+              "path": "skills/global-hotpatch/examples/hijack-response.yak",
+              "size": 1530
+            },
+            {
+              "kind": "example",
               "lines": 81,
-              "name": "example-global-flow-coloring.yak",
-              "path": "skills/global-hotpatch/example-global-flow-coloring.yak",
+              "name": "hijack-save-http-flow.yak",
+              "path": "skills/global-hotpatch/examples/hijack-save-http-flow.yak",
               "size": 2963
             },
             {
               "kind": "example",
-              "lines": 94,
-              "name": "example-global-sm4-transparent.yak",
-              "path": "skills/global-hotpatch/example-global-sm4-transparent.yak",
-              "size": 3731
+              "lines": 44,
+              "name": "mirror-filtered-http-flow.yak",
+              "path": "skills/global-hotpatch/examples/mirror-filtered-http-flow.yak",
+              "size": 1648
+            },
+            {
+              "kind": "example",
+              "lines": 44,
+              "name": "mirror-http-flow.yak",
+              "path": "skills/global-hotpatch/examples/mirror-http-flow.yak",
+              "size": 1449
+            },
+            {
+              "kind": "example",
+              "lines": 50,
+              "name": "mirror-new-website-path-params.yak",
+              "path": "skills/global-hotpatch/examples/mirror-new-website-path-params.yak",
+              "size": 1847
+            },
+            {
+              "kind": "example",
+              "lines": 46,
+              "name": "mirror-new-website-path.yak",
+              "path": "skills/global-hotpatch/examples/mirror-new-website-path.yak",
+              "size": 1557
+            },
+            {
+              "kind": "example",
+              "lines": 43,
+              "name": "mirror-new-website.yak",
+              "path": "skills/global-hotpatch/examples/mirror-new-website.yak",
+              "size": 1425
+            },
+            {
+              "kind": "example",
+              "lines": 58,
+              "name": "mock-http-request.yak",
+              "path": "skills/global-hotpatch/examples/mock-http-request.yak",
+              "size": 2197
             }
           ],
-          "extraLines": 345,
+          "extraLines": 803,
           "id": "global-hotpatch",
           "name": "global-hotpatch",
           "path": "skills/global-hotpatch/SKILL.md",
           "rawUrl": "https://raw.githubusercontent.com/yaklang/yak-skills/main/skills/global-hotpatch/SKILL.md",
-          "skillLines": 100,
-          "skillSize": 5372,
+          "skillLines": 119,
+          "skillSize": 7446,
           "tier": "deep",
-          "totalLines": 445
+          "totalLines": 922
         }
       ]
     },
@@ -206,28 +332,28 @@
           "extraDocs": [
             {
               "kind": "example",
-              "lines": 77,
-              "name": "example-error-handling.yak",
-              "path": "skills/yaklang-syntax/example-error-handling.yak",
-              "size": 2821
+              "lines": 80,
+              "name": "error-handling.yak",
+              "path": "skills/yaklang-syntax/examples/error-handling.yak",
+              "size": 2938
             },
             {
               "kind": "example",
-              "lines": 139,
-              "name": "example-syntax-tour.yak",
-              "path": "skills/yaklang-syntax/example-syntax-tour.yak",
-              "size": 3841
+              "lines": 142,
+              "name": "syntax-tour.yak",
+              "path": "skills/yaklang-syntax/examples/syntax-tour.yak",
+              "size": 3958
             }
           ],
-          "extraLines": 216,
+          "extraLines": 222,
           "id": "yaklang-syntax",
           "name": "yaklang-syntax",
           "path": "skills/yaklang-syntax/SKILL.md",
           "rawUrl": "https://raw.githubusercontent.com/yaklang/yak-skills/main/skills/yaklang-syntax/SKILL.md",
           "skillLines": 151,
-          "skillSize": 5403,
+          "skillSize": 5411,
           "tier": "deep",
-          "totalLines": 367
+          "totalLines": 373
         }
       ]
     },
@@ -246,28 +372,28 @@
           "extraDocs": [
             {
               "kind": "example",
-              "lines": 66,
-              "name": "example-kv-and-payload.yak",
-              "path": "skills/yaklang-database/example-kv-and-payload.yak",
-              "size": 2180
+              "lines": 69,
+              "name": "kv-and-payload.yak",
+              "path": "skills/yaklang-database/examples/kv-and-payload.yak",
+              "size": 2297
             },
             {
               "kind": "example",
               "lines": 67,
-              "name": "example-sqlite-crud.yak",
-              "path": "skills/yaklang-database/example-sqlite-crud.yak",
+              "name": "sqlite-crud.yak",
+              "path": "skills/yaklang-database/examples/sqlite-crud.yak",
               "size": 2645
             }
           ],
-          "extraLines": 133,
+          "extraLines": 136,
           "id": "yaklang-database",
           "name": "yaklang-database",
           "path": "skills/yaklang-database/SKILL.md",
           "rawUrl": "https://raw.githubusercontent.com/yaklang/yak-skills/main/skills/yaklang-database/SKILL.md",
           "skillLines": 105,
-          "skillSize": 4883,
+          "skillSize": 4889,
           "tier": "deep",
-          "totalLines": 238
+          "totalLines": 241
         },
         {
           "blobUrl": "https://github.com/yaklang/yak-skills/blob/main/skills/yakit-data-extract-plugin/SKILL.md",
@@ -278,16 +404,16 @@
             {
               "kind": "example",
               "lines": 106,
-              "name": "example-collect-domain-urls.yak",
-              "path": "skills/yakit-data-extract-plugin/example-collect-domain-urls.yak",
-              "size": 3999
+              "name": "collect-domain-urls.yak",
+              "path": "skills/yakit-data-extract-plugin/examples/collect-domain-urls.yak",
+              "size": 4162
             },
             {
               "kind": "example",
               "lines": 126,
-              "name": "example-path-scan-with-payload.yak",
-              "path": "skills/yakit-data-extract-plugin/example-path-scan-with-payload.yak",
-              "size": 4438
+              "name": "path-scan-with-payload.yak",
+              "path": "skills/yakit-data-extract-plugin/examples/path-scan-with-payload.yak",
+              "size": 4593
             }
           ],
           "extraLines": 232,
@@ -296,18 +422,18 @@
           "path": "skills/yakit-data-extract-plugin/SKILL.md",
           "rawUrl": "https://raw.githubusercontent.com/yaklang/yak-skills/main/skills/yakit-data-extract-plugin/SKILL.md",
           "skillLines": 98,
-          "skillSize": 4743,
+          "skillSize": 4747,
           "tier": "deep",
           "totalLines": 330
         }
       ]
     },
     {
-      "description": "工具链 / 热加载验证命令 / 插件验证闭环",
+      "description": "工具链 / 热加载验证命令 / 右键插件编程 / 插件验证闭环",
       "id": "tooling",
       "name": "Toolchain \u0026 Verification",
       "order": 5,
-      "skillCount": 1,
+      "skillCount": 2,
       "skills": [
         {
           "blobUrl": "https://github.com/yaklang/yak-skills/blob/main/skills/yaklang-toolchain/SKILL.md",
@@ -318,9 +444,9 @@
             {
               "kind": "example",
               "lines": 49,
-              "name": "example-codec-rot13.yak",
-              "path": "skills/yaklang-toolchain/example-codec-rot13.yak",
-              "size": 1552
+              "name": "codec-rot13.yak",
+              "path": "skills/yaklang-toolchain/examples/codec-rot13.yak",
+              "size": 1544
             }
           ],
           "extraLines": 49,
@@ -328,10 +454,55 @@
           "name": "yaklang-toolchain",
           "path": "skills/yaklang-toolchain/SKILL.md",
           "rawUrl": "https://raw.githubusercontent.com/yaklang/yak-skills/main/skills/yaklang-toolchain/SKILL.md",
-          "skillLines": 141,
-          "skillSize": 6607,
+          "skillLines": 143,
+          "skillSize": 6804,
           "tier": "deep",
-          "totalLines": 190
+          "totalLines": 192
+        },
+        {
+          "blobUrl": "https://github.com/yaklang/yak-skills/blob/main/skills/yakit-rightclick-plugin/SKILL.md",
+          "category": "tooling",
+          "description": "Yakit 右键插件 (codec 插件) 的使用与编程技巧。讲清 codec 插件只需要一个 handle(input) 函数, 配合插件类型 codec + 开关\"用于数据包右键\" (tag: allow-custom-context-menu-execute) 即可出现在 任意 HTTP 编辑器的右键菜单里; 还讲 Web Fuzzer 编辑器的两层右键 (Monaco 原生菜单 + 选区浮动菜单) 如何选中文本一键编码/解码/调用插件, 以及如何用 yak codec-plugin 命令验证。当用户问\"怎么写右键 插件 / codec 插件怎么用 / Web Fuzzer 右键怎么操作\"时使用。右键插件是编写小工具最快的方式。",
+          "exampleCount": 4,
+          "extraDocs": [
+            {
+              "kind": "example",
+              "lines": 37,
+              "name": "codec-base64-wrap.yak",
+              "path": "skills/yakit-rightclick-plugin/examples/codec-base64-wrap.yak",
+              "size": 1367
+            },
+            {
+              "kind": "example",
+              "lines": 59,
+              "name": "codec-jwt-decode.yak",
+              "path": "skills/yakit-rightclick-plugin/examples/codec-jwt-decode.yak",
+              "size": 2010
+            },
+            {
+              "kind": "example",
+              "lines": 59,
+              "name": "codec-timestamp-to-date.yak",
+              "path": "skills/yakit-rightclick-plugin/examples/codec-timestamp-to-date.yak",
+              "size": 1680
+            },
+            {
+              "kind": "example",
+              "lines": 36,
+              "name": "codec-unicode-unescape.yak",
+              "path": "skills/yakit-rightclick-plugin/examples/codec-unicode-unescape.yak",
+              "size": 1084
+            }
+          ],
+          "extraLines": 191,
+          "id": "yakit-rightclick-plugin",
+          "name": "yakit-rightclick-plugin",
+          "path": "skills/yakit-rightclick-plugin/SKILL.md",
+          "rawUrl": "https://raw.githubusercontent.com/yaklang/yak-skills/main/skills/yakit-rightclick-plugin/SKILL.md",
+          "skillLines": 145,
+          "skillSize": 7563,
+          "tier": "deep",
+          "totalLines": 336
         }
       ]
     }
@@ -345,162 +516,288 @@
       "blobUrl": "https://github.com/yaklang/yak-skills/blob/main/skills/global-hotpatch/SKILL.md",
       "category": "hotpatch",
       "description": "Yakit 全局热加载 (Global Hot Patch) 专题。当用户需要一处配置、让 MITM 与所有 Web Fuzzer Tab 共享同一套 hook 时使用：全站透明加解密、统一签名/认证注入、动态 challenge 应答、全站染色脱敏、危险操作护栏。全局 hook 先于模块 hook 执行，同时只能启用一个。复用 beforeRequest / afterRequest / hijackHTTPRequest / hijackSaveHTTPFlow / mockHTTPRequest。",
-      "exampleCount": 4,
+      "exampleCount": 14,
       "extraDocs": [
         {
           "kind": "example",
-          "lines": 46,
-          "name": "example-global-auto-bearer.yak",
-          "path": "skills/global-hotpatch/example-global-auto-bearer.yak",
-          "size": 1856
-        },
-        {
-          "kind": "example",
           "lines": 124,
-          "name": "example-global-challenge-sign.yak",
-          "path": "skills/global-hotpatch/example-global-challenge-sign.yak",
+          "name": "advanced-challenge-sign.yak",
+          "path": "skills/global-hotpatch/examples/advanced-challenge-sign.yak",
           "size": 5701
         },
         {
           "kind": "example",
+          "lines": 94,
+          "name": "advanced-sm4-transparent.yak",
+          "path": "skills/global-hotpatch/examples/advanced-sm4-transparent.yak",
+          "size": 3731
+        },
+        {
+          "kind": "example",
+          "lines": 39,
+          "name": "after-request.yak",
+          "path": "skills/global-hotpatch/examples/after-request.yak",
+          "size": 1449
+        },
+        {
+          "kind": "example",
+          "lines": 46,
+          "name": "before-request.yak",
+          "path": "skills/global-hotpatch/examples/before-request.yak",
+          "size": 1856
+        },
+        {
+          "kind": "example",
+          "lines": 41,
+          "name": "hijack-request.yak",
+          "path": "skills/global-hotpatch/examples/hijack-request.yak",
+          "size": 1585
+        },
+        {
+          "kind": "example",
+          "lines": 53,
+          "name": "hijack-response-ex.yak",
+          "path": "skills/global-hotpatch/examples/hijack-response-ex.yak",
+          "size": 2048
+        },
+        {
+          "kind": "example",
+          "lines": 40,
+          "name": "hijack-response.yak",
+          "path": "skills/global-hotpatch/examples/hijack-response.yak",
+          "size": 1530
+        },
+        {
+          "kind": "example",
           "lines": 81,
-          "name": "example-global-flow-coloring.yak",
-          "path": "skills/global-hotpatch/example-global-flow-coloring.yak",
+          "name": "hijack-save-http-flow.yak",
+          "path": "skills/global-hotpatch/examples/hijack-save-http-flow.yak",
           "size": 2963
         },
         {
           "kind": "example",
-          "lines": 94,
-          "name": "example-global-sm4-transparent.yak",
-          "path": "skills/global-hotpatch/example-global-sm4-transparent.yak",
-          "size": 3731
+          "lines": 44,
+          "name": "mirror-filtered-http-flow.yak",
+          "path": "skills/global-hotpatch/examples/mirror-filtered-http-flow.yak",
+          "size": 1648
+        },
+        {
+          "kind": "example",
+          "lines": 44,
+          "name": "mirror-http-flow.yak",
+          "path": "skills/global-hotpatch/examples/mirror-http-flow.yak",
+          "size": 1449
+        },
+        {
+          "kind": "example",
+          "lines": 50,
+          "name": "mirror-new-website-path-params.yak",
+          "path": "skills/global-hotpatch/examples/mirror-new-website-path-params.yak",
+          "size": 1847
+        },
+        {
+          "kind": "example",
+          "lines": 46,
+          "name": "mirror-new-website-path.yak",
+          "path": "skills/global-hotpatch/examples/mirror-new-website-path.yak",
+          "size": 1557
+        },
+        {
+          "kind": "example",
+          "lines": 43,
+          "name": "mirror-new-website.yak",
+          "path": "skills/global-hotpatch/examples/mirror-new-website.yak",
+          "size": 1425
+        },
+        {
+          "kind": "example",
+          "lines": 58,
+          "name": "mock-http-request.yak",
+          "path": "skills/global-hotpatch/examples/mock-http-request.yak",
+          "size": 2197
         }
       ],
-      "extraLines": 345,
+      "extraLines": 803,
       "id": "global-hotpatch",
       "name": "global-hotpatch",
       "path": "skills/global-hotpatch/SKILL.md",
       "rawUrl": "https://raw.githubusercontent.com/yaklang/yak-skills/main/skills/global-hotpatch/SKILL.md",
-      "skillLines": 100,
-      "skillSize": 5372,
+      "skillLines": 119,
+      "skillSize": 7446,
       "tier": "deep",
-      "totalLines": 445
+      "totalLines": 922
     },
     {
       "blobUrl": "https://github.com/yaklang/yak-skills/blob/main/skills/mitm-hotpatch/SKILL.md",
       "category": "hotpatch",
       "description": "Yakit MITM 热加载 (Hot Patch) 专题。当用户需要在 MITM 中间人代理中用代码动态劫持/修改请求与响应、镜像分析流量、入库前打标签染色、或对危险操作做 mock 护栏时使用。覆盖 hijackHTTPRequest / hijackHTTPResponseEx / mirror 系列 / hijackSaveHTTPFlow / mockHTTPRequest 全部 Hook 与 forward/drop 语义。",
-      "exampleCount": 5,
+      "exampleCount": 12,
       "extraDocs": [
         {
           "kind": "example",
+          "lines": 49,
+          "name": "after-request.yak",
+          "path": "skills/mitm-hotpatch/examples/after-request.yak",
+          "size": 2026
+        },
+        {
+          "kind": "example",
+          "lines": 53,
+          "name": "before-request.yak",
+          "path": "skills/mitm-hotpatch/examples/before-request.yak",
+          "size": 2200
+        },
+        {
+          "kind": "example",
           "lines": 77,
-          "name": "example-hijack-request-modify-json.yak",
-          "path": "skills/mitm-hotpatch/example-hijack-request-modify-json.yak",
+          "name": "hijack-request.yak",
+          "path": "skills/mitm-hotpatch/examples/hijack-request.yak",
           "size": 3051
         },
         {
           "kind": "example",
           "lines": 77,
-          "name": "example-hijack-response-strip-js.yak",
-          "path": "skills/mitm-hotpatch/example-hijack-response-strip-js.yak",
+          "name": "hijack-response-ex.yak",
+          "path": "skills/mitm-hotpatch/examples/hijack-response-ex.yak",
           "size": 2974
         },
         {
           "kind": "example",
-          "lines": 60,
-          "name": "example-mirror-new-path-collect.yak",
-          "path": "skills/mitm-hotpatch/example-mirror-new-path-collect.yak",
-          "size": 2368
-        },
-        {
-          "kind": "example",
-          "lines": 77,
-          "name": "example-mock-danger-protect.yak",
-          "path": "skills/mitm-hotpatch/example-mock-danger-protect.yak",
-          "size": 2972
+          "lines": 66,
+          "name": "hijack-response.yak",
+          "path": "skills/mitm-hotpatch/examples/hijack-response.yak",
+          "size": 2578
         },
         {
           "kind": "example",
           "lines": 86,
-          "name": "example-save-flow-tag-color.yak",
-          "path": "skills/mitm-hotpatch/example-save-flow-tag-color.yak",
+          "name": "hijack-save-http-flow.yak",
+          "path": "skills/mitm-hotpatch/examples/hijack-save-http-flow.yak",
           "size": 3245
+        },
+        {
+          "kind": "example",
+          "lines": 62,
+          "name": "mirror-filtered-http-flow.yak",
+          "path": "skills/mitm-hotpatch/examples/mirror-filtered-http-flow.yak",
+          "size": 2364
+        },
+        {
+          "kind": "example",
+          "lines": 63,
+          "name": "mirror-http-flow.yak",
+          "path": "skills/mitm-hotpatch/examples/mirror-http-flow.yak",
+          "size": 2314
+        },
+        {
+          "kind": "example",
+          "lines": 79,
+          "name": "mirror-new-website-path-params.yak",
+          "path": "skills/mitm-hotpatch/examples/mirror-new-website-path-params.yak",
+          "size": 2956
+        },
+        {
+          "kind": "example",
+          "lines": 60,
+          "name": "mirror-new-website-path.yak",
+          "path": "skills/mitm-hotpatch/examples/mirror-new-website-path.yak",
+          "size": 2368
+        },
+        {
+          "kind": "example",
+          "lines": 57,
+          "name": "mirror-new-website.yak",
+          "path": "skills/mitm-hotpatch/examples/mirror-new-website.yak",
+          "size": 2080
+        },
+        {
+          "kind": "example",
+          "lines": 77,
+          "name": "mock-http-request.yak",
+          "path": "skills/mitm-hotpatch/examples/mock-http-request.yak",
+          "size": 2972
         }
       ],
-      "extraLines": 377,
+      "extraLines": 806,
       "id": "mitm-hotpatch",
       "name": "mitm-hotpatch",
       "path": "skills/mitm-hotpatch/SKILL.md",
       "rawUrl": "https://raw.githubusercontent.com/yaklang/yak-skills/main/skills/mitm-hotpatch/SKILL.md",
-      "skillLines": 151,
-      "skillSize": 8225,
+      "skillLines": 165,
+      "skillSize": 9706,
       "tier": "deep",
-      "totalLines": 528
+      "totalLines": 971
     },
     {
       "blobUrl": "https://github.com/yaklang/yak-skills/blob/main/skills/webfuzzer-hotpatch/SKILL.md",
       "category": "hotpatch",
       "description": "Yakit Web Fuzzer 热加载 (Hot Patch) 专题。当用户需要在 Web Fuzzer 单 Tab 发包时用代码自动加解密请求/响应、注入签名、智能重试、自定义业务失败判定、用 fuzztag 动态生成 payload、或从响应提取参数做关联测试时使用。覆盖 beforeRequest / afterRequest / retryHandler / customFailureChecker / mirrorHTTPFlow / mockHTTPRequest 与 {{yak(...)}} fuzztag。",
-      "exampleCount": 6,
+      "exampleCount": 7,
       "extraDocs": [
         {
           "kind": "example",
-          "lines": 67,
-          "name": "example-before-after-aes-cbc.yak",
-          "path": "skills/webfuzzer-hotpatch/example-before-after-aes-cbc.yak",
-          "size": 2737
+          "lines": 60,
+          "name": "after-request.yak",
+          "path": "skills/webfuzzer-hotpatch/examples/after-request.yak",
+          "size": 2325
+        },
+        {
+          "kind": "example",
+          "lines": 66,
+          "name": "before-request.yak",
+          "path": "skills/webfuzzer-hotpatch/examples/before-request.yak",
+          "size": 2476
         },
         {
           "kind": "example",
           "lines": 51,
-          "name": "example-custom-failure-checker.yak",
-          "path": "skills/webfuzzer-hotpatch/example-custom-failure-checker.yak",
+          "name": "custom-failure-checker.yak",
+          "path": "skills/webfuzzer-hotpatch/examples/custom-failure-checker.yak",
           "size": 2156
         },
         {
           "kind": "example",
           "lines": 54,
-          "name": "example-fuzztag-hash.yak",
-          "path": "skills/webfuzzer-hotpatch/example-fuzztag-hash.yak",
+          "name": "fuzztag-handle.yak",
+          "path": "skills/webfuzzer-hotpatch/examples/fuzztag-handle.yak",
           "size": 1956
         },
         {
           "kind": "example",
           "lines": 69,
-          "name": "example-mirror-flow-extract-params.yak",
-          "path": "skills/webfuzzer-hotpatch/example-mirror-flow-extract-params.yak",
+          "name": "mirror-http-flow.yak",
+          "path": "skills/webfuzzer-hotpatch/examples/mirror-http-flow.yak",
           "size": 2667
         },
         {
           "kind": "example",
-          "lines": 77,
-          "name": "example-retry-status-aware.yak",
-          "path": "skills/webfuzzer-hotpatch/example-retry-status-aware.yak",
-          "size": 2872
+          "lines": 53,
+          "name": "mock-http-request.yak",
+          "path": "skills/webfuzzer-hotpatch/examples/mock-http-request.yak",
+          "size": 2224
         },
         {
           "kind": "example",
-          "lines": 66,
-          "name": "example-sign-hmac-before-request.yak",
-          "path": "skills/webfuzzer-hotpatch/example-sign-hmac-before-request.yak",
-          "size": 2476
+          "lines": 77,
+          "name": "retry-handler.yak",
+          "path": "skills/webfuzzer-hotpatch/examples/retry-handler.yak",
+          "size": 2872
         }
       ],
-      "extraLines": 384,
+      "extraLines": 430,
       "id": "webfuzzer-hotpatch",
       "name": "webfuzzer-hotpatch",
       "path": "skills/webfuzzer-hotpatch/SKILL.md",
       "rawUrl": "https://raw.githubusercontent.com/yaklang/yak-skills/main/skills/webfuzzer-hotpatch/SKILL.md",
-      "skillLines": 133,
-      "skillSize": 6847,
+      "skillLines": 141,
+      "skillSize": 7399,
       "tier": "deep",
-      "totalLines": 517
+      "totalLines": 571
     },
     {
       "blobUrl": "https://github.com/yaklang/yak-skills/blob/main/skills/yak/SKILL.md",
       "category": "entry",
-      "description": "yak-skills 总入口与路由。当用户要做 Yaklang 编程、Yak 热加载（MITM / Web Fuzzer / 全局）、Yakit 二次开发或 MCP 测试时，先从这里判断该进入哪个专题 skill。本页讲清三层热加载体系、YAK_MAIN 调试约定、go run 测试方法，并把请求路由到 mitm-hotpatch / webfuzzer-hotpatch / global-hotpatch / yaklang-syntax / yaklang-database。",
+      "description": "yak-skills 总入口与路由。当用户要做 Yaklang 编程、Yak 热加载（MITM / Web Fuzzer / 全局）、Yakit 二次开发或 MCP 测试时，先从这里判断该进入哪个专题 skill。本页讲清三层热加载体系、YAK_MAIN 调试约定、go run 测试方法，并把请求路由到 mitm-hotpatch / webfuzzer-hotpatch / global-hotpatch / yaklang-syntax / yaklang-database / yakit-rightclick-plugin / yaklang-toolchain / yakit-data-extract-plugin。",
       "exampleCount": 0,
       "extraDocs": [],
       "extraLines": 0,
@@ -508,10 +805,10 @@
       "name": "yak",
       "path": "skills/yak/SKILL.md",
       "rawUrl": "https://raw.githubusercontent.com/yaklang/yak-skills/main/skills/yak/SKILL.md",
-      "skillLines": 94,
-      "skillSize": 5190,
+      "skillLines": 99,
+      "skillSize": 6138,
       "tier": "master",
-      "totalLines": 94
+      "totalLines": 99
     },
     {
       "blobUrl": "https://github.com/yaklang/yak-skills/blob/main/skills/yakit-data-extract-plugin/SKILL.md",
@@ -522,16 +819,16 @@
         {
           "kind": "example",
           "lines": 106,
-          "name": "example-collect-domain-urls.yak",
-          "path": "skills/yakit-data-extract-plugin/example-collect-domain-urls.yak",
-          "size": 3999
+          "name": "collect-domain-urls.yak",
+          "path": "skills/yakit-data-extract-plugin/examples/collect-domain-urls.yak",
+          "size": 4162
         },
         {
           "kind": "example",
           "lines": 126,
-          "name": "example-path-scan-with-payload.yak",
-          "path": "skills/yakit-data-extract-plugin/example-path-scan-with-payload.yak",
-          "size": 4438
+          "name": "path-scan-with-payload.yak",
+          "path": "skills/yakit-data-extract-plugin/examples/path-scan-with-payload.yak",
+          "size": 4593
         }
       ],
       "extraLines": 232,
@@ -540,9 +837,54 @@
       "path": "skills/yakit-data-extract-plugin/SKILL.md",
       "rawUrl": "https://raw.githubusercontent.com/yaklang/yak-skills/main/skills/yakit-data-extract-plugin/SKILL.md",
       "skillLines": 98,
-      "skillSize": 4743,
+      "skillSize": 4747,
       "tier": "deep",
       "totalLines": 330
+    },
+    {
+      "blobUrl": "https://github.com/yaklang/yak-skills/blob/main/skills/yakit-rightclick-plugin/SKILL.md",
+      "category": "tooling",
+      "description": "Yakit 右键插件 (codec 插件) 的使用与编程技巧。讲清 codec 插件只需要一个 handle(input) 函数, 配合插件类型 codec + 开关\"用于数据包右键\" (tag: allow-custom-context-menu-execute) 即可出现在 任意 HTTP 编辑器的右键菜单里; 还讲 Web Fuzzer 编辑器的两层右键 (Monaco 原生菜单 + 选区浮动菜单) 如何选中文本一键编码/解码/调用插件, 以及如何用 yak codec-plugin 命令验证。当用户问\"怎么写右键 插件 / codec 插件怎么用 / Web Fuzzer 右键怎么操作\"时使用。右键插件是编写小工具最快的方式。",
+      "exampleCount": 4,
+      "extraDocs": [
+        {
+          "kind": "example",
+          "lines": 37,
+          "name": "codec-base64-wrap.yak",
+          "path": "skills/yakit-rightclick-plugin/examples/codec-base64-wrap.yak",
+          "size": 1367
+        },
+        {
+          "kind": "example",
+          "lines": 59,
+          "name": "codec-jwt-decode.yak",
+          "path": "skills/yakit-rightclick-plugin/examples/codec-jwt-decode.yak",
+          "size": 2010
+        },
+        {
+          "kind": "example",
+          "lines": 59,
+          "name": "codec-timestamp-to-date.yak",
+          "path": "skills/yakit-rightclick-plugin/examples/codec-timestamp-to-date.yak",
+          "size": 1680
+        },
+        {
+          "kind": "example",
+          "lines": 36,
+          "name": "codec-unicode-unescape.yak",
+          "path": "skills/yakit-rightclick-plugin/examples/codec-unicode-unescape.yak",
+          "size": 1084
+        }
+      ],
+      "extraLines": 191,
+      "id": "yakit-rightclick-plugin",
+      "name": "yakit-rightclick-plugin",
+      "path": "skills/yakit-rightclick-plugin/SKILL.md",
+      "rawUrl": "https://raw.githubusercontent.com/yaklang/yak-skills/main/skills/yakit-rightclick-plugin/SKILL.md",
+      "skillLines": 145,
+      "skillSize": 7563,
+      "tier": "deep",
+      "totalLines": 336
     },
     {
       "blobUrl": "https://github.com/yaklang/yak-skills/blob/main/skills/yaklang-database/SKILL.md",
@@ -552,28 +894,28 @@
       "extraDocs": [
         {
           "kind": "example",
-          "lines": 66,
-          "name": "example-kv-and-payload.yak",
-          "path": "skills/yaklang-database/example-kv-and-payload.yak",
-          "size": 2180
+          "lines": 69,
+          "name": "kv-and-payload.yak",
+          "path": "skills/yaklang-database/examples/kv-and-payload.yak",
+          "size": 2297
         },
         {
           "kind": "example",
           "lines": 67,
-          "name": "example-sqlite-crud.yak",
-          "path": "skills/yaklang-database/example-sqlite-crud.yak",
+          "name": "sqlite-crud.yak",
+          "path": "skills/yaklang-database/examples/sqlite-crud.yak",
           "size": 2645
         }
       ],
-      "extraLines": 133,
+      "extraLines": 136,
       "id": "yaklang-database",
       "name": "yaklang-database",
       "path": "skills/yaklang-database/SKILL.md",
       "rawUrl": "https://raw.githubusercontent.com/yaklang/yak-skills/main/skills/yaklang-database/SKILL.md",
       "skillLines": 105,
-      "skillSize": 4883,
+      "skillSize": 4889,
       "tier": "deep",
-      "totalLines": 238
+      "totalLines": 241
     },
     {
       "blobUrl": "https://github.com/yaklang/yak-skills/blob/main/skills/yaklang-syntax/SKILL.md",
@@ -583,28 +925,28 @@
       "extraDocs": [
         {
           "kind": "example",
-          "lines": 77,
-          "name": "example-error-handling.yak",
-          "path": "skills/yaklang-syntax/example-error-handling.yak",
-          "size": 2821
+          "lines": 80,
+          "name": "error-handling.yak",
+          "path": "skills/yaklang-syntax/examples/error-handling.yak",
+          "size": 2938
         },
         {
           "kind": "example",
-          "lines": 139,
-          "name": "example-syntax-tour.yak",
-          "path": "skills/yaklang-syntax/example-syntax-tour.yak",
-          "size": 3841
+          "lines": 142,
+          "name": "syntax-tour.yak",
+          "path": "skills/yaklang-syntax/examples/syntax-tour.yak",
+          "size": 3958
         }
       ],
-      "extraLines": 216,
+      "extraLines": 222,
       "id": "yaklang-syntax",
       "name": "yaklang-syntax",
       "path": "skills/yaklang-syntax/SKILL.md",
       "rawUrl": "https://raw.githubusercontent.com/yaklang/yak-skills/main/skills/yaklang-syntax/SKILL.md",
       "skillLines": 151,
-      "skillSize": 5403,
+      "skillSize": 5411,
       "tier": "deep",
-      "totalLines": 367
+      "totalLines": 373
     },
     {
       "blobUrl": "https://github.com/yaklang/yak-skills/blob/main/skills/yaklang-toolchain/SKILL.md",
@@ -615,9 +957,9 @@
         {
           "kind": "example",
           "lines": 49,
-          "name": "example-codec-rot13.yak",
-          "path": "skills/yaklang-toolchain/example-codec-rot13.yak",
-          "size": 1552
+          "name": "codec-rot13.yak",
+          "path": "skills/yaklang-toolchain/examples/codec-rot13.yak",
+          "size": 1544
         }
       ],
       "extraLines": 49,
@@ -625,21 +967,21 @@
       "name": "yaklang-toolchain",
       "path": "skills/yaklang-toolchain/SKILL.md",
       "rawUrl": "https://raw.githubusercontent.com/yaklang/yak-skills/main/skills/yaklang-toolchain/SKILL.md",
-      "skillLines": 141,
-      "skillSize": 6607,
+      "skillLines": 143,
+      "skillSize": 6804,
       "tier": "deep",
-      "totalLines": 190
+      "totalLines": 192
     }
   ],
   "tierCounts": {
     "category": 0,
-    "deep": 7,
+    "deep": 8,
     "master": 1
   },
   "totalCategories": 5,
-  "totalExamples": 22,
-  "totalLines": 2709,
-  "totalSize": 47270,
-  "totalSkills": 8,
+  "totalExamples": 44,
+  "totalLines": 4035,
+  "totalSize": 60103,
+  "totalSkills": 9,
   "version": "dev"
 }

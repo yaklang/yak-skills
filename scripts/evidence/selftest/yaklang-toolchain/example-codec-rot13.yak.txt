@@ -1,4 +1,0 @@
-[36m[INFO][0m 2026-06-16 23:11:45 [sqlite_large_db_tune:109] sqlite tuned for large project db (385.4M): cache=32M mmap=64M wal_autocheckpoint=8000
-[36m[INFO][0m 2026-06-16 23:11:45 [example-codec-rot13:47] start codec rot13 self test
-[36m[INFO][0m 2026-06-16 23:11:45 [example-codec-rot13:47] encoded: Uryyb, Lnx-Fxvyyf 123!
-[36m[INFO][0m 2026-06-16 23:11:45 [example-codec-rot13:47] codec rot13 self test passed

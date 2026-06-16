@@ -1,4 +1,0 @@
-[36m[INFO][0m 2026-06-16 23:11:38 [sqlite_large_db_tune:109] sqlite tuned for large project db (385.4M): cache=32M mmap=64M wal_autocheckpoint=8000
-[36m[INFO][0m 2026-06-16 23:11:38 [example-hijack-request-modify-json:74] start hijack request modify json self test
-[36m[INFO][0m 2026-06-16 23:11:38 [example-hijack-request-modify-json:74] forwarded body: {"amount":-1,"product_id":42}
-[36m[INFO][0m 2026-06-16 23:11:38 [example-hijack-request-modify-json:74] hijack request modify json self test passed

@@ -106,10 +106,10 @@ if YAK_MAIN {
 
 ```bash
 printf 'POST /api/order/create HTTP/1.1\r\nHost: shop.example.com\r\nContent-Type: application/json\r\n\r\n{"amount":100}' > /tmp/req.txt
-yak hotpatch-mitm --script skills/mitm-hotpatch/example-hijack-request-modify-json.yak --request /tmp/req.txt
+yak hotpatch-mitm --script skills/mitm-hotpatch/examples/hijack-request.yak --request /tmp/req.txt
 # 输出会打印原始请求 / 改写后请求 / drop 状态 / 入库 tag 作为证据
 
-yak codec-plugin --script skills/yaklang-toolchain/example-codec-rot13.yak --input "Hello, Yak!"
+yak codec-plugin --script skills/yaklang-toolchain/examples/codec-rot13.yak --input "Hello, Yak!"
 # -> output (len=11): Uryyb, Lnx!
 ```
 
@@ -121,10 +121,10 @@ yak codec-plugin --script skills/yaklang-toolchain/example-codec-rot13.yak --inp
 ```bash
 # 用 yaklang 源码引擎 (推荐, 拿到最新能力)
 cd /path/to/yaklang
-go run common/yak/cmd/yak.go /path/to/yak-skills/skills/mitm-hotpatch/example-hijack-request-modify-json.yak
+go run common/yak/cmd/yak.go /path/to/yak-skills/skills/mitm-hotpatch/examples/hijack-request.yak
 
 # 或用已安装引擎
-yak skills/mitm-hotpatch/example-hijack-request-modify-json.yak
+yak skills/mitm-hotpatch/examples/hijack-request.yak
 ```
 
 合格标准：10 秒内完成、所有 `assert` 通过、`log` 全英文、末尾出现 `... self test passed`。

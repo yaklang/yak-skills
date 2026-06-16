@@ -1,4 +1,0 @@
-mitm proxy: http://127.0.0.1:51901
-target: 127.0.0.1:51900
-upstream received body: {"amount":-1,"product_id":42}
-upstream response: upstream-ok

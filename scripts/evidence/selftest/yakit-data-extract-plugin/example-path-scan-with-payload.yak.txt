@@ -1,8 +1,0 @@
-[36m[INFO][0m 2026-06-16 23:11:43 [sqlite_large_db_tune:109] sqlite tuned for large project db (385.4M): cache=32M mmap=64M wal_autocheckpoint=8000
-[36m[INFO][0m 2026-06-16 23:11:43 [example-path-scan-with-payload:125] start path-scan-with-payload self test
-[36m[INFO][0m 2026-06-16 23:11:43 [example-path-scan-with-payload:125] deduped paths: [/admin /api/users /login /not-exist]
-[36m[INFO][0m 2026-06-16 23:11:43 [example-path-scan-with-payload:125] scan /admin -> code=200
-[36m[INFO][0m 2026-06-16 23:11:43 [example-path-scan-with-payload:125] scan /api/users -> code=200
-[36m[INFO][0m 2026-06-16 23:11:43 [example-path-scan-with-payload:125] scan /login -> code=200
-[36m[INFO][0m 2026-06-16 23:11:43 [example-path-scan-with-payload:125] scan /not-exist -> code=404
-[36m[INFO][0m 2026-06-16 23:11:43 [example-path-scan-with-payload:125] path-scan-with-payload self test passed

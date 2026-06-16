@@ -5,7 +5,7 @@
 
 /* -------------------------------------------------------------------------
    Theme tokens (light is default; dark via [data-theme="dark"])
-   设计取向: Vercel/Linear/shadcn 风格 - 灰阶 + 单色 accent (emerald)
+   设计取向: Vercel/Linear/shadcn 风格 - 灰阶 + 单色 accent (yaklang orange #ff7d23)
    ------------------------------------------------------------------------- */
 :root,
 [data-theme="light"] {
@@ -20,11 +20,11 @@
   --fg-4:      #a1a1aa;
   --border:    #e4e4e7;
   --border-2:  #d4d4d8;
-  --accent:        #059669;
-  --accent-soft:   #d1fae5;
-  --accent-hover:  #047857;
+  --accent:        #ff7d23;
+  --accent-soft:   #ffe6d2;
+  --accent-hover:  #f36f13;
   --accent-fg:     #ffffff;
-  --accent-text:   #047857;
+  --accent-text:   #d9610f;
   --warn:      #b45309;
   --danger:    #dc2626;
   --code-bg:   #f4f4f5;
@@ -33,7 +33,7 @@
   --shadow-2:  0 4px 12px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
   --shadow-pop:0 12px 32px rgba(0,0,0,0.10), 0 2px 6px rgba(0,0,0,0.05);
   --grid-dot:  rgba(0,0,0,0.07);
-  --selection: rgba(5, 150, 105, 0.18);
+  --selection: rgba(255, 125, 35, 0.18);
   color-scheme: light;
 }
 
@@ -49,11 +49,11 @@
   --fg-4:      #52525b;
   --border:    #27272a;
   --border-2:  #3f3f46;
-  --accent:        #10b981;
-  --accent-soft:   rgba(16, 185, 129, 0.12);
-  --accent-hover:  #34d399;
-  --accent-fg:     #052e26;
-  --accent-text:   #34d399;
+  --accent:        #ff8a3d;
+  --accent-soft:   rgba(255, 125, 35, 0.14);
+  --accent-hover:  #ffa05c;
+  --accent-fg:     #2b1402;
+  --accent-text:   #ff9d52;
   --warn:      #f59e0b;
   --danger:    #ef4444;
   --code-bg:   #161618;
@@ -62,7 +62,7 @@
   --shadow-2:  0 4px 16px rgba(0,0,0,0.5), 0 1px 2px rgba(0,0,0,0.3);
   --shadow-pop:0 16px 48px rgba(0,0,0,0.65), 0 2px 8px rgba(0,0,0,0.4);
   --grid-dot:  rgba(255,255,255,0.05);
-  --selection: rgba(16, 185, 129, 0.30);
+  --selection: rgba(255, 138, 61, 0.30);
   color-scheme: dark;
 }
 

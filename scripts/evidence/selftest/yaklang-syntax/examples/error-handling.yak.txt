@@ -1,0 +1,8 @@
+[36m[INFO][0m 2026-06-16 23:46:09 [sqlite_large_db_tune:109] sqlite tuned for large project db (298.9M): cache=32M mmap=64M wal_autocheckpoint=8000
+[36m[INFO][0m 2026-06-16 23:46:09 [error-handling:78] start yaklang error handling demo
+[36m[INFO][0m 2026-06-16 23:46:09 [error-handling:78] got expected error on invalid base64, degrade gracefully
+[36m[INFO][0m 2026-06-16 23:46:09 [error-handling:78] manual check ok
+[36m[INFO][0m 2026-06-16 23:46:09 [error-handling:78] wavy call ok
+[36m[INFO][0m 2026-06-16 23:46:09 [error-handling:78] caught panic: runtime error: integer divide by zero
+[36m[INFO][0m 2026-06-16 23:46:09 [error-handling:78] recover ok
+[36m[INFO][0m 2026-06-16 23:46:09 [error-handling:78] yaklang error handling self test passed

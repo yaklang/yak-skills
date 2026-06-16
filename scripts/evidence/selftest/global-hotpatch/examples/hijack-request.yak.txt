@@ -1,0 +1,4 @@
+[36m[INFO][0m 2026-06-16 23:45:56 [sqlite_large_db_tune:109] sqlite tuned for large project db (298.9M): cache=32M mmap=64M wal_autocheckpoint=8000
+[36m[INFO][0m 2026-06-16 23:45:56 [hijack-request:38] start global hijack request mark self test
+[36m[INFO][0m 2026-06-16 23:45:56 [hijack-request:38] global marker injected on request
+[36m[INFO][0m 2026-06-16 23:45:56 [hijack-request:38] global hijack request mark self test passed

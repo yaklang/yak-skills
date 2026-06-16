@@ -6,7 +6,7 @@ description: >-
 
 # SKILL: Yakit 全局热加载 (Global Hot Patch)
 
-> AI LOAD INSTRUCTION: 这是三层热加载体系中的"全局层"。全局热加载是 MITM 与 Web Fuzzer 共享的全系统级 hook，执行顺序为 `全局 HotPatch -> 模块 HotPatch`，同时只能启用 1 个。它最适合做"协议归一化"——一处定义全站加解密/签名/染色，MITM 和所有 Fuzzer Tab 自动生效。先读全局 vs 模块对比，再看 `example-*.yak`。
+> AI LOAD INSTRUCTION: 这是三层热加载体系中的"全局层"。全局热加载是 MITM 与 Web Fuzzer 共享的全系统级 hook，执行顺序为 `全局 HotPatch -> 模块 HotPatch`，同时只能启用 1 个。它最适合做"协议归一化"——一处定义全站加解密/签名/染色，MITM 和所有 Fuzzer Tab 自动生效。先读全局 vs 模块对比，再看 `examples/` 下按 Hook 命名的示例。
 
 ## 0. 相关路由
 
@@ -31,28 +31,41 @@ flowchart TB
     M --> Done["出站 / 回显 / 入库"]
 ```
 
-## 2. 可用 Hook
+## 2. 可用 Hook（与 MITM 同一套，全局先执行）
 
-全局热加载复用与 MITM/Fuzzer 相同名字的 hook（按需定义）：
+全局热加载与 MITM 共用**同一套 `MixPluginCaller` 执行管线和 Hook 集合**（后端 `mitm_global_hotpatch_pipeline.go`：每个 hook 点先 `globalCaller` 再 `moduleCaller`）。因此 [mitm-hotpatch](../mitm-hotpatch/SKILL.md) 的 12 个 Hook 在全局层**全部可用、签名完全相同**，区别只在：全局先于模块执行、跨 MITM+Fuzzer 生效。
 
-- `beforeRequest(isHttps, originReq, req) -> req`：全站请求出站前改写（加密/签名/补头）。
-- `afterRequest(isHttps, originReq, req, originRsp, rsp) -> rsp`：全站响应回显前改写（解密）。
-- `hijackHTTPRequest(isHttps, url, req, forward, drop)`：全站请求劫持。
-- `hijackSaveHTTPFlow(flow, modify, drop)`：全站入库改写（染色/脱敏/存明文）。
-- `mockHTTPRequest(isHttps, url, req, mockResponse)`：全站危险操作护栏。
+yakit 默认全局模板就用 `hijackHTTPRequest` + `beforeRequest` + `hijackSaveHTTPFlow` 给全站盖 `X-Yakit-Global-HotPatch` 标记。
 
-## 3. 实战场景
+## 3. 全部 Hook 示例索引（examples/，一个函数一个示例）
 
-| 场景 | Hook 组合 | 示例 |
+表中**每一个 Hook 都有独立的全局风格示例 + YAK_MAIN 自测**，另含 2 个真实文章复现的多 Hook 进阶示例。
+
+| Hook | 全局示例场景 | 文件 |
 |---|---|---|
-| 全站 SM4-CBC 透明加解密 + 入库存明文 | `beforeRequest` + `afterRequest` + `hijackSaveHTTPFlow` | [example-global-sm4-transparent.yak](example-global-sm4-transparent.yak) |
-| 动态 Challenge + HMAC 签名注入 + 响应解密 | `beforeRequest` + `afterRequest` + `hijackSaveHTTPFlow` | [example-global-challenge-sign.yak](example-global-challenge-sign.yak) |
-| 默认 Authorization Bearer 自动注入 | `beforeRequest` | [example-global-auto-bearer.yak](example-global-auto-bearer.yak) |
-| 全站按状态码染色 + 打标签 | `hijackSaveHTTPFlow` | [example-global-flow-coloring.yak](example-global-flow-coloring.yak) |
+| `hijackHTTPRequest` | 给所有出站请求盖全局标记 | [examples/hijack-request.yak](examples/hijack-request.yak) |
+| `hijackHTTPResponse` | 给所有响应盖全局标记 | [examples/hijack-response.yak](examples/hijack-response.yak) |
+| `hijackHTTPResponseEx` | 凭请求上下文有条件改写响应 | [examples/hijack-response-ex.yak](examples/hijack-response-ex.yak) |
+| `beforeRequest` | 默认 Authorization Bearer 自动注入 | [examples/before-request.yak](examples/before-request.yak) |
+| `afterRequest` | 全站统一响应审计标记 | [examples/after-request.yak](examples/after-request.yak) |
+| `mirrorHTTPFlow` | 全站流量审计计数 | [examples/mirror-http-flow.yak](examples/mirror-http-flow.yak) |
+| `mirrorFilteredHTTPFlow` | 全站过滤后流量聚焦审计 | [examples/mirror-filtered-http-flow.yak](examples/mirror-filtered-http-flow.yak) |
+| `mirrorNewWebsite` | 全站资产清单 | [examples/mirror-new-website.yak](examples/mirror-new-website.yak) |
+| `mirrorNewWebsitePath` | 全站路径清单 | [examples/mirror-new-website-path.yak](examples/mirror-new-website-path.yak) |
+| `mirrorNewWebsitePathParams` | 全站可 Fuzz 端点清单 | [examples/mirror-new-website-path-params.yak](examples/mirror-new-website-path-params.yak) |
+| `hijackSaveHTTPFlow` | 全站按状态码染色 + 打标签 | [examples/hijack-save-http-flow.yak](examples/hijack-save-http-flow.yak) |
+| `mockHTTPRequest` | 全局 kill-switch 拦截黑名单域名 | [examples/mock-http-request.yak](examples/mock-http-request.yak) |
+
+进阶（真实文章复现，多 Hook 组合）：
+
+| 场景 | Hook 组合 | 文件 |
+|---|---|---|
+| 全站 SM4-CBC 透明加解密 + 入库存明文 | `beforeRequest` + `afterRequest` + `hijackSaveHTTPFlow` | [examples/advanced-sm4-transparent.yak](examples/advanced-sm4-transparent.yak) |
+| 动态 Challenge + HMAC 签名注入 + 响应解密 | `beforeRequest` + `afterRequest` + `hijackSaveHTTPFlow` | [examples/advanced-challenge-sign.yak](examples/advanced-challenge-sign.yak) |
 
 ### 重点：文章 009 的动态 challenge 链路
 
-`example-global-challenge-sign.yak` 完整还原了公众号 009 的场景，自测用文章里给出的**真实抓包数据**离线断言：
+`examples/advanced-challenge-sign.yak` 完整还原了公众号 009 的场景，自测用文章里给出的**真实抓包数据**离线断言：
 
 1. `beforeRequest`：命中 `/api/user/info` 时，主动 `GET /api/get-challenge`，解密拿 nonce，HMAC 算签名，写入 `X-Auth-Signature`。
 2. `afterRequest`：请求带 `X-Yak-Force-Plaintext: 1` 时把响应 AES-CBC 解成明文（避免无条件改写破坏浏览器前端解密）。
@@ -86,7 +99,13 @@ sequenceDiagram
 
 ```bash
 cd /Users/v1ll4n/Projects/yaklang
-go run common/yak/cmd/yak.go skills/global-hotpatch/example-global-challenge-sign.yak
+go run common/yak/cmd/yak.go skills/global-hotpatch/examples/advanced-challenge-sign.yak
+
+# 与 Yakit gRPC 同款执行路径 (全局管线顺序: beforeRequest -> hijack -> afterRequest):
+go build -o /tmp/yak ./common/yak/cmd/yak.go
+printf 'GET / HTTP/1.1\r\nHost: t.example.com\r\n\r\n' > /tmp/req.txt
+printf 'HTTP/1.1 500 Internal Server Error\r\nContent-Length: 4\r\n\r\nboom' > /tmp/rsp.txt
+/tmp/yak hotpatch-global --script skills/global-hotpatch/examples/hijack-save-http-flow.yak --request /tmp/req.txt --response /tmp/rsp.txt
 ```
 
 每个示例应：10 秒内完成、assert 全过、log 全英文、出现 `... self test passed`。

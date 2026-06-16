@@ -271,43 +271,52 @@ func countLines(text) {
     return len(str.Split(text, "\n"))
 }
 
-// 收集每个 skill 目录下的所有 .md / .yak 附件 (SKILL.md 除外)
-// 关键词: extra docs collection, .md and .yak aggregation, runnable examples
+// 收集 skill 目录下所有 .md / .yak 附件 (SKILL.md 除外), 递归进入 examples/ 等子目录
+// 关键词: extra docs collection, .md and .yak aggregation, runnable examples, recursive walk
 func collectExtraDocs(skill_dir, project_root_p) {
     docs = []
-    entries = file.Ls(skill_dir)
-    if entries == nil {
-        return docs
+    // 递归遍历: 顶层 + 一层及以上子目录 (examples/ 等)
+    var walk
+    walk = func(dir) {
+        entries = file.Ls(dir)
+        if entries == nil {
+            return
+        }
+        for e in entries {
+            n = e.Name
+            full = file.Join(dir, n)
+            if e.IsDir {
+                if str.HasPrefix(n, ".") {
+                    continue
+                }
+                walk(full)
+                continue
+            }
+            is_md = str.HasSuffix(n, ".md")
+            is_yak = str.HasSuffix(n, ".yak")
+            if !is_md && !is_yak {
+                continue
+            }
+            if n == "SKILL.md" {
+                continue
+            }
+            body = file.ReadFile(full)~
+            rel_p = str.TrimPrefix(full, project_root_p + "/")
+            rel_p = str.ReplaceAll(rel_p, "\\", "/")
+            kind = "doc"
+            if is_yak {
+                kind = "example"
+            }
+            docs = append(docs, {
+                "name": n,
+                "kind": kind,
+                "lines": countLines(string(body)),
+                "size": len(body),
+                "path": rel_p,
+            })
+        }
     }
-    for e in entries {
-        if e.IsDir {
-            continue
-        }
-        n = e.Name
-        is_md = str.HasSuffix(n, ".md")
-        is_yak = str.HasSuffix(n, ".yak")
-        if !is_md && !is_yak {
-            continue
-        }
-        if n == "SKILL.md" {
-            continue
-        }
-        full = file.Join(skill_dir, n)
-        body = file.ReadFile(full)~
-        rel_p = str.TrimPrefix(full, project_root_p + "/")
-        rel_p = str.ReplaceAll(rel_p, "\\", "/")
-        kind = "doc"
-        if is_yak {
-            kind = "example"
-        }
-        docs = append(docs, {
-            "name": n,
-            "kind": kind,
-            "lines": countLines(string(body)),
-            "size": len(body),
-            "path": rel_p,
-        })
-    }
+    walk(skill_dir)
     return docs
 }
 

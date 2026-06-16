@@ -62,7 +62,7 @@ collectFromHistory = func(domain) {
 
 去重 key 用“去掉 scheme 与 query 后的 host+path”，避免 `?page=1` / `?page=2` 被当成两条。
 
-完整示例：[example-collect-domain-urls.yak](example-collect-domain-urls.yak)
+完整示例：[examples/collect-domain-urls.yak](examples/collect-domain-urls.yak)
 
 ## 3. 去重路径接 Payload 字典 + 带登录态发包扫描
 
@@ -78,7 +78,7 @@ for path in db.YieldPayload(group) {             // 迭代字典逐条扫描
 }
 ```
 
-完整示例：[example-path-scan-with-payload.yak](example-path-scan-with-payload.yak)
+完整示例：[examples/path-scan-with-payload.yak](examples/path-scan-with-payload.yak)
 （自测会在本地随机端口起真实靶站，真正发出 HTTP 请求并校验状态码与 Cookie 透传）
 
 ## 4. 坑（先核实再写）

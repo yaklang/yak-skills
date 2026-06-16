@@ -1,4 +1,0 @@
-[36m[INFO][0m 2026-06-16 23:11:37 [sqlite_large_db_tune:109] sqlite tuned for large project db (385.4M): cache=32M mmap=64M wal_autocheckpoint=8000
-[36m[INFO][0m 2026-06-16 23:11:37 [example-global-sm4-transparent:91] start global sm4 transparent self test
-[36m[INFO][0m 2026-06-16 23:11:37 [example-global-sm4-transparent:91] saved-to-db body: {"code":0,"token":"abc123"}
-[36m[INFO][0m 2026-06-16 23:11:37 [example-global-sm4-transparent:91] global sm4 transparent self test passed

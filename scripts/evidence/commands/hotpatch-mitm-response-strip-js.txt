@@ -1,6 +1,6 @@
-"/tmp/yak-hotpatch" hotpatch-mitm --script "/Users/v1ll4n/Projects/yak-skills/skills/mitm-hotpatch/example-hijack-response-strip-js.yak" --request "/Users/v1ll4n/Projects/yak-skills/scripts/fixtures/req-panel.txt" --response "/Users/v1ll4n/Projects/yak-skills/scripts/fixtures/rsp-js.txt"
+"/tmp/yak-hotpatch" hotpatch-mitm --script "/Users/v1ll4n/Projects/yak-skills/skills/mitm-hotpatch/examples/hijack-response-ex.yak" --request "/Users/v1ll4n/Projects/yak-skills/scripts/fixtures/req-panel.txt" --response "/Users/v1ll4n/Projects/yak-skills/scripts/fixtures/rsp-js.txt"
 
-[36m[INFO][0m 2026-06-16 23:11:45 [sqlite_large_db_tune:109] sqlite tuned for large project db (385.4M): cache=32M mmap=64M wal_autocheckpoint=8000
+[36m[INFO][0m 2026-06-16 23:46:10 [sqlite_large_db_tune:109] sqlite tuned for large project db (298.9M): cache=32M mmap=64M wal_autocheckpoint=8000
 ########## MITM hot-patch validation ##########
 url: http://admin.example.com/panel
 dropped: false (stage: )

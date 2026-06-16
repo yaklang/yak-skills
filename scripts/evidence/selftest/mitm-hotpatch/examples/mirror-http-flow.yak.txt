@@ -1,0 +1,6 @@
+[36m[INFO][0m 2026-06-16 23:46:01 [sqlite_large_db_tune:109] sqlite tuned for large project db (298.9M): cache=32M mmap=64M wal_autocheckpoint=8000
+[36m[INFO][0m 2026-06-16 23:46:02 [mirror-http-flow:60] start mirror http flow passive scan self test
+[35m[WARN][0m 2026-06-16 23:46:02 [mirror-http-flow:60] passive leak found: aws-akid @ http://target.local/config
+[35m[WARN][0m 2026-06-16 23:46:02 [mirror-http-flow:60] passive leak found: jwt @ http://target.local/config
+[36m[INFO][0m 2026-06-16 23:46:02 [mirror-http-flow:60] findings: [map[type:aws-akid url:http://target.local/config] map[type:jwt url:http://target.local/config]]
+[36m[INFO][0m 2026-06-16 23:46:02 [mirror-http-flow:60] mirror http flow passive scan self test passed
