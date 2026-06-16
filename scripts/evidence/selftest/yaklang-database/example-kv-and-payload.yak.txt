@@ -1,0 +1,8 @@
+[36m[INFO][0m 2026-06-16 23:11:43 [sqlite_large_db_tune:109] sqlite tuned for large project db (385.4M): cache=32M mmap=64M wal_autocheckpoint=8000
+[36m[INFO][0m 2026-06-16 23:11:43 [example-kv-and-payload:65] start db kv and payload demo
+[36m[INFO][0m 2026-06-16 23:11:43 [example-kv-and-payload:65] test key-value storage
+[36m[INFO][0m 2026-06-16 23:11:43 [example-kv-and-payload:65] key-value ok
+[36m[INFO][0m 2026-06-16 23:11:43 [example-kv-and-payload:65] test payload management
+[36m[INFO][0m 2026-06-16 23:11:43 [example-kv-and-payload:65] yielded 4 payloads from group yak-skills-demo-users
+[36m[INFO][0m 2026-06-16 23:11:43 [example-kv-and-payload:65] payload ok
+[36m[INFO][0m 2026-06-16 23:11:43 [example-kv-and-payload:65] db kv and payload self test passed

@@ -1,0 +1,4 @@
+[36m[INFO][0m 2026-06-16 23:11:41 [sqlite_large_db_tune:109] sqlite tuned for large project db (385.4M): cache=32M mmap=64M wal_autocheckpoint=8000
+[36m[INFO][0m 2026-06-16 23:11:41 [example-sign-hmac-before-request:63] start sign hmac before request self test
+[36m[INFO][0m 2026-06-16 23:11:41 [example-sign-hmac-before-request:63] ts=1781622701 nonce=e9d71337c73a6a5d sign=43e2f108adb4e4493488a39ee10fd015a2a83c4f2bd3bff935f58237b1c1aa43
+[36m[INFO][0m 2026-06-16 23:11:41 [example-sign-hmac-before-request:63] sign hmac before request self test passed

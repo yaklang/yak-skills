@@ -1,0 +1,9 @@
+[36m[INFO][0m 2026-06-16 23:11:44 [sqlite_large_db_tune:109] sqlite tuned for large project db (385.4M): cache=32M mmap=64M wal_autocheckpoint=8000
+[36m[INFO][0m 2026-06-16 23:11:44 [example-syntax-tour:138] start yaklang syntax tour
+[36m[INFO][0m 2026-06-16 23:11:44 [example-syntax-tour:138] vars and types ok
+[36m[INFO][0m 2026-06-16 23:11:44 [example-syntax-tour:138] slices ok
+[36m[INFO][0m 2026-06-16 23:11:44 [example-syntax-tour:138] maps ok
+[36m[INFO][0m 2026-06-16 23:11:44 [example-syntax-tour:138] control flow ok
+[36m[INFO][0m 2026-06-16 23:11:44 [example-syntax-tour:138] functions ok
+[36m[INFO][0m 2026-06-16 23:11:44 [example-syntax-tour:138] strings ok
+[36m[INFO][0m 2026-06-16 23:11:44 [example-syntax-tour:138] yaklang syntax tour self test passed

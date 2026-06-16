@@ -1,0 +1,4 @@
+[36m[INFO][0m 2026-06-16 23:11:39 [sqlite_large_db_tune:109] sqlite tuned for large project db (385.4M): cache=32M mmap=64M wal_autocheckpoint=8000
+[36m[INFO][0m 2026-06-16 23:11:39 [example-save-flow-tag-color:83] start save flow tag color self test
+[36m[INFO][0m 2026-06-16 23:11:39 [example-save-flow-tag-color:83] hit tags: [credential credential pii admin-related], colors: [Red Red Orange Purple]
+[36m[INFO][0m 2026-06-16 23:11:39 [example-save-flow-tag-color:83] save flow tag color self test passed

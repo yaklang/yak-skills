@@ -1,0 +1,98 @@
+// =============================================================================
+// yak-skills 真实 MITM 链路演示 (补充深度证据)
+// 功能:
+//   用 mitm 模块起一个真实代理 + 本地真实靶站, 加载一个代表性 MITM 热加载逻辑
+//   (改写 JSON body 的 amount 字段), 经代理发真实流量, 校验"改写后的包确实到达上游靶站"。
+// 与 hotpatch-mitm 命令互补: 命令验证 hook 逻辑, 本脚本验证端到端真实链路。
+// 用法:
+//   cd yak-skills
+//   yak scripts/mitm-live-demo.yak
+// 关键词: mitm.Start, mitm.hijackHTTPRequest, poc.proxy, 真实代理链路, evidence
+// =============================================================================
+
+project_root = os.Getwd()~
+evidence_dir = file.Join(project_root, "scripts", "evidence", "live")
+file.MkdirAll(evidence_dir)
+
+targetPort = os.GetRandomAvailableTCPPort()
+mitmPort = os.GetRandomAvailableTCPPort()
+mitmProxy = sprintf("http://127.0.0.1:%d", mitmPort)
+targetHostPort = sprintf("127.0.0.1:%d", targetPort)
+
+log.info("target: %s, mitm proxy: %s", targetHostPort, mitmProxy)
+
+// 上游靶站: 记录它真正收到的请求 body, 用于证明改写包确实出站
+lock = sync.NewLock()
+received = {"body": ""}
+go func() {
+    err = httpserver.Serve("127.0.0.1", targetPort, httpserver.handler(func(w, r) {
+        body = io.ReadAll(r.Body)~
+        lock.Lock()
+        received["body"] = string(body)
+        lock.Unlock()
+        w.WriteHeader(200)
+        w.Write([]byte("upstream-ok"))
+    }))
+    if err != nil {
+        log.error("target server exit: %v", err)
+    }
+}()
+
+// 启动真实 MITM 代理, 加载"改写 JSON amount 字段"的热加载逻辑
+go func() {
+    err = mitm.Start(mitmPort,
+        mitm.host("127.0.0.1"),
+        mitm.hijackHTTPRequest(func(isHttps, urlStr, req, forward, drop) {
+            if !str.Contains(urlStr, "/api/order/create") {
+                forward(req)
+                return
+            }
+            body = poc.GetHTTPPacketBody(req)
+            params = json.loads(string(body))
+            if params != nil && ("amount" in params) {
+                params["amount"] = -1
+                forward(poc.ReplaceHTTPPacketBody(req, json.dumps(params, json.withIndent(""))))
+                return
+            }
+            forward(req)
+        }),
+    )
+    if err != nil {
+        log.error("mitm start exit: %v", err)
+    }
+}()
+
+// 等待靶站与代理就绪 (通过代理发探测请求)
+probe = sprintf("GET /healthz HTTP/1.1\r\nHost: %s\r\nConnection: close\r\n\r\n", targetHostPort)
+ready = false
+for i = 0; i < 50; i++ {
+    rsp, _, err = poc.HTTP(probe, poc.proxy(mitmProxy), poc.timeout(2), poc.save(false))
+    if err == nil && len(rsp) > 0 {
+        ready = true
+        break
+    }
+    sleep(0.2)
+}
+assert ready, "mitm proxy + target should be ready"
+log.info("link is ready")
+
+// 经代理发真实业务请求
+raw = sprintf("POST /api/order/create HTTP/1.1\r\nHost: %s\r\nContent-Type: application/json\r\nConnection: close\r\n\r\n{\"amount\":100,\"product_id\":42}", targetHostPort)
+rsp, _ = poc.HTTP(raw, poc.proxy(mitmProxy), poc.timeout(10), poc.save(false))~
+log.info("response from upstream: %s", string(poc.GetHTTPPacketBody(rsp)))
+
+// 取上游真实收到的 body
+lock.Lock()
+gotBody = received["body"]
+lock.Unlock()
+log.info("upstream received body: %s", gotBody)
+
+// 证据: 改写后的 amount=-1 确实到达上游, 原始 100 未到达
+assert str.Contains(gotBody, "\"amount\":-1") || str.Contains(gotBody, "\"amount\": -1"), "modified amount must reach upstream"
+assert !str.Contains(gotBody, "\"amount\":100"), "original amount must NOT reach upstream"
+
+evidence = sprintf("mitm proxy: %s\ntarget: %s\nupstream received body: %s\nupstream response: %s\n",
+    mitmProxy, targetHostPort, gotBody, string(poc.GetHTTPPacketBody(rsp)))
+file.Save(file.Join(evidence_dir, "mitm-live-demo.txt"), evidence)~
+
+log.info("mitm live demo self test passed, evidence written")

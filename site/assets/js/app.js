@@ -133,6 +133,17 @@
     bindZipModal();
     applyHashState();
     rerender();
+
+    // 语言切换时, 重新本地化动态文案 (placeholder / 计数器)
+    // 关键词: i18n, langchange, dynamic re-localization
+    if (window.YakI18n && typeof window.YakI18n.onChange === "function") {
+      window.YakI18n.onChange(() => {
+        if (els.heroSearchInput && state.raw) {
+          els.heroSearchInput.placeholder = heroPlaceholder(state.raw.totalSkills);
+        }
+        rerender();
+      });
+    }
   }
 
   // ---------------------------------------------------------------
@@ -159,10 +170,28 @@
     if (els.provCatsNum)   els.provCatsNum.textContent   = formatNum(r.totalCategories);
     if (els.provBuild)     els.provBuild.textContent     = r.version || "dev";
 
-    // hero 占位 placeholder 数字也跟着更新
+    // hero 占位 placeholder 数字也跟着更新 (支持 i18n)
     if (els.heroSearchInput) {
-      els.heroSearchInput.placeholder = `Search ${formatNum(r.totalSkills)} skills…   try "mitm hijack"   "category:hotpatch"   "tier:master"`;
+      els.heroSearchInput.placeholder = heroPlaceholder(r.totalSkills);
     }
+  }
+
+  // i18n 安全取值: 优先 YakI18n, 缺失时回退到给定默认
+  // 关键词: i18n, dynamic localization
+  function i18nText(key, fallback) {
+    if (window.YakI18n && typeof window.YakI18n.t === "function") {
+      const v = window.YakI18n.t(key);
+      if (v != null && v !== key) return v;
+    }
+    return fallback;
+  }
+
+  function heroPlaceholder(total) {
+    const tpl = i18nText(
+      "hero_search_ph",
+      'Search {n} skills…   try "mitm hijack"   "category:hotpatch"   "tier:master"'
+    );
+    return tpl.replace("{n}", formatNum(total));
   }
 
   // ---------------------------------------------------------------
@@ -509,9 +538,10 @@
     const r = HackSkillsSearch.search(state.skills, virtual);
 
     const count = r.results.length;
-    els.counter.innerHTML = count === 0
-      ? `<strong>0</strong> matches`
-      : `<strong>${count}</strong> match${count === 1 ? "" : "es"}`;
+    const matchWord = count === 1
+      ? i18nText("matches_one", "match")
+      : i18nText("matches_other", "matches");
+    els.counter.innerHTML = `<strong>${count}</strong> ${matchWord}`;
 
     if (count === 0) {
       els.empty.classList.remove("hidden");

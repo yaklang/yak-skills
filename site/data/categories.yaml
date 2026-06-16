@@ -38,9 +38,17 @@ categories:
   - id: data
     name: Data & Storage
     order: 4
-    description: 数据库 / 键值存储 / Payload 管理
+    description: 数据库 / 键值存储 / Payload 管理 / 历史数据提取
     skills:
       - yaklang-database
+      - yakit-data-extract-plugin
+
+  - id: tooling
+    name: Toolchain & Verification
+    order: 5
+    description: 工具链 / 热加载验证命令 / 插件验证闭环
+    skills:
+      - yaklang-toolchain
 
 # 关键词: tier override - 用于覆盖默认推断
 # 规则:

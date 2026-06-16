@@ -1,0 +1,32 @@
+"/tmp/yak-hotpatch" hotpatch-mitm --script "/Users/v1ll4n/Projects/yak-skills/skills/mitm-hotpatch/example-hijack-response-strip-js.yak" --request "/Users/v1ll4n/Projects/yak-skills/scripts/fixtures/req-panel.txt" --response "/Users/v1ll4n/Projects/yak-skills/scripts/fixtures/rsp-js.txt"
+
+[36m[INFO][0m 2026-06-16 23:11:45 [sqlite_large_db_tune:109] sqlite tuned for large project db (385.4M): cache=32M mmap=64M wal_autocheckpoint=8000
+########## MITM hot-patch validation ##########
+url: http://admin.example.com/panel
+dropped: false (stage: )
+request-hooked: false, response-hooked: true, save-hooked: false
+save-tags: 
+
+===== origin request (len=48) =====
+GET /panel HTTP/1.1
+Host: admin.example.com
+
+
+
+===== modified request (len=0) =====
+<empty / not changed>
+
+===== origin response (len=114) =====
+HTTP/1.1 200 OK
+Content-Type: text/javascript
+Content-Length: 31
+
+alert('unauthorized');location.href='/login'
+
+===== modified response (len=146) =====
+HTTP/1.1 200 OK
+Content-Type: text/javascript
+Content-Length: 76
+
+console.log('ALERT_BYPASSED','unauthorized');window.__bypassed_href='/login'
+

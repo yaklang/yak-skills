@@ -1,0 +1,17 @@
+"/tmp/yak-hotpatch" hotpatch-webfuzzer --script "/Users/v1ll4n/Projects/yak-skills/skills/webfuzzer-hotpatch/example-fuzztag-hash.yak" --request "/Users/v1ll4n/Projects/yak-skills/scripts/fixtures/req-generic.txt" --fuzztag '{{yak(hash|md5,hello)}}'
+
+[36m[INFO][0m 2026-06-16 23:11:46 [sqlite_large_db_tune:109] sqlite tuned for large project db (385.4M): cache=32M mmap=64M wal_autocheckpoint=8000
+[36m[INFO][0m 2026-06-16 23:11:46 [script_engine_for_fuzz:326] create YAK_HOOK rule[clen:1956]
+[36m[INFO][0m 2026-06-16 23:11:46 [script_engine_for_fuzz:366] start to call funcName: hash in {{yak(...)}}
+########## WEBFUZZER hot-patch validation ##########
+before-hooked: false, after-hooked: false
+failure-reasons: []
+retry-requests: 0
+rendered-fuzztag: [5d41402abc4b2a76b9719d911017c592]
+
+===== origin request (len=39) =====
+GET / HTTP/1.1
+Host: t.example.com
+
+
+

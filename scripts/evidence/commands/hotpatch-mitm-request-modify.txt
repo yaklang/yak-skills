@@ -1,0 +1,25 @@
+"/tmp/yak-hotpatch" hotpatch-mitm --script "/Users/v1ll4n/Projects/yak-skills/skills/mitm-hotpatch/example-hijack-request-modify-json.yak" --request "/Users/v1ll4n/Projects/yak-skills/scripts/fixtures/req-order.txt"
+
+[36m[INFO][0m 2026-06-16 23:11:45 [sqlite_large_db_tune:109] sqlite tuned for large project db (385.4M): cache=32M mmap=64M wal_autocheckpoint=8000
+########## MITM hot-patch validation ##########
+url: http://shop.example.com/api/order/create
+dropped: false (stage: )
+request-hooked: true, response-hooked: false, save-hooked: false
+save-tags: 
+
+===== origin request (len=141) =====
+POST /api/order/create HTTP/1.1
+Host: shop.example.com
+Content-Type: application/json
+Content-Length: 30
+
+{"amount":100,"product_id":42}
+
+===== modified request (len=140) =====
+POST /api/order/create HTTP/1.1
+Host: shop.example.com
+Content-Type: application/json
+Content-Length: 29
+
+{"amount":-1,"product_id":42}
+

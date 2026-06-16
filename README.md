@@ -1,80 +1,82 @@
 # Yak Skills
 
-> A composable, agent-ready knowledge base for Yaklang programming and Yak hot patching. One master entry + five topic skills, each with runnable, self-testing `.yak` examples.
+> 面向 AI Agent 的 Yaklang 编程与 Yak 热加载知识库。一个总入口 + 多个专题，每个 skill 都配可一键自测的 `.yak` 示例，并提供命令行验证器与端到端证据。
 
-English | [中文](README_CN.md)
+中文 | [English](README_EN.md)
 
-Yak Skills follows the directory-style SKILL knowledge-base pattern. Distilled from the Yak official articles (`yak-project-public`) and the [yaklang.github.io](https://yaklang.com) docs, it turns the core mechanics of Yaklang programming and Yak hot patching into skills that an AI agent can load directly and a human can run directly.
+Yak Skills 模仿目录式 SKILL 知识库范式，围绕 Yak 公众号文章（`yak-project-public`）与 [yaklang.github.io](https://yaklang.com) 官方文档，把 Yaklang 编程与 Yak 热加载的核心机制蒸馏成可被 AI Agent 直接加载、可被人直接运行的技能库。
 
-## Browse online
+## 在线浏览
 
-Static site: `site/index.html` (auto-built and deployed by GitHub Pages).
-- Filter by category / tier / free text
-- Supports query syntax like `category:hotpatch`, `tier:master`
-- Each card: one-click copy of the install command, jump to GitHub source
+静态站点：[skills.yaklang.io](https://skills.yaklang.io)（由 GitHub Pages 自动构建部署，默认中文，可切换英文）。
+- 按分类 / 层级 / 自由文本检索
+- 支持 `category:hotpatch`、`tier:master` 等过滤语法
+- 每张卡片可一键复制安装命令、跳转 GitHub 源码
 
-## The three-layer hot patch model (core)
+## 三层热加载体系（核心）
 
-Hot Patch lets you take over HTTP traffic processing stages with Yaklang code **without interrupting the service**. It has three layers, executed top-down: `Global -> Module (MITM / Web Fuzzer)`.
+热加载（Hot Patch）允许在 **不中断服务** 的情况下，用 Yaklang 代码动态接管 HTTP 流量的处理阶段。它分三层，执行顺序自上而下：`全局 -> 模块（MITM / Web Fuzzer）`。
 
 ```
-Global Hot Patch     ← shared by MITM and all Fuzzers, only 1 active at a time, runs first
+全局热加载 (Global Hot Patch)   ← MITM 与所有 Fuzzer 共享, 同时只启用 1 个, 先执行
         │
         ▼
-Module Hot Patch
-   ├── MITM       proxy side: hijack / mirror / save-to-db / mock
-   └── Web Fuzzer single tab: crypto / signature / retry / fuzztag
+模块热加载
+   ├── MITM 热加载        代理侧: 劫持 / 镜像 / 入库 / mock
+   └── Web Fuzzer 热加载  单 Tab: 加解密 / 签名 / 重试 / fuzztag
         │
         ▼
-   outbound / display / persist
+   出站 / 回显 / 入库
 ```
 
-## Skill catalog
+## 技能目录
 
-| Skill | Tier | Description |
+| Skill | 层级 | 说明 |
 |---|---|---|
-| [`yak`](skills/yak/SKILL.md) | master | three-layer routing, YAK_MAIN debug convention, test method |
-| [`mitm-hotpatch`](skills/mitm-hotpatch/SKILL.md) | topic | MITM hooks: hijackHTTPRequest / hijackHTTPResponseEx / mirror* / hijackSaveHTTPFlow / mockHTTPRequest |
-| [`webfuzzer-hotpatch`](skills/webfuzzer-hotpatch/SKILL.md) | topic | beforeRequest / afterRequest / retryHandler / customFailureChecker / mirrorHTTPFlow / fuzztag |
-| [`global-hotpatch`](skills/global-hotpatch/SKILL.md) | topic | site-wide transparent crypto, dynamic challenge signing, unified auth, site-wide coloring |
-| [`yaklang-syntax`](skills/yaklang-syntax/SKILL.md) | topic | variables / control flow / functions / closures / f-string / error handling `~` |
-| [`yaklang-database`](skills/yaklang-database/SKILL.md) | topic | SQLite / key-value store / payload dictionaries / project config |
+| [`yak`](skills/yak/SKILL.md) | 总入口 | 三层热加载路由、YAK_MAIN 调试约定、测试方法 |
+| [`mitm-hotpatch`](skills/mitm-hotpatch/SKILL.md) | 专题 | MITM 六类 Hook：hijackHTTPRequest / hijackHTTPResponseEx / mirror* / hijackSaveHTTPFlow / mockHTTPRequest |
+| [`webfuzzer-hotpatch`](skills/webfuzzer-hotpatch/SKILL.md) | 专题 | beforeRequest / afterRequest / retryHandler / customFailureChecker / mirrorHTTPFlow / fuzztag |
+| [`global-hotpatch`](skills/global-hotpatch/SKILL.md) | 专题 | 全站透明加解密、动态 challenge 签名、统一认证、全站染色 |
+| [`yaklang-syntax`](skills/yaklang-syntax/SKILL.md) | 专题 | 变量 / 控制流 / 函数 / 闭包 / f-string / 错误处理 `~` |
+| [`yaklang-database`](skills/yaklang-database/SKILL.md) | 专题 | SQLite / 键值存储 / Payload 字典 / 项目配置 |
+| [`yakit-data-extract-plugin`](skills/yakit-data-extract-plugin/SKILL.md) | 专题 | 按 domain 捞 History、URI 去重、提取登录 Cookie、字典驱动发包扫描 |
+| [`yaklang-toolchain`](skills/yaklang-toolchain/SKILL.md) | 专题 | go run 工作流、4 个验证命令、用仓库调试 MITM、如何验证你写的插件 |
 
-Each topic directory ships several `example-*.yak` files, all independently runnable and self-testing.
+每个专题目录下都有若干 `example-*.yak`，均可独立运行自测。
 
-## Install
+## 安装
 
-### Bundle (recommended)
+### 整包安装（推荐）
 
 ```bash
 npx skills add yaklang/yak-skills
 ```
 
-### Single skill
+### 单个专题
 
 ```bash
 npx skills add yaklang/yak-skills/mitm-hotpatch
 ```
 
-### curl a single SKILL.md
+### curl 拉取单个 SKILL.md
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/yaklang/yak-skills/main/skills/yak/SKILL.md
 ```
 
-## The YAK_MAIN debug convention (important)
+## YAK_MAIN 调试约定（重要）
 
-Every hot patch script shares one structure: register hook functions + guard the local self-test with `if YAK_MAIN { runSelfTest() }`:
+所有热加载脚本统一结构——注册 hook 函数 + `if YAK_MAIN { runSelfTest() }` 守卫本地自测：
 
 ```yak
-// 1) register the hook (the only thing yakit does on load)
+// 1) 注册 hook (yakit 加载时只做这件事)
 hijackHTTPRequest = func(isHttps, url, req, forward, drop) {
     forward(req)
 }
 
-// 2) local self-test (runs only from the CLI)
+// 2) 本地自测 (命令行运行时才跑)
 func runSelfTest() {
-    // mock data + custom callbacks + assert
+    // mock 数据 + 自定义 callback + assert
 }
 
 if YAK_MAIN {
@@ -82,50 +84,86 @@ if YAK_MAIN {
 }
 ```
 
-`YAK_MAIN` is a global boolean injected by the yaklang engine:
+`YAK_MAIN` 是 yaklang 引擎注入的全局布尔：
 
-- CLI run `yak xxx.yak`: `YAK_MAIN = true` -> runs the self-test.
-- yakit hot patch window: `YAK_MAIN = false` -> only registers the hooks.
+- 命令行 `yak xxx.yak` 运行：`YAK_MAIN = true` → 跑自测。
+- yakit 热加载窗口加载：`YAK_MAIN = false` → 只注册 hook。
 
-So a full script including its self-test block can be pasted back into yakit **safely** -- yakit never runs your mock data. This is the "self-test on the CLI -> paste back into yakit" debug loop.
+所以含自测块的完整脚本可以 **安全地** 粘贴回 yakit——yakit 不会执行你的 mock 数据。这就是"命令行一键自测 → 粘回 yakit 使用"的安全闭环。
 
-## Run and verify locally
+## 如何验证你写的插件
+
+除了 `YAK_MAIN` 自测，本库在 yaklang 引擎里提供了四个验证命令，用 **与 Yakit UI 同款的 gRPC 执行路径** 把脚本跑在真实请求/响应上、打印改写证据。详见 [yaklang-toolchain](skills/yaklang-toolchain/SKILL.md)。
+
+| 命令 | 验证对象 |
+|---|---|
+| `yak hotpatch-mitm --script x.yak --request req.txt [--response rsp.txt] [--https] [--url URL]` | MITM 热加载 |
+| `yak hotpatch-global --script x.yak --request req.txt [--response rsp.txt]` | 全局热加载（beforeRequest/afterRequest + 劫持 + 入库） |
+| `yak hotpatch-webfuzzer --script x.yak --request req.txt [--response rsp.txt] [--fuzztag TAG]` | Web Fuzzer 热加载 |
+| `yak codec-plugin --script x.yak --input STRING` | 右键 codec 插件（handle） |
+
+示例：
 
 ```bash
-# using the yaklang source engine (recommended, latest capabilities)
+printf 'POST /api/order/create HTTP/1.1\r\nHost: shop.example.com\r\nContent-Type: application/json\r\n\r\n{"amount":100}' > /tmp/req.txt
+yak hotpatch-mitm --script skills/mitm-hotpatch/example-hijack-request-modify-json.yak --request /tmp/req.txt
+# 输出会打印原始请求 / 改写后请求 / drop 状态 / 入库 tag 作为证据
+
+yak codec-plugin --script skills/yaklang-toolchain/example-codec-rot13.yak --input "Hello, Yak!"
+# -> output (len=11): Uryyb, Lnx!
+```
+
+命令实现位于 `yaklang/common/yak/cmd/yakcmds/hotpatch.go`，并配有 Go 单元测试 `hotpatch_test.go`
+（`go test ./common/yak/cmd/yakcmds/ -run 'HotPatch|Codec'`）。
+
+## 本地运行与验证
+
+```bash
+# 用 yaklang 源码引擎 (推荐, 拿到最新能力)
 cd /path/to/yaklang
 go run common/yak/cmd/yak.go /path/to/yak-skills/skills/mitm-hotpatch/example-hijack-request-modify-json.yak
 
-# or the installed engine
+# 或用已安装引擎
 yak skills/mitm-hotpatch/example-hijack-request-modify-json.yak
 ```
 
-Pass criteria: finishes within 10 seconds, all `assert` pass, all `log` output in English, ends with `... self test passed`.
+合格标准：10 秒内完成、所有 `assert` 通过、`log` 全英文、末尾出现 `... self test passed`。
 
-## Build the index
+### 批量证据化验证
+
+```bash
+# 遍历所有 example-*.yak 自测 + 跑 4 个验证命令, 证据落地 scripts/evidence/
+cd yak-skills
+YAK_BIN=/path/to/yak yak scripts/validate-skills.yak
+
+# 真实 MITM 链路演示 (mitm 模块起代理 + 本地靶站), 证据落地 scripts/evidence/live/
+yak scripts/mitm-live-demo.yak
+```
+
+## 构建索引
 
 ```bash
 go run common/yak/cmd/yak.go scripts/build-skills-index.yak \
   --project-root /path/to/yak-skills --strict
 ```
 
-It scans `skills/*/SKILL.md`, combines with `site/data/categories.yaml` to produce `site/data/skills.json`, and verifies a roundtrip. New skill directories must be registered in `categories.yaml` or `--strict` will fail.
+会扫描 `skills/*/SKILL.md`，结合 `site/data/categories.yaml` 生成 `site/data/skills.json`，并做回环校验。新增 skill 目录后必须在 `categories.yaml` 登记，否则 `--strict` 会报错。
 
-## Sources
+## 知识来源
 
-- Yak official article collection `yak-project-public` (the most authoritative hands-on guidance)
-- [yaklang.github.io](https://yaklang.com) official docs
-- yaklang engine source (hook signatures are sourced from code):
-  - MITM: `common/yak/hook_mixed_plugin_caller.go`
-  - Web Fuzzer: `common/yak/script_engine_for_fuzz.go`
-  - YAK_MAIN: `common/yak/script_engine.go`
+- Yak 公众号文章合集 `yak-project-public`（最核心的实战指导）
+- [yaklang.github.io](https://yaklang.com) 官方文档
+- yaklang 引擎源码（Hook 签名以源码为准）：
+  - MITM：`common/yak/hook_mixed_plugin_caller.go`
+  - Web Fuzzer：`common/yak/script_engine_for_fuzz.go`
+  - YAK_MAIN：`common/yak/script_engine.go`
 
-## Conventions
+## 规范
 
-- Comments may be in Chinese; `log` output, strings, and payloads are all in English.
-- Prefer `~` for error handling; verify key results with `assert`.
-- Add `// 关键词: ...` comments at key code locations for grep / AI retrieval.
-- No emojis.
+- 注释可用中文；`log` 输出、字符串、payload 全部英文。
+- 错误处理优先用 `~`；关键结果用 `assert` 验证。
+- 关键代码位置加 `// 关键词: ...` 注释，便于 grep 与 AI 检索。
+- 不使用 emoji。
 
 ## License
 

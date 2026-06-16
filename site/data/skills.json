@@ -1,5 +1,5 @@
 {
-  "buildTime": "2026-06-16T14:16:10Z",
+  "buildTime": "2026-06-16T15:11:11Z",
   "categories": [
     {
       "description": "总入口 / 全局路由 / 调试约定",
@@ -232,11 +232,11 @@
       ]
     },
     {
-      "description": "数据库 / 键值存储 / Payload 管理",
+      "description": "数据库 / 键值存储 / Payload 管理 / 历史数据提取",
       "id": "data",
       "name": "Data \u0026 Storage",
       "order": 4,
-      "skillCount": 1,
+      "skillCount": 2,
       "skills": [
         {
           "blobUrl": "https://github.com/yaklang/yak-skills/blob/main/skills/yaklang-database/SKILL.md",
@@ -268,6 +268,70 @@
           "skillSize": 4883,
           "tier": "deep",
           "totalLines": 238
+        },
+        {
+          "blobUrl": "https://github.com/yaklang/yak-skills/blob/main/skills/yakit-data-extract-plugin/SKILL.md",
+          "category": "data",
+          "description": "解决一个高频实战痛点：在 Yakit History 里积累了某站点大量流量后，如何一键按域名捞取所有唯一 路径、拿到登录 Cookie，并把这些路径沉淀成可复用的 Payload 字典，再带着登录态逐路径发包扫描/Fuzz。 覆盖 db.QueryHTTPFlowsByKeyword 捞 History、URI 去重、Cookie 提取、db.SavePayload/YieldPayload 字典管理、poc.HTTP 登录态发包。当用户想\"从历史流量提取数据驱动后续扫描\"时使用。",
+          "exampleCount": 2,
+          "extraDocs": [
+            {
+              "kind": "example",
+              "lines": 106,
+              "name": "example-collect-domain-urls.yak",
+              "path": "skills/yakit-data-extract-plugin/example-collect-domain-urls.yak",
+              "size": 3999
+            },
+            {
+              "kind": "example",
+              "lines": 126,
+              "name": "example-path-scan-with-payload.yak",
+              "path": "skills/yakit-data-extract-plugin/example-path-scan-with-payload.yak",
+              "size": 4438
+            }
+          ],
+          "extraLines": 232,
+          "id": "yakit-data-extract-plugin",
+          "name": "yakit-data-extract-plugin",
+          "path": "skills/yakit-data-extract-plugin/SKILL.md",
+          "rawUrl": "https://raw.githubusercontent.com/yaklang/yak-skills/main/skills/yakit-data-extract-plugin/SKILL.md",
+          "skillLines": 98,
+          "skillSize": 4743,
+          "tier": "deep",
+          "totalLines": 330
+        }
+      ]
+    },
+    {
+      "description": "工具链 / 热加载验证命令 / 插件验证闭环",
+      "id": "tooling",
+      "name": "Toolchain \u0026 Verification",
+      "order": 5,
+      "skillCount": 1,
+      "skills": [
+        {
+          "blobUrl": "https://github.com/yaklang/yak-skills/blob/main/skills/yaklang-toolchain/SKILL.md",
+          "category": "tooling",
+          "description": "Yaklang 工具链与插件验证指南。讲清如何用 yaklang 源码引擎 (go run common/yak/cmd/yak.go) 跑脚本， 以及四个热加载/codec 验证命令 (yak hotpatch-mitm / hotpatch-global / hotpatch-webfuzzer / codec-plugin) 如何用真实 gRPC 同款执行路径验证你写的 MITM / 全局 / Web Fuzzer 热加载与右键 codec 插件；还讲如何 借助 yaklang 仓库源码定位与调试 MITM 问题。当用户问\"我写的插件怎么验证 / MITM 行为不对怎么调\"时使用。",
+          "exampleCount": 1,
+          "extraDocs": [
+            {
+              "kind": "example",
+              "lines": 49,
+              "name": "example-codec-rot13.yak",
+              "path": "skills/yaklang-toolchain/example-codec-rot13.yak",
+              "size": 1552
+            }
+          ],
+          "extraLines": 49,
+          "id": "yaklang-toolchain",
+          "name": "yaklang-toolchain",
+          "path": "skills/yaklang-toolchain/SKILL.md",
+          "rawUrl": "https://raw.githubusercontent.com/yaklang/yak-skills/main/skills/yaklang-toolchain/SKILL.md",
+          "skillLines": 141,
+          "skillSize": 6607,
+          "tier": "deep",
+          "totalLines": 190
         }
       ]
     }
@@ -450,6 +514,37 @@
       "totalLines": 94
     },
     {
+      "blobUrl": "https://github.com/yaklang/yak-skills/blob/main/skills/yakit-data-extract-plugin/SKILL.md",
+      "category": "data",
+      "description": "解决一个高频实战痛点：在 Yakit History 里积累了某站点大量流量后，如何一键按域名捞取所有唯一 路径、拿到登录 Cookie，并把这些路径沉淀成可复用的 Payload 字典，再带着登录态逐路径发包扫描/Fuzz。 覆盖 db.QueryHTTPFlowsByKeyword 捞 History、URI 去重、Cookie 提取、db.SavePayload/YieldPayload 字典管理、poc.HTTP 登录态发包。当用户想\"从历史流量提取数据驱动后续扫描\"时使用。",
+      "exampleCount": 2,
+      "extraDocs": [
+        {
+          "kind": "example",
+          "lines": 106,
+          "name": "example-collect-domain-urls.yak",
+          "path": "skills/yakit-data-extract-plugin/example-collect-domain-urls.yak",
+          "size": 3999
+        },
+        {
+          "kind": "example",
+          "lines": 126,
+          "name": "example-path-scan-with-payload.yak",
+          "path": "skills/yakit-data-extract-plugin/example-path-scan-with-payload.yak",
+          "size": 4438
+        }
+      ],
+      "extraLines": 232,
+      "id": "yakit-data-extract-plugin",
+      "name": "yakit-data-extract-plugin",
+      "path": "skills/yakit-data-extract-plugin/SKILL.md",
+      "rawUrl": "https://raw.githubusercontent.com/yaklang/yak-skills/main/skills/yakit-data-extract-plugin/SKILL.md",
+      "skillLines": 98,
+      "skillSize": 4743,
+      "tier": "deep",
+      "totalLines": 330
+    },
+    {
       "blobUrl": "https://github.com/yaklang/yak-skills/blob/main/skills/yaklang-database/SKILL.md",
       "category": "data",
       "description": "Yaklang 数据库操作 (db 库) 专题。当用户需要在脚本/插件里持久化或查询数据时使用：临时 SQLite 建表与增删改查 (db.OpenTempSqliteDatabase / db.ScanResult / Exec)、跨脚本共享配置的键值存储 (db.SetKey/GetKey/DelKey/SetKeyWithTTL)、爆破字典统一管理 (db.SavePayload/YieldPayload)、以及项目级配置 (db.SetProjectKey/GetProjectKey)。",
@@ -510,17 +605,41 @@
       "skillSize": 5403,
       "tier": "deep",
       "totalLines": 367
+    },
+    {
+      "blobUrl": "https://github.com/yaklang/yak-skills/blob/main/skills/yaklang-toolchain/SKILL.md",
+      "category": "tooling",
+      "description": "Yaklang 工具链与插件验证指南。讲清如何用 yaklang 源码引擎 (go run common/yak/cmd/yak.go) 跑脚本， 以及四个热加载/codec 验证命令 (yak hotpatch-mitm / hotpatch-global / hotpatch-webfuzzer / codec-plugin) 如何用真实 gRPC 同款执行路径验证你写的 MITM / 全局 / Web Fuzzer 热加载与右键 codec 插件；还讲如何 借助 yaklang 仓库源码定位与调试 MITM 问题。当用户问\"我写的插件怎么验证 / MITM 行为不对怎么调\"时使用。",
+      "exampleCount": 1,
+      "extraDocs": [
+        {
+          "kind": "example",
+          "lines": 49,
+          "name": "example-codec-rot13.yak",
+          "path": "skills/yaklang-toolchain/example-codec-rot13.yak",
+          "size": 1552
+        }
+      ],
+      "extraLines": 49,
+      "id": "yaklang-toolchain",
+      "name": "yaklang-toolchain",
+      "path": "skills/yaklang-toolchain/SKILL.md",
+      "rawUrl": "https://raw.githubusercontent.com/yaklang/yak-skills/main/skills/yaklang-toolchain/SKILL.md",
+      "skillLines": 141,
+      "skillSize": 6607,
+      "tier": "deep",
+      "totalLines": 190
     }
   ],
   "tierCounts": {
     "category": 0,
-    "deep": 5,
+    "deep": 7,
     "master": 1
   },
-  "totalCategories": 4,
-  "totalExamples": 19,
-  "totalLines": 2189,
-  "totalSize": 35920,
-  "totalSkills": 6,
+  "totalCategories": 5,
+  "totalExamples": 22,
+  "totalLines": 2709,
+  "totalSize": 47270,
+  "totalSkills": 8,
   "version": "dev"
 }

@@ -270,6 +270,14 @@ kbd {
 [data-theme-pref="dark"]   .theme-toggle .ico-dark   { opacity: 1; }
 [data-theme-pref="system"] .theme-toggle .ico-system { opacity: 1; }
 
+/* 语言切换按钮 — 关键词: lang toggle, i18n */
+.lang-toggle .lang-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .02em;
+  line-height: 1;
+}
+
 /* -------------------------------------------------------------------------
    Hero
    关键词: hero with background image, dual-theme veil, marquee ticker

@@ -1,0 +1,180 @@
+// =============================================================================
+// yak-skills 证据化验证脚本
+// 功能:
+//   1. 遍历 skills/*/example-*.yak, 用引擎逐个跑 YAK_MAIN 自测, stdout 落地 evidence/selftest/
+//   2. 用 4 个验证命令 (hotpatch-mitm/global/webfuzzer + codec-plugin) 跑代表性脚本,
+//      stdout 落地 evidence/commands/, 校验关键证据子串
+//   3. 汇总通过/失败数, 有失败则非零退出
+// 用法:
+//   cd yak-skills
+//   YAK_BIN=/path/to/yak yak scripts/validate-skills.yak
+//   (YAK_BIN 缺省时用 PATH 里的 yak)
+// 关键词: validate-skills, evidence, hotpatch validators, exec.Command
+// =============================================================================
+
+project_root_arg = cli.String("project-root", cli.setDefault(""), cli.setHelp("project root, default cwd"))
+yak_bin_arg = cli.String("yak-bin", cli.setDefault(""), cli.setHelp("yak engine binary, default $YAK_BIN or 'yak'"))
+cli.check()
+
+project_root = project_root_arg
+if project_root == "" {
+    project_root = os.Getwd()~
+}
+
+yak_bin = yak_bin_arg
+if yak_bin == "" {
+    yak_bin = os.Getenv("YAK_BIN")
+}
+if yak_bin == "" {
+    yak_bin = "yak"
+}
+
+skills_dir = file.Join(project_root, "skills")
+evidence_dir = file.Join(project_root, "scripts", "evidence")
+fixtures_dir = file.Join(project_root, "scripts", "fixtures")
+assert file.IsDir(skills_dir), f"skills dir not found: ${skills_dir}"
+
+log.info("project root: %s", project_root)
+log.info("yak binary:   %s", yak_bin)
+log.info("evidence dir: %s", evidence_dir)
+
+// 运行命令并捕获 combined output (即使非零退出也返回输出)
+// 关键词: exec.Command, CombinedOutput
+runCmd = func(cmdline) {
+    cmd = exec.Command(cmdline)~
+    out, err = cmd.CombinedOutput()
+    code = 0
+    if err != nil {
+        code = 1
+    }
+    return {"out": string(out), "code": code}
+}
+
+saveEvidence = func(rel, content) {
+    full = file.Join(evidence_dir, rel)
+    dir = file.GetDirPath(full)
+    file.MkdirAll(dir)
+    file.Save(full, content)~
+}
+
+total = 0
+passed = 0
+failed = []
+
+// =============================================================================
+// Part 1: 遍历所有 example-*.yak 跑自测
+// =============================================================================
+log.info("=== Part 1: self-test all example-*.yak ===")
+for entry in file.Ls(skills_dir) {
+    if !entry.IsDir {
+        continue
+    }
+    skill = entry.Name
+    skill_dir = file.Join(skills_dir, skill)
+    for f in file.Ls(skill_dir) {
+        if !str.HasPrefix(f.Name, "example-") || !str.HasSuffix(f.Name, ".yak") {
+            continue
+        }
+        path = file.Join(skill_dir, f.Name)
+        total++
+        cmdline = sprintf(`"%s" "%s"`, yak_bin, path)
+        r = runCmd(cmdline)
+        saveEvidence(file.Join("selftest", skill, f.Name + ".txt"), r.out)
+        if r.code == 0 {
+            passed++
+            log.info("PASS  %s/%s", skill, f.Name)
+        } else {
+            failed = append(failed, sprintf("selftest %s/%s", skill, f.Name))
+            log.error("FAIL  %s/%s", skill, f.Name)
+        }
+    }
+}
+
+// =============================================================================
+// Part 2: 4 个验证命令的代表性证据 (用 fixtures)
+// =============================================================================
+log.info("=== Part 2: validator command evidence ===")
+file.MkdirAll(fixtures_dir)
+
+// fixtures
+reqOrder = `POST /api/order/create HTTP/1.1
+Host: shop.example.com
+Content-Type: application/json
+
+{"amount":100,"product_id":42}`
+reqOrder = str.ReplaceAll(reqOrder, "\n", "\r\n")
+fxReqOrder = file.Join(fixtures_dir, "req-order.txt")
+file.Save(fxReqOrder, reqOrder)~
+
+reqJs = "GET /panel HTTP/1.1\r\nHost: admin.example.com\r\n\r\n"
+fxReqJs = file.Join(fixtures_dir, "req-panel.txt")
+file.Save(fxReqJs, reqJs)~
+rspJs = "HTTP/1.1 200 OK\r\nContent-Type: text/javascript\r\nContent-Length: 31\r\n\r\nalert('unauthorized');location.href='/login'"
+fxRspJs = file.Join(fixtures_dir, "rsp-js.txt")
+file.Save(fxRspJs, rspJs)~
+
+reqGeneric = "GET / HTTP/1.1\r\nHost: t.example.com\r\n\r\n"
+fxReqGeneric = file.Join(fixtures_dir, "req-generic.txt")
+file.Save(fxReqGeneric, reqGeneric)~
+rsp500 = "HTTP/1.1 500 Internal Server Error\r\nContent-Length: 5\r\n\r\nboom!"
+fxRsp500 = file.Join(fixtures_dir, "rsp-500.txt")
+file.Save(fxRsp500, rsp500)~
+
+mitmReqModify = file.Join(skills_dir, "mitm-hotpatch", "example-hijack-request-modify-json.yak")
+mitmRspStrip = file.Join(skills_dir, "mitm-hotpatch", "example-hijack-response-strip-js.yak")
+globalColor = file.Join(skills_dir, "global-hotpatch", "example-global-flow-coloring.yak")
+wfFuzztag = file.Join(skills_dir, "webfuzzer-hotpatch", "example-fuzztag-hash.yak")
+codecRot13 = file.Join(skills_dir, "yaklang-toolchain", "example-codec-rot13.yak")
+
+demos = [
+    {
+        "name": "hotpatch-mitm-request-modify",
+        "cmd": sprintf(`"%s" hotpatch-mitm --script "%s" --request "%s"`, yak_bin, mitmReqModify, fxReqOrder),
+        "expect": `"amount":-1`,
+    },
+    {
+        "name": "hotpatch-mitm-response-strip-js",
+        "cmd": sprintf(`"%s" hotpatch-mitm --script "%s" --request "%s" --response "%s"`, yak_bin, mitmRspStrip, fxReqJs, fxRspJs),
+        "expect": "console.log(",
+    },
+    {
+        "name": "hotpatch-global-flow-coloring",
+        "cmd": sprintf(`"%s" hotpatch-global --script "%s" --request "%s" --response "%s"`, yak_bin, globalColor, fxReqGeneric, fxRsp500),
+        "expect": "server-error",
+    },
+    {
+        "name": "hotpatch-webfuzzer-fuzztag",
+        "cmd": sprintf(`"%s" hotpatch-webfuzzer --script "%s" --request "%s" --fuzztag '{{yak(hash|md5,hello)}}'`, yak_bin, wfFuzztag, fxReqGeneric),
+        "expect": "5d41402abc4b2a76b9719d911017c592",
+    },
+    {
+        "name": "codec-plugin-rot13",
+        "cmd": sprintf(`"%s" codec-plugin --script "%s" --input "Hello, Yak!"`, yak_bin, codecRot13),
+        "expect": "Uryyb, Lnx!",
+    },
+]
+
+for demo in demos {
+    total++
+    r = runCmd(demo.cmd)
+    saveEvidence(file.Join("commands", demo.name + ".txt"), demo.cmd + "\n\n" + r.out)
+    if r.code == 0 && str.Contains(r.out, demo.expect) {
+        passed++
+        log.info("PASS  command %s (found %#v)", demo.name, demo.expect)
+    } else {
+        failed = append(failed, sprintf("command %s", demo.name))
+        log.error("FAIL  command %s (expect %#v, code=%d)", demo.name, demo.expect, r.code)
+    }
+}
+
+// =============================================================================
+// 汇总
+// =============================================================================
+log.info("=== summary: %d/%d passed ===", passed, total)
+if len(failed) > 0 {
+    for name in failed {
+        log.error("FAILED: %s", name)
+    }
+}
+assert len(failed) == 0, sprintf("%d validation(s) failed", len(failed))
+log.info("all validations passed, evidence written to %s", evidence_dir)

@@ -1,0 +1,5 @@
+POST /api/order/create HTTP/1.1
+Host: shop.example.com
+Content-Type: application/json
+
+{"amount":100,"product_id":42}

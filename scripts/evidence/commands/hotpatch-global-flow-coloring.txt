@@ -1,0 +1,24 @@
+"/tmp/yak-hotpatch" hotpatch-global --script "/Users/v1ll4n/Projects/yak-skills/skills/global-hotpatch/example-global-flow-coloring.yak" --request "/Users/v1ll4n/Projects/yak-skills/scripts/fixtures/req-generic.txt" --response "/Users/v1ll4n/Projects/yak-skills/scripts/fixtures/rsp-500.txt"
+
+[36m[INFO][0m 2026-06-16 23:11:46 [sqlite_large_db_tune:109] sqlite tuned for large project db (385.4M): cache=32M mmap=64M wal_autocheckpoint=8000
+########## GLOBAL hot-patch validation ##########
+url: http://t.example.com/
+dropped: false (stage: )
+request-hooked: false, response-hooked: false, save-hooked: true
+save-tags: server-error|YAKIT_COLOR_RED
+
+===== origin request (len=39) =====
+GET / HTTP/1.1
+Host: t.example.com
+
+
+
+===== modified request (len=0) =====
+<empty / not changed>
+
+===== origin response (len=62) =====
+HTTP/1.1 500 Internal Server Error
+Content-Length: 5
+
+boom!
+
