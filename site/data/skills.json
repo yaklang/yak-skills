@@ -1,0 +1,526 @@
+{
+  "buildTime": "2026-06-16T14:16:10Z",
+  "categories": [
+    {
+      "description": "总入口 / 全局路由 / 调试约定",
+      "id": "entry",
+      "name": "Entry \u0026 Routing",
+      "order": 1,
+      "skillCount": 1,
+      "skills": [
+        {
+          "blobUrl": "https://github.com/yaklang/yak-skills/blob/main/skills/yak/SKILL.md",
+          "category": "entry",
+          "description": "yak-skills 总入口与路由。当用户要做 Yaklang 编程、Yak 热加载（MITM / Web Fuzzer / 全局）、Yakit 二次开发或 MCP 测试时，先从这里判断该进入哪个专题 skill。本页讲清三层热加载体系、YAK_MAIN 调试约定、go run 测试方法，并把请求路由到 mitm-hotpatch / webfuzzer-hotpatch / global-hotpatch / yaklang-syntax / yaklang-database。",
+          "exampleCount": 0,
+          "extraDocs": [],
+          "extraLines": 0,
+          "id": "yak",
+          "name": "yak",
+          "path": "skills/yak/SKILL.md",
+          "rawUrl": "https://raw.githubusercontent.com/yaklang/yak-skills/main/skills/yak/SKILL.md",
+          "skillLines": 94,
+          "skillSize": 5190,
+          "tier": "master",
+          "totalLines": 94
+        }
+      ]
+    },
+    {
+      "description": "MITM / Web Fuzzer / 全局热加载三层体系",
+      "id": "hotpatch",
+      "name": "Hot Patch (HotReload)",
+      "order": 2,
+      "skillCount": 3,
+      "skills": [
+        {
+          "blobUrl": "https://github.com/yaklang/yak-skills/blob/main/skills/mitm-hotpatch/SKILL.md",
+          "category": "hotpatch",
+          "description": "Yakit MITM 热加载 (Hot Patch) 专题。当用户需要在 MITM 中间人代理中用代码动态劫持/修改请求与响应、镜像分析流量、入库前打标签染色、或对危险操作做 mock 护栏时使用。覆盖 hijackHTTPRequest / hijackHTTPResponseEx / mirror 系列 / hijackSaveHTTPFlow / mockHTTPRequest 全部 Hook 与 forward/drop 语义。",
+          "exampleCount": 5,
+          "extraDocs": [
+            {
+              "kind": "example",
+              "lines": 77,
+              "name": "example-hijack-request-modify-json.yak",
+              "path": "skills/mitm-hotpatch/example-hijack-request-modify-json.yak",
+              "size": 3051
+            },
+            {
+              "kind": "example",
+              "lines": 77,
+              "name": "example-hijack-response-strip-js.yak",
+              "path": "skills/mitm-hotpatch/example-hijack-response-strip-js.yak",
+              "size": 2974
+            },
+            {
+              "kind": "example",
+              "lines": 60,
+              "name": "example-mirror-new-path-collect.yak",
+              "path": "skills/mitm-hotpatch/example-mirror-new-path-collect.yak",
+              "size": 2368
+            },
+            {
+              "kind": "example",
+              "lines": 77,
+              "name": "example-mock-danger-protect.yak",
+              "path": "skills/mitm-hotpatch/example-mock-danger-protect.yak",
+              "size": 2972
+            },
+            {
+              "kind": "example",
+              "lines": 86,
+              "name": "example-save-flow-tag-color.yak",
+              "path": "skills/mitm-hotpatch/example-save-flow-tag-color.yak",
+              "size": 3245
+            }
+          ],
+          "extraLines": 377,
+          "id": "mitm-hotpatch",
+          "name": "mitm-hotpatch",
+          "path": "skills/mitm-hotpatch/SKILL.md",
+          "rawUrl": "https://raw.githubusercontent.com/yaklang/yak-skills/main/skills/mitm-hotpatch/SKILL.md",
+          "skillLines": 151,
+          "skillSize": 8225,
+          "tier": "deep",
+          "totalLines": 528
+        },
+        {
+          "blobUrl": "https://github.com/yaklang/yak-skills/blob/main/skills/webfuzzer-hotpatch/SKILL.md",
+          "category": "hotpatch",
+          "description": "Yakit Web Fuzzer 热加载 (Hot Patch) 专题。当用户需要在 Web Fuzzer 单 Tab 发包时用代码自动加解密请求/响应、注入签名、智能重试、自定义业务失败判定、用 fuzztag 动态生成 payload、或从响应提取参数做关联测试时使用。覆盖 beforeRequest / afterRequest / retryHandler / customFailureChecker / mirrorHTTPFlow / mockHTTPRequest 与 {{yak(...)}} fuzztag。",
+          "exampleCount": 6,
+          "extraDocs": [
+            {
+              "kind": "example",
+              "lines": 67,
+              "name": "example-before-after-aes-cbc.yak",
+              "path": "skills/webfuzzer-hotpatch/example-before-after-aes-cbc.yak",
+              "size": 2737
+            },
+            {
+              "kind": "example",
+              "lines": 51,
+              "name": "example-custom-failure-checker.yak",
+              "path": "skills/webfuzzer-hotpatch/example-custom-failure-checker.yak",
+              "size": 2156
+            },
+            {
+              "kind": "example",
+              "lines": 54,
+              "name": "example-fuzztag-hash.yak",
+              "path": "skills/webfuzzer-hotpatch/example-fuzztag-hash.yak",
+              "size": 1956
+            },
+            {
+              "kind": "example",
+              "lines": 69,
+              "name": "example-mirror-flow-extract-params.yak",
+              "path": "skills/webfuzzer-hotpatch/example-mirror-flow-extract-params.yak",
+              "size": 2667
+            },
+            {
+              "kind": "example",
+              "lines": 77,
+              "name": "example-retry-status-aware.yak",
+              "path": "skills/webfuzzer-hotpatch/example-retry-status-aware.yak",
+              "size": 2872
+            },
+            {
+              "kind": "example",
+              "lines": 66,
+              "name": "example-sign-hmac-before-request.yak",
+              "path": "skills/webfuzzer-hotpatch/example-sign-hmac-before-request.yak",
+              "size": 2476
+            }
+          ],
+          "extraLines": 384,
+          "id": "webfuzzer-hotpatch",
+          "name": "webfuzzer-hotpatch",
+          "path": "skills/webfuzzer-hotpatch/SKILL.md",
+          "rawUrl": "https://raw.githubusercontent.com/yaklang/yak-skills/main/skills/webfuzzer-hotpatch/SKILL.md",
+          "skillLines": 133,
+          "skillSize": 6847,
+          "tier": "deep",
+          "totalLines": 517
+        },
+        {
+          "blobUrl": "https://github.com/yaklang/yak-skills/blob/main/skills/global-hotpatch/SKILL.md",
+          "category": "hotpatch",
+          "description": "Yakit 全局热加载 (Global Hot Patch) 专题。当用户需要一处配置、让 MITM 与所有 Web Fuzzer Tab 共享同一套 hook 时使用：全站透明加解密、统一签名/认证注入、动态 challenge 应答、全站染色脱敏、危险操作护栏。全局 hook 先于模块 hook 执行，同时只能启用一个。复用 beforeRequest / afterRequest / hijackHTTPRequest / hijackSaveHTTPFlow / mockHTTPRequest。",
+          "exampleCount": 4,
+          "extraDocs": [
+            {
+              "kind": "example",
+              "lines": 46,
+              "name": "example-global-auto-bearer.yak",
+              "path": "skills/global-hotpatch/example-global-auto-bearer.yak",
+              "size": 1856
+            },
+            {
+              "kind": "example",
+              "lines": 124,
+              "name": "example-global-challenge-sign.yak",
+              "path": "skills/global-hotpatch/example-global-challenge-sign.yak",
+              "size": 5701
+            },
+            {
+              "kind": "example",
+              "lines": 81,
+              "name": "example-global-flow-coloring.yak",
+              "path": "skills/global-hotpatch/example-global-flow-coloring.yak",
+              "size": 2963
+            },
+            {
+              "kind": "example",
+              "lines": 94,
+              "name": "example-global-sm4-transparent.yak",
+              "path": "skills/global-hotpatch/example-global-sm4-transparent.yak",
+              "size": 3731
+            }
+          ],
+          "extraLines": 345,
+          "id": "global-hotpatch",
+          "name": "global-hotpatch",
+          "path": "skills/global-hotpatch/SKILL.md",
+          "rawUrl": "https://raw.githubusercontent.com/yaklang/yak-skills/main/skills/global-hotpatch/SKILL.md",
+          "skillLines": 100,
+          "skillSize": 5372,
+          "tier": "deep",
+          "totalLines": 445
+        }
+      ]
+    },
+    {
+      "description": "Yaklang DSL 语法案例",
+      "id": "language",
+      "name": "Yaklang Language",
+      "order": 3,
+      "skillCount": 1,
+      "skills": [
+        {
+          "blobUrl": "https://github.com/yaklang/yak-skills/blob/main/skills/yaklang-syntax/SKILL.md",
+          "category": "language",
+          "description": "Yaklang DSL 语法案例。当用户需要写或读懂 Yaklang (.yak) 代码时使用：变量与类型、切片/map、控制流、函数（func/箭头/闭包/可变参数/多返回值）、字符串模板 f-string、以及错误处理三板斧（~ 波浪号 / if err / defer recover）。包含可直接运行的语法巡览与错误处理示例。",
+          "exampleCount": 2,
+          "extraDocs": [
+            {
+              "kind": "example",
+              "lines": 77,
+              "name": "example-error-handling.yak",
+              "path": "skills/yaklang-syntax/example-error-handling.yak",
+              "size": 2821
+            },
+            {
+              "kind": "example",
+              "lines": 139,
+              "name": "example-syntax-tour.yak",
+              "path": "skills/yaklang-syntax/example-syntax-tour.yak",
+              "size": 3841
+            }
+          ],
+          "extraLines": 216,
+          "id": "yaklang-syntax",
+          "name": "yaklang-syntax",
+          "path": "skills/yaklang-syntax/SKILL.md",
+          "rawUrl": "https://raw.githubusercontent.com/yaklang/yak-skills/main/skills/yaklang-syntax/SKILL.md",
+          "skillLines": 151,
+          "skillSize": 5403,
+          "tier": "deep",
+          "totalLines": 367
+        }
+      ]
+    },
+    {
+      "description": "数据库 / 键值存储 / Payload 管理",
+      "id": "data",
+      "name": "Data \u0026 Storage",
+      "order": 4,
+      "skillCount": 1,
+      "skills": [
+        {
+          "blobUrl": "https://github.com/yaklang/yak-skills/blob/main/skills/yaklang-database/SKILL.md",
+          "category": "data",
+          "description": "Yaklang 数据库操作 (db 库) 专题。当用户需要在脚本/插件里持久化或查询数据时使用：临时 SQLite 建表与增删改查 (db.OpenTempSqliteDatabase / db.ScanResult / Exec)、跨脚本共享配置的键值存储 (db.SetKey/GetKey/DelKey/SetKeyWithTTL)、爆破字典统一管理 (db.SavePayload/YieldPayload)、以及项目级配置 (db.SetProjectKey/GetProjectKey)。",
+          "exampleCount": 2,
+          "extraDocs": [
+            {
+              "kind": "example",
+              "lines": 66,
+              "name": "example-kv-and-payload.yak",
+              "path": "skills/yaklang-database/example-kv-and-payload.yak",
+              "size": 2180
+            },
+            {
+              "kind": "example",
+              "lines": 67,
+              "name": "example-sqlite-crud.yak",
+              "path": "skills/yaklang-database/example-sqlite-crud.yak",
+              "size": 2645
+            }
+          ],
+          "extraLines": 133,
+          "id": "yaklang-database",
+          "name": "yaklang-database",
+          "path": "skills/yaklang-database/SKILL.md",
+          "rawUrl": "https://raw.githubusercontent.com/yaklang/yak-skills/main/skills/yaklang-database/SKILL.md",
+          "skillLines": 105,
+          "skillSize": 4883,
+          "tier": "deep",
+          "totalLines": 238
+        }
+      ]
+    }
+  ],
+  "commit": "local",
+  "githubBranch": "main",
+  "githubRepo": "yaklang/yak-skills",
+  "schema": "yak-skills-index/v1",
+  "skills": [
+    {
+      "blobUrl": "https://github.com/yaklang/yak-skills/blob/main/skills/global-hotpatch/SKILL.md",
+      "category": "hotpatch",
+      "description": "Yakit 全局热加载 (Global Hot Patch) 专题。当用户需要一处配置、让 MITM 与所有 Web Fuzzer Tab 共享同一套 hook 时使用：全站透明加解密、统一签名/认证注入、动态 challenge 应答、全站染色脱敏、危险操作护栏。全局 hook 先于模块 hook 执行，同时只能启用一个。复用 beforeRequest / afterRequest / hijackHTTPRequest / hijackSaveHTTPFlow / mockHTTPRequest。",
+      "exampleCount": 4,
+      "extraDocs": [
+        {
+          "kind": "example",
+          "lines": 46,
+          "name": "example-global-auto-bearer.yak",
+          "path": "skills/global-hotpatch/example-global-auto-bearer.yak",
+          "size": 1856
+        },
+        {
+          "kind": "example",
+          "lines": 124,
+          "name": "example-global-challenge-sign.yak",
+          "path": "skills/global-hotpatch/example-global-challenge-sign.yak",
+          "size": 5701
+        },
+        {
+          "kind": "example",
+          "lines": 81,
+          "name": "example-global-flow-coloring.yak",
+          "path": "skills/global-hotpatch/example-global-flow-coloring.yak",
+          "size": 2963
+        },
+        {
+          "kind": "example",
+          "lines": 94,
+          "name": "example-global-sm4-transparent.yak",
+          "path": "skills/global-hotpatch/example-global-sm4-transparent.yak",
+          "size": 3731
+        }
+      ],
+      "extraLines": 345,
+      "id": "global-hotpatch",
+      "name": "global-hotpatch",
+      "path": "skills/global-hotpatch/SKILL.md",
+      "rawUrl": "https://raw.githubusercontent.com/yaklang/yak-skills/main/skills/global-hotpatch/SKILL.md",
+      "skillLines": 100,
+      "skillSize": 5372,
+      "tier": "deep",
+      "totalLines": 445
+    },
+    {
+      "blobUrl": "https://github.com/yaklang/yak-skills/blob/main/skills/mitm-hotpatch/SKILL.md",
+      "category": "hotpatch",
+      "description": "Yakit MITM 热加载 (Hot Patch) 专题。当用户需要在 MITM 中间人代理中用代码动态劫持/修改请求与响应、镜像分析流量、入库前打标签染色、或对危险操作做 mock 护栏时使用。覆盖 hijackHTTPRequest / hijackHTTPResponseEx / mirror 系列 / hijackSaveHTTPFlow / mockHTTPRequest 全部 Hook 与 forward/drop 语义。",
+      "exampleCount": 5,
+      "extraDocs": [
+        {
+          "kind": "example",
+          "lines": 77,
+          "name": "example-hijack-request-modify-json.yak",
+          "path": "skills/mitm-hotpatch/example-hijack-request-modify-json.yak",
+          "size": 3051
+        },
+        {
+          "kind": "example",
+          "lines": 77,
+          "name": "example-hijack-response-strip-js.yak",
+          "path": "skills/mitm-hotpatch/example-hijack-response-strip-js.yak",
+          "size": 2974
+        },
+        {
+          "kind": "example",
+          "lines": 60,
+          "name": "example-mirror-new-path-collect.yak",
+          "path": "skills/mitm-hotpatch/example-mirror-new-path-collect.yak",
+          "size": 2368
+        },
+        {
+          "kind": "example",
+          "lines": 77,
+          "name": "example-mock-danger-protect.yak",
+          "path": "skills/mitm-hotpatch/example-mock-danger-protect.yak",
+          "size": 2972
+        },
+        {
+          "kind": "example",
+          "lines": 86,
+          "name": "example-save-flow-tag-color.yak",
+          "path": "skills/mitm-hotpatch/example-save-flow-tag-color.yak",
+          "size": 3245
+        }
+      ],
+      "extraLines": 377,
+      "id": "mitm-hotpatch",
+      "name": "mitm-hotpatch",
+      "path": "skills/mitm-hotpatch/SKILL.md",
+      "rawUrl": "https://raw.githubusercontent.com/yaklang/yak-skills/main/skills/mitm-hotpatch/SKILL.md",
+      "skillLines": 151,
+      "skillSize": 8225,
+      "tier": "deep",
+      "totalLines": 528
+    },
+    {
+      "blobUrl": "https://github.com/yaklang/yak-skills/blob/main/skills/webfuzzer-hotpatch/SKILL.md",
+      "category": "hotpatch",
+      "description": "Yakit Web Fuzzer 热加载 (Hot Patch) 专题。当用户需要在 Web Fuzzer 单 Tab 发包时用代码自动加解密请求/响应、注入签名、智能重试、自定义业务失败判定、用 fuzztag 动态生成 payload、或从响应提取参数做关联测试时使用。覆盖 beforeRequest / afterRequest / retryHandler / customFailureChecker / mirrorHTTPFlow / mockHTTPRequest 与 {{yak(...)}} fuzztag。",
+      "exampleCount": 6,
+      "extraDocs": [
+        {
+          "kind": "example",
+          "lines": 67,
+          "name": "example-before-after-aes-cbc.yak",
+          "path": "skills/webfuzzer-hotpatch/example-before-after-aes-cbc.yak",
+          "size": 2737
+        },
+        {
+          "kind": "example",
+          "lines": 51,
+          "name": "example-custom-failure-checker.yak",
+          "path": "skills/webfuzzer-hotpatch/example-custom-failure-checker.yak",
+          "size": 2156
+        },
+        {
+          "kind": "example",
+          "lines": 54,
+          "name": "example-fuzztag-hash.yak",
+          "path": "skills/webfuzzer-hotpatch/example-fuzztag-hash.yak",
+          "size": 1956
+        },
+        {
+          "kind": "example",
+          "lines": 69,
+          "name": "example-mirror-flow-extract-params.yak",
+          "path": "skills/webfuzzer-hotpatch/example-mirror-flow-extract-params.yak",
+          "size": 2667
+        },
+        {
+          "kind": "example",
+          "lines": 77,
+          "name": "example-retry-status-aware.yak",
+          "path": "skills/webfuzzer-hotpatch/example-retry-status-aware.yak",
+          "size": 2872
+        },
+        {
+          "kind": "example",
+          "lines": 66,
+          "name": "example-sign-hmac-before-request.yak",
+          "path": "skills/webfuzzer-hotpatch/example-sign-hmac-before-request.yak",
+          "size": 2476
+        }
+      ],
+      "extraLines": 384,
+      "id": "webfuzzer-hotpatch",
+      "name": "webfuzzer-hotpatch",
+      "path": "skills/webfuzzer-hotpatch/SKILL.md",
+      "rawUrl": "https://raw.githubusercontent.com/yaklang/yak-skills/main/skills/webfuzzer-hotpatch/SKILL.md",
+      "skillLines": 133,
+      "skillSize": 6847,
+      "tier": "deep",
+      "totalLines": 517
+    },
+    {
+      "blobUrl": "https://github.com/yaklang/yak-skills/blob/main/skills/yak/SKILL.md",
+      "category": "entry",
+      "description": "yak-skills 总入口与路由。当用户要做 Yaklang 编程、Yak 热加载（MITM / Web Fuzzer / 全局）、Yakit 二次开发或 MCP 测试时，先从这里判断该进入哪个专题 skill。本页讲清三层热加载体系、YAK_MAIN 调试约定、go run 测试方法，并把请求路由到 mitm-hotpatch / webfuzzer-hotpatch / global-hotpatch / yaklang-syntax / yaklang-database。",
+      "exampleCount": 0,
+      "extraDocs": [],
+      "extraLines": 0,
+      "id": "yak",
+      "name": "yak",
+      "path": "skills/yak/SKILL.md",
+      "rawUrl": "https://raw.githubusercontent.com/yaklang/yak-skills/main/skills/yak/SKILL.md",
+      "skillLines": 94,
+      "skillSize": 5190,
+      "tier": "master",
+      "totalLines": 94
+    },
+    {
+      "blobUrl": "https://github.com/yaklang/yak-skills/blob/main/skills/yaklang-database/SKILL.md",
+      "category": "data",
+      "description": "Yaklang 数据库操作 (db 库) 专题。当用户需要在脚本/插件里持久化或查询数据时使用：临时 SQLite 建表与增删改查 (db.OpenTempSqliteDatabase / db.ScanResult / Exec)、跨脚本共享配置的键值存储 (db.SetKey/GetKey/DelKey/SetKeyWithTTL)、爆破字典统一管理 (db.SavePayload/YieldPayload)、以及项目级配置 (db.SetProjectKey/GetProjectKey)。",
+      "exampleCount": 2,
+      "extraDocs": [
+        {
+          "kind": "example",
+          "lines": 66,
+          "name": "example-kv-and-payload.yak",
+          "path": "skills/yaklang-database/example-kv-and-payload.yak",
+          "size": 2180
+        },
+        {
+          "kind": "example",
+          "lines": 67,
+          "name": "example-sqlite-crud.yak",
+          "path": "skills/yaklang-database/example-sqlite-crud.yak",
+          "size": 2645
+        }
+      ],
+      "extraLines": 133,
+      "id": "yaklang-database",
+      "name": "yaklang-database",
+      "path": "skills/yaklang-database/SKILL.md",
+      "rawUrl": "https://raw.githubusercontent.com/yaklang/yak-skills/main/skills/yaklang-database/SKILL.md",
+      "skillLines": 105,
+      "skillSize": 4883,
+      "tier": "deep",
+      "totalLines": 238
+    },
+    {
+      "blobUrl": "https://github.com/yaklang/yak-skills/blob/main/skills/yaklang-syntax/SKILL.md",
+      "category": "language",
+      "description": "Yaklang DSL 语法案例。当用户需要写或读懂 Yaklang (.yak) 代码时使用：变量与类型、切片/map、控制流、函数（func/箭头/闭包/可变参数/多返回值）、字符串模板 f-string、以及错误处理三板斧（~ 波浪号 / if err / defer recover）。包含可直接运行的语法巡览与错误处理示例。",
+      "exampleCount": 2,
+      "extraDocs": [
+        {
+          "kind": "example",
+          "lines": 77,
+          "name": "example-error-handling.yak",
+          "path": "skills/yaklang-syntax/example-error-handling.yak",
+          "size": 2821
+        },
+        {
+          "kind": "example",
+          "lines": 139,
+          "name": "example-syntax-tour.yak",
+          "path": "skills/yaklang-syntax/example-syntax-tour.yak",
+          "size": 3841
+        }
+      ],
+      "extraLines": 216,
+      "id": "yaklang-syntax",
+      "name": "yaklang-syntax",
+      "path": "skills/yaklang-syntax/SKILL.md",
+      "rawUrl": "https://raw.githubusercontent.com/yaklang/yak-skills/main/skills/yaklang-syntax/SKILL.md",
+      "skillLines": 151,
+      "skillSize": 5403,
+      "tier": "deep",
+      "totalLines": 367
+    }
+  ],
+  "tierCounts": {
+    "category": 0,
+    "deep": 5,
+    "master": 1
+  },
+  "totalCategories": 4,
+  "totalExamples": 19,
+  "totalLines": 2189,
+  "totalSize": 35920,
+  "totalSkills": 6,
+  "version": "dev"
+}

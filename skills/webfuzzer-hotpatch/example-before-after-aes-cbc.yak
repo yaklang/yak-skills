@@ -1,0 +1,66 @@
+/*
+示例: [加解密] beforeRequest 加密请求 + afterRequest 解密响应 (AES-CBC 双向)
+关键词: beforeRequest, afterRequest, Web Fuzzer 热加载, AES-CBC, Base64, 双向加解密, 前端加密对抗
+适用场景: 客户端用 AES-CBC 加密请求 body, 服务端响应 body 也是密文; 用热加载在发包前加密、收包后解密, 让 Fuzzer 里直接看明文
+参考: yak-project-public 270 (2022-07-28) 前端 AES 加密测试; 043 热加载函数
+
+签名:
+  beforeRequest(https, originReq, req) -> req      请求出站前, 返回值即最终请求
+  afterRequest(https, originReq, req, originRsp, rsp) -> rsp   响应回显前, 返回值即最终响应
+*/
+
+// ===== HOT PATCH TEMPLATE START =====
+// key / iv 用 Base64 表示, 替换为实际值 (此处为 AES-128, 16 字节)
+AES_KEY = codec.DecodeBase64("MTIzNDU2Nzg5MDEyMzQ1Ng==")~
+AES_IV = codec.DecodeBase64("MTIzNDU2Nzg5MDEyMzQ1Ng==")~
+
+beforeRequest = func(https, originReq, req) {
+    body = poc.GetHTTPPacketBody(req)
+    if len(body) == 0 {
+        return req
+    }
+    cipher = codec.AESCBCEncrypt(AES_KEY, body, AES_IV)~
+    return poc.ReplaceHTTPPacketBody(req, codec.EncodeBase64(cipher))
+}
+
+afterRequest = func(https, originReq, req, originRsp, rsp) {
+    body = poc.GetHTTPPacketBody(rsp)
+    if len(body) == 0 {
+        return rsp
+    }
+    cipher = codec.DecodeBase64(body)~
+    plain = codec.AESCBCDecrypt(AES_KEY, cipher, AES_IV)~
+    return poc.ReplaceHTTPPacketBody(rsp, plain)
+}
+
+/*
+========== 自测块 (YAK_MAIN 守卫) ==========
+*/
+func runSelfTest() {
+    log.info("start aes cbc bidirectional self test")
+
+    plainReqBody = `{"action":"transfer","amount":100}`
+    mockReq = "POST /api/pay HTTP/1.1\r\nHost: bank.local\r\nContent-Type: application/json\r\n\r\n" + plainReqBody
+
+    encReq = beforeRequest(true, []byte(mockReq), []byte(mockReq))
+    encBody = poc.GetHTTPPacketBody(encReq)
+    backPlain = codec.AESCBCDecrypt(AES_KEY, codec.DecodeBase64(encBody)~, AES_IV)~
+    assert string(backPlain) == plainReqBody, "request encrypt roundtrip mismatch"
+    log.info("encrypted req body (base64): " + string(encBody))
+
+    plainRspBody = `{"code":0,"txn_id":"abc123"}`
+    encRsp = codec.EncodeBase64(codec.AESCBCEncrypt(AES_KEY, plainRspBody, AES_IV)~)
+    mockRsp = "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n" + encRsp
+
+    decRsp = afterRequest(true, []byte(mockReq), []byte(mockReq), []byte(mockRsp), []byte(mockRsp))
+    decBody = string(poc.GetHTTPPacketBody(decRsp))
+    assert decBody == plainRspBody, "response decrypt mismatch"
+    log.info("decrypted rsp body: " + decBody)
+
+    log.info("aes cbc bidirectional self test passed")
+}
+
+if YAK_MAIN {
+    runSelfTest()
+}
+// ===== HOT PATCH TEMPLATE END =====

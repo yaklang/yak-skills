@@ -1,0 +1,51 @@
+# yak-skills 分类映射 - 单一真相源
+# 关键词: categories, single source of truth, skill grouping
+#
+# 维护规则:
+# 1. skills/ 下新增目录后, 必须在这里登记到合适分类, 否则 build-skills-index.yak 会报错
+# 2. id 用于 URL hash 锚点和过滤参数, 必须 ASCII 短横线
+# 3. order 决定分类在主页的展示顺序
+# 4. tier 三档:
+#    - master:   总入口 (只有 yak)
+#    - category: 分类入口 (xxx-sec)
+#    - deep:     具体专题技能
+# 5. 分类内的 skills 顺序与 README.md 中各表保持一致, 便于 grep 对照
+
+categories:
+  - id: entry
+    name: Entry & Routing
+    order: 1
+    description: 总入口 / 全局路由 / 调试约定
+    skills:
+      - yak
+
+  - id: hotpatch
+    name: Hot Patch (HotReload)
+    order: 2
+    description: MITM / Web Fuzzer / 全局热加载三层体系
+    skills:
+      - mitm-hotpatch
+      - webfuzzer-hotpatch
+      - global-hotpatch
+
+  - id: language
+    name: Yaklang Language
+    order: 3
+    description: Yaklang DSL 语法案例
+    skills:
+      - yaklang-syntax
+
+  - id: data
+    name: Data & Storage
+    order: 4
+    description: 数据库 / 键值存储 / Payload 管理
+    skills:
+      - yaklang-database
+
+# 关键词: tier override - 用于覆盖默认推断
+# 规则:
+#   - yak -> master
+#   - 名字以 -sec 结尾 -> category
+#   - 其他 -> deep
+tier_overrides:
+  yak: master
