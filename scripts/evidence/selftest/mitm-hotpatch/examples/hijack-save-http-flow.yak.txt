@@ -1,4 +1,4 @@
-[36m[INFO][0m 2026-06-16 23:46:01 [sqlite_large_db_tune:109] sqlite tuned for large project db (298.9M): cache=32M mmap=64M wal_autocheckpoint=8000
-[36m[INFO][0m 2026-06-16 23:46:01 [hijack-save-http-flow:83] start save flow tag color self test
-[36m[INFO][0m 2026-06-16 23:46:01 [hijack-save-http-flow:83] hit tags: [credential credential pii admin-related], colors: [Red Red Orange Purple]
-[36m[INFO][0m 2026-06-16 23:46:01 [hijack-save-http-flow:83] save flow tag color self test passed
+[36m[INFO][0m 2026-06-16 23:54:12 [sqlite_large_db_tune:109] sqlite tuned for large project db (298.9M): cache=32M mmap=64M wal_autocheckpoint=8000
+[36m[INFO][0m 2026-06-16 23:54:12 [hijack-save-http-flow:83] start save flow tag color self test
+[36m[INFO][0m 2026-06-16 23:54:12 [hijack-save-http-flow:83] hit tags: [credential credential pii admin-related], colors: [Red Red Orange Purple]
+[36m[INFO][0m 2026-06-16 23:54:12 [hijack-save-http-flow:83] save flow tag color self test passed

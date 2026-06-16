@@ -92,6 +92,8 @@ yak <path-to>.yak
 - 在关键代码位置加 `// 关键词: ...` 注释，便于 grep 与 AI 检索。
 - 不使用 emoji，只用 ASCII、中文与必要标点。
 - 以认真查阅为荣，以暗猜接口为耻；不确定就 `desc(obj)` 或直接 `go run` 试。
+- 并发安全：热加载 hook 会被 **并发** 调用。顶层全局只放 **只读常量**（密钥/IV/规则），**绝不在 hook 内写共享可变全局**（裸 `append` 全局 slice、改全局 map 会 data race 崩溃）；需聚合用 `sync.Map`/`sync.NewMutex()` 或 `db.*`/`risk.*`。
+- 前端加密各种 HACK / 让用户看到明文：见 [webfuzzer-hotpatch](../webfuzzer-hotpatch/SKILL.md) 第 5 节组合配方（`examples/combo-*.yak`）。
 
 ## 参考来源
 

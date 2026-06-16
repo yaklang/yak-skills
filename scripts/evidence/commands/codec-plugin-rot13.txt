@@ -1,6 +1,6 @@
 "/tmp/yak-hotpatch" codec-plugin --script "/Users/v1ll4n/Projects/yak-skills/skills/yaklang-toolchain/examples/codec-rot13.yak" --input "Hello, Yak!"
 
-[36m[INFO][0m 2026-06-16 23:46:11 [sqlite_large_db_tune:109] sqlite tuned for large project db (298.9M): cache=32M mmap=64M wal_autocheckpoint=8000
+[36m[INFO][0m 2026-06-16 23:54:23 [sqlite_large_db_tune:109] sqlite tuned for large project db (298.9M): cache=32M mmap=64M wal_autocheckpoint=8000
 ########## CODEC plugin validation ##########
 input  (len=11): Hello, Yak!
 output (len=11): Uryyb, Lnx!

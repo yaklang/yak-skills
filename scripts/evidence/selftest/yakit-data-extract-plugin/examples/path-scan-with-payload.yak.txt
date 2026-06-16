@@ -1,8 +1,8 @@
-[36m[INFO][0m 2026-06-16 23:46:06 [sqlite_large_db_tune:109] sqlite tuned for large project db (298.9M): cache=32M mmap=64M wal_autocheckpoint=8000
-[36m[INFO][0m 2026-06-16 23:46:07 [path-scan-with-payload:124] start path-scan-with-payload self test
-[36m[INFO][0m 2026-06-16 23:46:07 [path-scan-with-payload:124] deduped paths: [/admin /api/users /login /not-exist]
-[36m[INFO][0m 2026-06-16 23:46:07 [path-scan-with-payload:124] scan /admin -> code=200
-[36m[INFO][0m 2026-06-16 23:46:07 [path-scan-with-payload:124] scan /api/users -> code=200
-[36m[INFO][0m 2026-06-16 23:46:07 [path-scan-with-payload:124] scan /login -> code=200
-[36m[INFO][0m 2026-06-16 23:46:07 [path-scan-with-payload:124] scan /not-exist -> code=404
-[36m[INFO][0m 2026-06-16 23:46:07 [path-scan-with-payload:124] path-scan-with-payload self test passed
+[36m[INFO][0m 2026-06-16 23:54:18 [sqlite_large_db_tune:109] sqlite tuned for large project db (298.9M): cache=32M mmap=64M wal_autocheckpoint=8000
+[36m[INFO][0m 2026-06-16 23:54:18 [path-scan-with-payload:124] start path-scan-with-payload self test
+[36m[INFO][0m 2026-06-16 23:54:18 [path-scan-with-payload:124] deduped paths: [/admin /api/users /login /not-exist]
+[36m[INFO][0m 2026-06-16 23:54:18 [path-scan-with-payload:124] scan /admin -> code=200
+[36m[INFO][0m 2026-06-16 23:54:18 [path-scan-with-payload:124] scan /api/users -> code=200
+[36m[INFO][0m 2026-06-16 23:54:18 [path-scan-with-payload:124] scan /login -> code=200
+[36m[INFO][0m 2026-06-16 23:54:18 [path-scan-with-payload:124] scan /not-exist -> code=404
+[36m[INFO][0m 2026-06-16 23:54:18 [path-scan-with-payload:124] path-scan-with-payload self test passed

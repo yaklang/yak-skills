@@ -35,7 +35,7 @@ Yak Skills 模仿目录式 SKILL 知识库范式，围绕 Yak 公众号文章（
 |---|---|---|
 | [`yak`](skills/yak/SKILL.md) | 总入口 | 三层热加载路由、YAK_MAIN 调试约定、测试方法 |
 | [`mitm-hotpatch`](skills/mitm-hotpatch/SKILL.md) | 专题 | MITM 六类 Hook：hijackHTTPRequest / hijackHTTPResponseEx / mirror* / hijackSaveHTTPFlow / mockHTTPRequest |
-| [`webfuzzer-hotpatch`](skills/webfuzzer-hotpatch/SKILL.md) | 专题 | beforeRequest / afterRequest / retryHandler / customFailureChecker / mirrorHTTPFlow / fuzztag |
+| [`webfuzzer-hotpatch`](skills/webfuzzer-hotpatch/SKILL.md) | 专题 | beforeRequest / afterRequest / retryHandler / customFailureChecker / mirrorHTTPFlow / fuzztag；前端加密对抗组合配方（AES-CBC / 加密+验签 / RSA+AES-GCM 混合）让用户看到明文 |
 | [`global-hotpatch`](skills/global-hotpatch/SKILL.md) | 专题 | 全站透明加解密、动态 challenge 签名、统一认证、全站染色 |
 | [`yaklang-syntax`](skills/yaklang-syntax/SKILL.md) | 专题 | 变量 / 控制流 / 函数 / 闭包 / f-string / 错误处理 `~` |
 | [`yaklang-database`](skills/yaklang-database/SKILL.md) | 专题 | SQLite / 键值存储 / Payload 字典 / 项目配置 |

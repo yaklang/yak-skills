@@ -1,6 +1,6 @@
-[36m[INFO][0m 2026-06-16 23:46:02 [sqlite_large_db_tune:109] sqlite tuned for large project db (298.9M): cache=32M mmap=64M wal_autocheckpoint=8000
-[36m[INFO][0m 2026-06-16 23:46:02 [mirror-new-website:54] start mirror new website self test
-[36m[INFO][0m 2026-06-16 23:46:02 [mirror-new-website:54] discover new website: http://a.target.local
-[36m[INFO][0m 2026-06-16 23:46:02 [mirror-new-website:54] discover new website: https://b.target.local
-[36m[INFO][0m 2026-06-16 23:46:02 [mirror-new-website:54] new sites: [http://a.target.local https://b.target.local]
-[36m[INFO][0m 2026-06-16 23:46:02 [mirror-new-website:54] mirror new website self test passed
+[36m[INFO][0m 2026-06-16 23:54:14 [sqlite_large_db_tune:109] sqlite tuned for large project db (298.9M): cache=32M mmap=64M wal_autocheckpoint=8000
+[36m[INFO][0m 2026-06-16 23:54:14 [mirror-new-website:54] start mirror new website self test
+[36m[INFO][0m 2026-06-16 23:54:14 [mirror-new-website:54] discover new website: http://a.target.local
+[36m[INFO][0m 2026-06-16 23:54:14 [mirror-new-website:54] discover new website: https://b.target.local
+[36m[INFO][0m 2026-06-16 23:54:14 [mirror-new-website:54] new sites: [http://a.target.local https://b.target.local]
+[36m[INFO][0m 2026-06-16 23:54:14 [mirror-new-website:54] mirror new website self test passed

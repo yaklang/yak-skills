@@ -1,5 +1,5 @@
-[36m[INFO][0m 2026-06-16 23:45:54 [sqlite_large_db_tune:109] sqlite tuned for large project db (298.9M): cache=32M mmap=64M wal_autocheckpoint=8000
-[36m[INFO][0m 2026-06-16 23:45:55 [advanced-challenge-sign:121] start global challenge sign self test
-[36m[INFO][0m 2026-06-16 23:45:55 [advanced-challenge-sign:121] computed signature: c9f36e99b46389cefc289002c02f88548403de96d0facf8a6cc99d1ded27f632
-[36m[INFO][0m 2026-06-16 23:45:55 [advanced-challenge-sign:121] decrypted body: {"email":"admin@yaklang.io","message":"Congratulations! You have successfully passed the challenge.","permission":"all","used_nonce":"4d001ca5c0c2c41524396baea5fe0f07259f0597b4216abc885c2ab2512169c3","user":"admin"}
-[36m[INFO][0m 2026-06-16 23:45:55 [advanced-challenge-sign:121] global challenge sign self test passed
+[36m[INFO][0m 2026-06-16 23:54:06 [sqlite_large_db_tune:109] sqlite tuned for large project db (298.9M): cache=32M mmap=64M wal_autocheckpoint=8000
+[36m[INFO][0m 2026-06-16 23:54:06 [advanced-challenge-sign:121] start global challenge sign self test
+[36m[INFO][0m 2026-06-16 23:54:06 [advanced-challenge-sign:121] computed signature: c9f36e99b46389cefc289002c02f88548403de96d0facf8a6cc99d1ded27f632
+[36m[INFO][0m 2026-06-16 23:54:06 [advanced-challenge-sign:121] decrypted body: {"email":"admin@yaklang.io","message":"Congratulations! You have successfully passed the challenge.","permission":"all","used_nonce":"4d001ca5c0c2c41524396baea5fe0f07259f0597b4216abc885c2ab2512169c3","user":"admin"}
+[36m[INFO][0m 2026-06-16 23:54:06 [advanced-challenge-sign:121] global challenge sign self test passed

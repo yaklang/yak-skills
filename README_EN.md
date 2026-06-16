@@ -35,7 +35,7 @@ Module Hot Patch
 |---|---|---|
 | [`yak`](skills/yak/SKILL.md) | master | three-layer routing, YAK_MAIN debug convention, test method |
 | [`mitm-hotpatch`](skills/mitm-hotpatch/SKILL.md) | topic | MITM hooks: hijackHTTPRequest / hijackHTTPResponseEx / mirror* / hijackSaveHTTPFlow / mockHTTPRequest |
-| [`webfuzzer-hotpatch`](skills/webfuzzer-hotpatch/SKILL.md) | topic | beforeRequest / afterRequest / retryHandler / customFailureChecker / mirrorHTTPFlow / fuzztag |
+| [`webfuzzer-hotpatch`](skills/webfuzzer-hotpatch/SKILL.md) | topic | beforeRequest / afterRequest / retryHandler / customFailureChecker / mirrorHTTPFlow / fuzztag; frontend-encryption combo recipes (AES-CBC / encrypt+sign / RSA+AES-GCM hybrid) to see plaintext |
 | [`global-hotpatch`](skills/global-hotpatch/SKILL.md) | topic | site-wide transparent crypto, dynamic challenge signing, unified auth, site-wide coloring |
 | [`yaklang-syntax`](skills/yaklang-syntax/SKILL.md) | topic | variables / control flow / functions / closures / f-string / error handling `~` |
 | [`yaklang-database`](skills/yaklang-database/SKILL.md) | topic | SQLite / key-value store / payload dictionaries / project config |

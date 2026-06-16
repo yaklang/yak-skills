@@ -120,6 +120,8 @@ if YAK_MAIN {
 
 因此把含自测块的完整脚本粘贴回 yakit 是绝对安全的。
 
+> 并发与全局变量（重要，避免崩溃）：MITM 会 **并发** 调用同一份 hook。顶层全局变量请当作 **只读常量**（密钥/IV/规则表加载时赋值一次、hook 内绝不修改）。**不要在 hook 里写共享可变全局**（裸 `append` 全局 slice、给全局 map 赋值会触发 data race 直接 panic）。需要跨请求聚合时用 `sync.Map`/`sync.NewMutex()` 或 `db.*`/`risk.*` 落库；本库 `mirror-*` 示例里的全局累加只是 **单线程命令行自测** 的演示写法。详见 [webfuzzer-hotpatch 第 6 节](../webfuzzer-hotpatch/SKILL.md)。
+
 ### 各 Hook 的自测 mock 方式
 
 | Hook | 自测验证方式 |

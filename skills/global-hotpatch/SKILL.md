@@ -95,6 +95,8 @@ sequenceDiagram
 
 > 在线 hook（如 challenge 链路里的 `fetchChallengeSignature` 需 `poc.HTTP` 发副请求）在自测时可只验证其依赖的**纯函数**（签名计算、响应解密），避免自测依赖真实靶场。
 
+> 并发与全局变量（重要）：全局热加载作用面更广、并发更高。顶层全局只放 **只读常量**（密钥/IV/规则，加载一次后不改），**绝不在 hook 里写共享可变全局**，否则多请求并发写会 data race 崩溃。跨请求聚合用 `sync.Map`/`sync.NewMutex()` 或 `db.*`/`risk.*`。详见 [webfuzzer-hotpatch 第 6 节](../webfuzzer-hotpatch/SKILL.md)。
+
 ## 5. 验证
 
 ```bash

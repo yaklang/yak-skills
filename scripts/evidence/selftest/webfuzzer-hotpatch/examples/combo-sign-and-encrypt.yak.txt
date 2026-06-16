@@ -1,0 +1,4 @@
+[36m[INFO][0m 2026-06-16 23:54:16 [sqlite_large_db_tune:109] sqlite tuned for large project db (298.9M): cache=32M mmap=64M wal_autocheckpoint=8000
+[36m[INFO][0m 2026-06-16 23:54:16 [combo-sign-and-encrypt:88] start combo sign-and-encrypt self test
+[36m[INFO][0m 2026-06-16 23:54:16 [combo-sign-and-encrypt:88] signature header: a975b13e72e29cdf8f35a0c8a4584438f8e7800e9976198415782902d8b9b6eb
+[36m[INFO][0m 2026-06-16 23:54:16 [combo-sign-and-encrypt:88] combo sign-and-encrypt self test passed

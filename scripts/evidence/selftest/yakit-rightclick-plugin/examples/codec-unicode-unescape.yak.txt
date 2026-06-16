@@ -1,4 +1,4 @@
-[36m[INFO][0m 2026-06-16 23:46:08 [sqlite_large_db_tune:109] sqlite tuned for large project db (298.9M): cache=32M mmap=64M wal_autocheckpoint=8000
-[36m[INFO][0m 2026-06-16 23:46:08 [codec-unicode-unescape:34] start codec unicode unescape self test
-[36m[INFO][0m 2026-06-16 23:46:08 [codec-unicode-unescape:34] unescaped: 中文abc
-[36m[INFO][0m 2026-06-16 23:46:08 [codec-unicode-unescape:34] codec unicode unescape self test passed
+[36m[INFO][0m 2026-06-16 23:54:20 [sqlite_large_db_tune:109] sqlite tuned for large project db (298.9M): cache=32M mmap=64M wal_autocheckpoint=8000
+[36m[INFO][0m 2026-06-16 23:54:20 [codec-unicode-unescape:34] start codec unicode unescape self test
+[36m[INFO][0m 2026-06-16 23:54:20 [codec-unicode-unescape:34] unescaped: 中文abc
+[36m[INFO][0m 2026-06-16 23:54:20 [codec-unicode-unescape:34] codec unicode unescape self test passed

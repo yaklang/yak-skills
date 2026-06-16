@@ -1,6 +1,6 @@
-[36m[INFO][0m 2026-06-16 23:45:58 [sqlite_large_db_tune:109] sqlite tuned for large project db (298.9M): cache=32M mmap=64M wal_autocheckpoint=8000
-[36m[INFO][0m 2026-06-16 23:45:58 [mirror-new-website-path-params:47] start global mirror new website path params self test
-[36m[INFO][0m 2026-06-16 23:45:58 [mirror-new-website-path-params:47] global fuzzable endpoint: corp.local/search[2 params]
-[36m[INFO][0m 2026-06-16 23:45:58 [mirror-new-website-path-params:47] global fuzzable endpoint: corp.local/item[1 params]
-[36m[INFO][0m 2026-06-16 23:45:58 [mirror-new-website-path-params:47] endpoints: 2
-[36m[INFO][0m 2026-06-16 23:45:58 [mirror-new-website-path-params:47] global mirror new website path params self test passed
+[36m[INFO][0m 2026-06-16 23:54:09 [sqlite_large_db_tune:109] sqlite tuned for large project db (298.9M): cache=32M mmap=64M wal_autocheckpoint=8000
+[36m[INFO][0m 2026-06-16 23:54:09 [mirror-new-website-path-params:47] start global mirror new website path params self test
+[36m[INFO][0m 2026-06-16 23:54:09 [mirror-new-website-path-params:47] global fuzzable endpoint: corp.local/search[2 params]
+[36m[INFO][0m 2026-06-16 23:54:09 [mirror-new-website-path-params:47] global fuzzable endpoint: corp.local/item[1 params]
+[36m[INFO][0m 2026-06-16 23:54:09 [mirror-new-website-path-params:47] endpoints: 2
+[36m[INFO][0m 2026-06-16 23:54:09 [mirror-new-website-path-params:47] global mirror new website path params self test passed

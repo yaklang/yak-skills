@@ -1,4 +1,4 @@
-[36m[INFO][0m 2026-06-16 23:46:00 [sqlite_large_db_tune:109] sqlite tuned for large project db (298.9M): cache=32M mmap=64M wal_autocheckpoint=8000
-[36m[INFO][0m 2026-06-16 23:46:00 [hijack-response-ex:74] start hijack response strip js self test
-[36m[INFO][0m 2026-06-16 23:46:00 [hijack-response-ex:74] rewritten js: function init(){ console.log('ALERT_BYPASSED',"admin only"); window.__bypassed_href = "/login"; }
-[36m[INFO][0m 2026-06-16 23:46:00 [hijack-response-ex:74] hijack response strip js self test passed
+[36m[INFO][0m 2026-06-16 23:54:12 [sqlite_large_db_tune:109] sqlite tuned for large project db (298.9M): cache=32M mmap=64M wal_autocheckpoint=8000
+[36m[INFO][0m 2026-06-16 23:54:12 [hijack-response-ex:74] start hijack response strip js self test
+[36m[INFO][0m 2026-06-16 23:54:12 [hijack-response-ex:74] rewritten js: function init(){ console.log('ALERT_BYPASSED',"admin only"); window.__bypassed_href = "/login"; }
+[36m[INFO][0m 2026-06-16 23:54:12 [hijack-response-ex:74] hijack response strip js self test passed

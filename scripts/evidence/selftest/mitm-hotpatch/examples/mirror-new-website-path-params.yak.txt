@@ -1,6 +1,6 @@
-[36m[INFO][0m 2026-06-16 23:46:02 [sqlite_large_db_tune:109] sqlite tuned for large project db (298.9M): cache=32M mmap=64M wal_autocheckpoint=8000
-[36m[INFO][0m 2026-06-16 23:46:02 [mirror-new-website-path-params:76] start mirror new website path params self test
-[36m[INFO][0m 2026-06-16 23:46:02 [mirror-new-website-path-params:76] discover new endpoint structure: target.local/search?{page,q}
-[36m[INFO][0m 2026-06-16 23:46:02 [mirror-new-website-path-params:76] discover new endpoint structure: target.local/item?{id}
-[36m[INFO][0m 2026-06-16 23:46:02 [mirror-new-website-path-params:76] endpoints: [target.local/search?{page,q} target.local/item?{id}]
-[36m[INFO][0m 2026-06-16 23:46:02 [mirror-new-website-path-params:76] mirror new website path params self test passed
+[36m[INFO][0m 2026-06-16 23:54:13 [sqlite_large_db_tune:109] sqlite tuned for large project db (298.9M): cache=32M mmap=64M wal_autocheckpoint=8000
+[36m[INFO][0m 2026-06-16 23:54:13 [mirror-new-website-path-params:76] start mirror new website path params self test
+[36m[INFO][0m 2026-06-16 23:54:13 [mirror-new-website-path-params:76] discover new endpoint structure: target.local/search?{page,q}
+[36m[INFO][0m 2026-06-16 23:54:13 [mirror-new-website-path-params:76] discover new endpoint structure: target.local/item?{id}
+[36m[INFO][0m 2026-06-16 23:54:13 [mirror-new-website-path-params:76] endpoints: [target.local/search?{page,q} target.local/item?{id}]
+[36m[INFO][0m 2026-06-16 23:54:13 [mirror-new-website-path-params:76] mirror new website path params self test passed

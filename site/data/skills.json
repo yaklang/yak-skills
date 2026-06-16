@@ -1,5 +1,5 @@
 {
-  "buildTime": "2026-06-16T15:45:37Z",
+  "buildTime": "2026-06-16T15:54:01Z",
   "categories": [
     {
       "description": "总入口 / 全局路由 / 调试约定",
@@ -19,10 +19,10 @@
           "name": "yak",
           "path": "skills/yak/SKILL.md",
           "rawUrl": "https://raw.githubusercontent.com/yaklang/yak-skills/main/skills/yak/SKILL.md",
-          "skillLines": 99,
-          "skillSize": 6138,
+          "skillLines": 101,
+          "skillSize": 6598,
           "tier": "master",
-          "totalLines": 99
+          "totalLines": 101
         }
       ]
     },
@@ -129,16 +129,16 @@
           "name": "mitm-hotpatch",
           "path": "skills/mitm-hotpatch/SKILL.md",
           "rawUrl": "https://raw.githubusercontent.com/yaklang/yak-skills/main/skills/mitm-hotpatch/SKILL.md",
-          "skillLines": 165,
-          "skillSize": 9706,
+          "skillLines": 167,
+          "skillSize": 10306,
           "tier": "deep",
-          "totalLines": 971
+          "totalLines": 973
         },
         {
           "blobUrl": "https://github.com/yaklang/yak-skills/blob/main/skills/webfuzzer-hotpatch/SKILL.md",
           "category": "hotpatch",
           "description": "Yakit Web Fuzzer 热加载 (Hot Patch) 专题。当用户需要在 Web Fuzzer 单 Tab 发包时用代码自动加解密请求/响应、注入签名、智能重试、自定义业务失败判定、用 fuzztag 动态生成 payload、或从响应提取参数做关联测试时使用。覆盖 beforeRequest / afterRequest / retryHandler / customFailureChecker / mirrorHTTPFlow / mockHTTPRequest 与 {{yak(...)}} fuzztag。",
-          "exampleCount": 7,
+          "exampleCount": 10,
           "extraDocs": [
             {
               "kind": "example",
@@ -153,6 +153,27 @@
               "name": "before-request.yak",
               "path": "skills/webfuzzer-hotpatch/examples/before-request.yak",
               "size": 2476
+            },
+            {
+              "kind": "example",
+              "lines": 85,
+              "name": "combo-aescbc-plaintext-roundtrip.yak",
+              "path": "skills/webfuzzer-hotpatch/examples/combo-aescbc-plaintext-roundtrip.yak",
+              "size": 3949
+            },
+            {
+              "kind": "example",
+              "lines": 105,
+              "name": "combo-rsa-aesgcm-hybrid.yak",
+              "path": "skills/webfuzzer-hotpatch/examples/combo-rsa-aesgcm-hybrid.yak",
+              "size": 4975
+            },
+            {
+              "kind": "example",
+              "lines": 91,
+              "name": "combo-sign-and-encrypt.yak",
+              "path": "skills/webfuzzer-hotpatch/examples/combo-sign-and-encrypt.yak",
+              "size": 3782
             },
             {
               "kind": "example",
@@ -190,15 +211,15 @@
               "size": 2872
             }
           ],
-          "extraLines": 430,
+          "extraLines": 711,
           "id": "webfuzzer-hotpatch",
           "name": "webfuzzer-hotpatch",
           "path": "skills/webfuzzer-hotpatch/SKILL.md",
           "rawUrl": "https://raw.githubusercontent.com/yaklang/yak-skills/main/skills/webfuzzer-hotpatch/SKILL.md",
-          "skillLines": 141,
-          "skillSize": 7399,
+          "skillLines": 192,
+          "skillSize": 11636,
           "tier": "deep",
-          "totalLines": 571
+          "totalLines": 903
         },
         {
           "blobUrl": "https://github.com/yaklang/yak-skills/blob/main/skills/global-hotpatch/SKILL.md",
@@ -310,10 +331,10 @@
           "name": "global-hotpatch",
           "path": "skills/global-hotpatch/SKILL.md",
           "rawUrl": "https://raw.githubusercontent.com/yaklang/yak-skills/main/skills/global-hotpatch/SKILL.md",
-          "skillLines": 119,
-          "skillSize": 7446,
+          "skillLines": 121,
+          "skillSize": 7853,
           "tier": "deep",
-          "totalLines": 922
+          "totalLines": 924
         }
       ]
     },
@@ -622,10 +643,10 @@
       "name": "global-hotpatch",
       "path": "skills/global-hotpatch/SKILL.md",
       "rawUrl": "https://raw.githubusercontent.com/yaklang/yak-skills/main/skills/global-hotpatch/SKILL.md",
-      "skillLines": 119,
-      "skillSize": 7446,
+      "skillLines": 121,
+      "skillSize": 7853,
       "tier": "deep",
-      "totalLines": 922
+      "totalLines": 924
     },
     {
       "blobUrl": "https://github.com/yaklang/yak-skills/blob/main/skills/mitm-hotpatch/SKILL.md",
@@ -723,16 +744,16 @@
       "name": "mitm-hotpatch",
       "path": "skills/mitm-hotpatch/SKILL.md",
       "rawUrl": "https://raw.githubusercontent.com/yaklang/yak-skills/main/skills/mitm-hotpatch/SKILL.md",
-      "skillLines": 165,
-      "skillSize": 9706,
+      "skillLines": 167,
+      "skillSize": 10306,
       "tier": "deep",
-      "totalLines": 971
+      "totalLines": 973
     },
     {
       "blobUrl": "https://github.com/yaklang/yak-skills/blob/main/skills/webfuzzer-hotpatch/SKILL.md",
       "category": "hotpatch",
       "description": "Yakit Web Fuzzer 热加载 (Hot Patch) 专题。当用户需要在 Web Fuzzer 单 Tab 发包时用代码自动加解密请求/响应、注入签名、智能重试、自定义业务失败判定、用 fuzztag 动态生成 payload、或从响应提取参数做关联测试时使用。覆盖 beforeRequest / afterRequest / retryHandler / customFailureChecker / mirrorHTTPFlow / mockHTTPRequest 与 {{yak(...)}} fuzztag。",
-      "exampleCount": 7,
+      "exampleCount": 10,
       "extraDocs": [
         {
           "kind": "example",
@@ -747,6 +768,27 @@
           "name": "before-request.yak",
           "path": "skills/webfuzzer-hotpatch/examples/before-request.yak",
           "size": 2476
+        },
+        {
+          "kind": "example",
+          "lines": 85,
+          "name": "combo-aescbc-plaintext-roundtrip.yak",
+          "path": "skills/webfuzzer-hotpatch/examples/combo-aescbc-plaintext-roundtrip.yak",
+          "size": 3949
+        },
+        {
+          "kind": "example",
+          "lines": 105,
+          "name": "combo-rsa-aesgcm-hybrid.yak",
+          "path": "skills/webfuzzer-hotpatch/examples/combo-rsa-aesgcm-hybrid.yak",
+          "size": 4975
+        },
+        {
+          "kind": "example",
+          "lines": 91,
+          "name": "combo-sign-and-encrypt.yak",
+          "path": "skills/webfuzzer-hotpatch/examples/combo-sign-and-encrypt.yak",
+          "size": 3782
         },
         {
           "kind": "example",
@@ -784,15 +826,15 @@
           "size": 2872
         }
       ],
-      "extraLines": 430,
+      "extraLines": 711,
       "id": "webfuzzer-hotpatch",
       "name": "webfuzzer-hotpatch",
       "path": "skills/webfuzzer-hotpatch/SKILL.md",
       "rawUrl": "https://raw.githubusercontent.com/yaklang/yak-skills/main/skills/webfuzzer-hotpatch/SKILL.md",
-      "skillLines": 141,
-      "skillSize": 7399,
+      "skillLines": 192,
+      "skillSize": 11636,
       "tier": "deep",
-      "totalLines": 571
+      "totalLines": 903
     },
     {
       "blobUrl": "https://github.com/yaklang/yak-skills/blob/main/skills/yak/SKILL.md",
@@ -805,10 +847,10 @@
       "name": "yak",
       "path": "skills/yak/SKILL.md",
       "rawUrl": "https://raw.githubusercontent.com/yaklang/yak-skills/main/skills/yak/SKILL.md",
-      "skillLines": 99,
-      "skillSize": 6138,
+      "skillLines": 101,
+      "skillSize": 6598,
       "tier": "master",
-      "totalLines": 99
+      "totalLines": 101
     },
     {
       "blobUrl": "https://github.com/yaklang/yak-skills/blob/main/skills/yakit-data-extract-plugin/SKILL.md",
@@ -979,9 +1021,9 @@
     "master": 1
   },
   "totalCategories": 5,
-  "totalExamples": 44,
-  "totalLines": 4035,
-  "totalSize": 60103,
+  "totalExamples": 47,
+  "totalLines": 4373,
+  "totalSize": 65807,
   "totalSkills": 9,
   "version": "dev"
 }

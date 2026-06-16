@@ -1,6 +1,6 @@
-[36m[INFO][0m 2026-06-16 23:46:05 [sqlite_large_db_tune:109] sqlite tuned for large project db (298.9M): cache=32M mmap=64M wal_autocheckpoint=8000
-[36m[INFO][0m 2026-06-16 23:46:05 [retry-handler:74] start retry status aware self test
-[36m[INFO][0m 2026-06-16 23:46:05 [retry-handler:74] retry: 405 -> switch to POST (count=1)
-[36m[INFO][0m 2026-06-16 23:46:05 [retry-handler:74] retry: 401 denied, give up
-[36m[INFO][0m 2026-06-16 23:46:05 [retry-handler:74] retry: 500 server error, retry once (count=1)
-[36m[INFO][0m 2026-06-16 23:46:05 [retry-handler:74] retry status aware self test passed
+[36m[INFO][0m 2026-06-16 23:54:18 [sqlite_large_db_tune:109] sqlite tuned for large project db (298.9M): cache=32M mmap=64M wal_autocheckpoint=8000
+[36m[INFO][0m 2026-06-16 23:54:18 [retry-handler:74] start retry status aware self test
+[36m[INFO][0m 2026-06-16 23:54:18 [retry-handler:74] retry: 405 -> switch to POST (count=1)
+[36m[INFO][0m 2026-06-16 23:54:18 [retry-handler:74] retry: 401 denied, give up
+[36m[INFO][0m 2026-06-16 23:54:18 [retry-handler:74] retry: 500 server error, retry once (count=1)
+[36m[INFO][0m 2026-06-16 23:54:18 [retry-handler:74] retry status aware self test passed

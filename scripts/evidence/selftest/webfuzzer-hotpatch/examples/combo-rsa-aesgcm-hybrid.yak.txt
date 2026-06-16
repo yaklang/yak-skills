@@ -1,0 +1,5 @@
+[36m[INFO][0m 2026-06-16 23:54:16 [sqlite_large_db_tune:109] sqlite tuned for large project db (298.9M): cache=32M mmap=64M wal_autocheckpoint=8000
+[36m[INFO][0m 2026-06-16 23:54:16 [combo-rsa-aesgcm-hybrid:102] start combo rsa-aesgcm hybrid self test
+[36m[INFO][0m 2026-06-16 23:54:16 [combo-rsa-aesgcm-hybrid:102] request-side encryption ok
+[36m[INFO][0m 2026-06-16 23:54:16 [combo-rsa-aesgcm-hybrid:102] decrypted plaintext: {"success":true,"username":"admin"}
+[36m[INFO][0m 2026-06-16 23:54:16 [combo-rsa-aesgcm-hybrid:102] combo rsa-aesgcm hybrid self test passed
