@@ -44,6 +44,8 @@ Yak Skills 模仿目录式 SKILL 知识库范式，围绕 Yak 公众号文章（
 | [`yaklang-syntax`](skills/yaklang-syntax/SKILL.md) | 专题 | 变量 / 控制流 / 函数 / 闭包 / f-string / 错误处理 `~` |
 | [`yaklang-database`](skills/yaklang-database/SKILL.md) | 专题 | SQLite / 键值存储 / Payload 字典 / 项目配置 |
 | [`yakit-data-extract-plugin`](skills/yakit-data-extract-plugin/SKILL.md) | 专题 | 按 domain 捞 History、URI 去重、提取登录 Cookie、字典驱动发包扫描 |
+| [`yakit-native-plugin`](skills/yakit-native-plugin/SKILL.md) | 专题 | yak/mitm 原生插件 + cli 参数表单；mitm 被动扫描、mitm+cli 交互式加载外部参数 |
+| [`yakit-rightclick-plugin`](skills/yakit-rightclick-plugin/SKILL.md) | 专题 | codec 右键插件 handle 契约；History 右键 flow id 反查提取(进度条)、codec+cli 选提取项、Web Fuzzer 选区变换 |
 | [`yaklang-toolchain`](skills/yaklang-toolchain/SKILL.md) | 专题 | go run 工作流、4 个验证命令、用仓库调试 MITM、如何验证你写的插件 |
 
 每个专题目录下都有若干 `example-*.yak`，均可独立运行自测。

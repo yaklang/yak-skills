@@ -46,9 +46,10 @@ categories:
   - id: tooling
     name: Toolchain & Verification
     order: 5
-    description: 工具链 / 热加载验证命令 / 右键插件编程 / 插件验证闭环
+    description: 工具链 / 热加载验证命令 / 原生插件编程 / 右键插件编程 / 插件验证闭环
     skills:
       - yaklang-toolchain
+      - yakit-native-plugin
       - yakit-rightclick-plugin
 
 # 关键词: tier override - 用于覆盖默认推断

@@ -17,7 +17,8 @@ description: >-
 | 一处配置让 MITM 与所有 Fuzzer 共享：全站透明加解密、统一签名、动态 challenge、全站染色护栏 | [global-hotpatch](../global-hotpatch/SKILL.md) |
 | 写/读懂 Yaklang 语法：变量、控制流、函数、闭包、f-string、错误处理 `~` | [yaklang-syntax](../yaklang-syntax/SKILL.md) |
 | 数据持久化与查询：SQLite、键值存储、Payload 字典、项目配置 | [yaklang-database](../yaklang-database/SKILL.md) |
-| 写 Yakit 右键 codec 插件（只需 handle）、Web Fuzzer 右键编解码/插件用法 | [yakit-rightclick-plugin](../yakit-rightclick-plugin/SKILL.md) |
+| 写 Yakit 原生插件（yak/mitm 类型）、cli 参数表单、mitm 被动扫描、mitm+cli 交互式加载外部参数 | [yakit-native-plugin](../yakit-native-plugin/SKILL.md) |
+| 写 Yakit 右键 codec 插件（只需 handle）、History 右键由 flow id 反查提取(进度条)、codec+cli 选提取项、Web Fuzzer 右键编解码/选区变换 | [yakit-rightclick-plugin](../yakit-rightclick-plugin/SKILL.md) |
 | 怎么验证写的插件：go run 引擎、hotpatch-* / codec-plugin 验证命令、用仓库调试 MITM | [yaklang-toolchain](../yaklang-toolchain/SKILL.md) |
 | 从 History 提取域名/URI/Cookie 做路径扫描与 Fuzz | [yakit-data-extract-plugin](../yakit-data-extract-plugin/SKILL.md) |
 

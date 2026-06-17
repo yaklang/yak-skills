@@ -1,5 +1,5 @@
 {
-  "buildTime": "2026-06-16T15:54:01Z",
+  "buildTime": "2026-06-17T03:57:58Z",
   "categories": [
     {
       "description": "总入口 / 全局路由 / 调试约定",
@@ -19,10 +19,10 @@
           "name": "yak",
           "path": "skills/yak/SKILL.md",
           "rawUrl": "https://raw.githubusercontent.com/yaklang/yak-skills/main/skills/yak/SKILL.md",
-          "skillLines": 101,
-          "skillSize": 6598,
+          "skillLines": 102,
+          "skillSize": 6858,
           "tier": "master",
-          "totalLines": 101
+          "totalLines": 102
         }
       ]
     },
@@ -216,10 +216,10 @@
           "name": "webfuzzer-hotpatch",
           "path": "skills/webfuzzer-hotpatch/SKILL.md",
           "rawUrl": "https://raw.githubusercontent.com/yaklang/yak-skills/main/skills/webfuzzer-hotpatch/SKILL.md",
-          "skillLines": 192,
-          "skillSize": 11636,
+          "skillLines": 195,
+          "skillSize": 12057,
           "tier": "deep",
-          "totalLines": 903
+          "totalLines": 906
         },
         {
           "blobUrl": "https://github.com/yaklang/yak-skills/blob/main/skills/global-hotpatch/SKILL.md",
@@ -450,11 +450,11 @@
       ]
     },
     {
-      "description": "工具链 / 热加载验证命令 / 右键插件编程 / 插件验证闭环",
+      "description": "工具链 / 热加载验证命令 / 原生插件编程 / 右键插件编程 / 插件验证闭环",
       "id": "tooling",
       "name": "Toolchain \u0026 Verification",
       "order": 5,
-      "skillCount": 2,
+      "skillCount": 3,
       "skills": [
         {
           "blobUrl": "https://github.com/yaklang/yak-skills/blob/main/skills/yaklang-toolchain/SKILL.md",
@@ -481,10 +481,48 @@
           "totalLines": 192
         },
         {
+          "blobUrl": "https://github.com/yaklang/yak-skills/blob/main/skills/yakit-native-plugin/SKILL.md",
+          "category": "tooling",
+          "description": "Yakit 原生插件(yak / mitm 类型)与 cli 参数体系。讲清原生插件与热加载的区别、cli.* 如何变成 Yakit 执行页的参数表单(String/Int/Bool/Urls/Ports/StringSlice 下拉/File 等 + setRequired/ setDefault/setVerboseName/setCliGroup), 以及三个优秀案例: yak 原生插件用 cli 收用户输入、 mitm 原生插件被动扫描复杂内容并产出 risk、mitm + cli 交互式插件加载外部参数(关键词字典/作用域) 驱动扫描。当用户问\"怎么写带参数表单的 yak/mitm 插件、cli 怎么用、mitm 插件怎么做被动扫描\"时使用。",
+          "exampleCount": 3,
+          "extraDocs": [
+            {
+              "kind": "example",
+              "lines": 118,
+              "name": "mitm-cli-interactive.yak",
+              "path": "skills/yakit-native-plugin/examples/mitm-cli-interactive.yak",
+              "size": 4765
+            },
+            {
+              "kind": "example",
+              "lines": 95,
+              "name": "mitm-passive-scan.yak",
+              "path": "skills/yakit-native-plugin/examples/mitm-passive-scan.yak",
+              "size": 3689
+            },
+            {
+              "kind": "example",
+              "lines": 107,
+              "name": "yak-cli-input.yak",
+              "path": "skills/yakit-native-plugin/examples/yak-cli-input.yak",
+              "size": 4511
+            }
+          ],
+          "extraLines": 320,
+          "id": "yakit-native-plugin",
+          "name": "yakit-native-plugin",
+          "path": "skills/yakit-native-plugin/SKILL.md",
+          "rawUrl": "https://raw.githubusercontent.com/yaklang/yak-skills/main/skills/yakit-native-plugin/SKILL.md",
+          "skillLines": 185,
+          "skillSize": 9230,
+          "tier": "deep",
+          "totalLines": 505
+        },
+        {
           "blobUrl": "https://github.com/yaklang/yak-skills/blob/main/skills/yakit-rightclick-plugin/SKILL.md",
           "category": "tooling",
-          "description": "Yakit 右键插件 (codec 插件) 的使用与编程技巧。讲清 codec 插件只需要一个 handle(input) 函数, 配合插件类型 codec + 开关\"用于数据包右键\" (tag: allow-custom-context-menu-execute) 即可出现在 任意 HTTP 编辑器的右键菜单里; 还讲 Web Fuzzer 编辑器的两层右键 (Monaco 原生菜单 + 选区浮动菜单) 如何选中文本一键编码/解码/调用插件, 以及如何用 yak codec-plugin 命令验证。当用户问\"怎么写右键 插件 / codec 插件怎么用 / Web Fuzzer 右键怎么操作\"时使用。右键插件是编写小工具最快的方式。",
-          "exampleCount": 4,
+          "description": "Yakit 右键插件 (codec 插件) 的使用与编程技巧。讲清 codec 插件只需要一个 handle(input) 函数, 配合插件类型 codec + 开关\"用于数据包右键\" (tag: allow-custom-context-menu-execute) 即可出现在 任意 HTTP 编辑器的右键菜单里; 还讲 History 右键(单选/多选)时 input=flow id 的特殊契约(可由 id 反查数据包提取 host 全部 path/参数名, 带 yakit.SetProgress 进度条与 db Yield 通道), codec 插件 叠加 cli 参数做下拉选择(提取 Path/参数名/Cookie), Web Fuzzer 选区做\"奇怪变换\", 以及如何用 yak codec-plugin 命令验证。当用户问\"怎么写右键插件 / codec 插件怎么用 / History 右键提取数据 / Web Fuzzer 右键变换 / codec 带参数\"时使用。右键插件是编写小工具最快的方式。",
+          "exampleCount": 7,
           "extraDocs": [
             {
               "kind": "example",
@@ -492,6 +530,27 @@
               "name": "codec-base64-wrap.yak",
               "path": "skills/yakit-rightclick-plugin/examples/codec-base64-wrap.yak",
               "size": 1367
+            },
+            {
+              "kind": "example",
+              "lines": 195,
+              "name": "codec-cli-extract-selector.yak",
+              "path": "skills/yakit-rightclick-plugin/examples/codec-cli-extract-selector.yak",
+              "size": 7179
+            },
+            {
+              "kind": "example",
+              "lines": 79,
+              "name": "codec-fuzzer-transform.yak",
+              "path": "skills/yakit-rightclick-plugin/examples/codec-fuzzer-transform.yak",
+              "size": 3241
+            },
+            {
+              "kind": "example",
+              "lines": 194,
+              "name": "codec-history-extract-paths.yak",
+              "path": "skills/yakit-rightclick-plugin/examples/codec-history-extract-paths.yak",
+              "size": 7727
             },
             {
               "kind": "example",
@@ -515,15 +574,15 @@
               "size": 1084
             }
           ],
-          "extraLines": 191,
+          "extraLines": 659,
           "id": "yakit-rightclick-plugin",
           "name": "yakit-rightclick-plugin",
           "path": "skills/yakit-rightclick-plugin/SKILL.md",
           "rawUrl": "https://raw.githubusercontent.com/yaklang/yak-skills/main/skills/yakit-rightclick-plugin/SKILL.md",
-          "skillLines": 145,
-          "skillSize": 7563,
+          "skillLines": 238,
+          "skillSize": 12683,
           "tier": "deep",
-          "totalLines": 336
+          "totalLines": 897
         }
       ]
     }
@@ -831,10 +890,10 @@
       "name": "webfuzzer-hotpatch",
       "path": "skills/webfuzzer-hotpatch/SKILL.md",
       "rawUrl": "https://raw.githubusercontent.com/yaklang/yak-skills/main/skills/webfuzzer-hotpatch/SKILL.md",
-      "skillLines": 192,
-      "skillSize": 11636,
+      "skillLines": 195,
+      "skillSize": 12057,
       "tier": "deep",
-      "totalLines": 903
+      "totalLines": 906
     },
     {
       "blobUrl": "https://github.com/yaklang/yak-skills/blob/main/skills/yak/SKILL.md",
@@ -847,10 +906,10 @@
       "name": "yak",
       "path": "skills/yak/SKILL.md",
       "rawUrl": "https://raw.githubusercontent.com/yaklang/yak-skills/main/skills/yak/SKILL.md",
-      "skillLines": 101,
-      "skillSize": 6598,
+      "skillLines": 102,
+      "skillSize": 6858,
       "tier": "master",
-      "totalLines": 101
+      "totalLines": 102
     },
     {
       "blobUrl": "https://github.com/yaklang/yak-skills/blob/main/skills/yakit-data-extract-plugin/SKILL.md",
@@ -884,10 +943,48 @@
       "totalLines": 330
     },
     {
+      "blobUrl": "https://github.com/yaklang/yak-skills/blob/main/skills/yakit-native-plugin/SKILL.md",
+      "category": "tooling",
+      "description": "Yakit 原生插件(yak / mitm 类型)与 cli 参数体系。讲清原生插件与热加载的区别、cli.* 如何变成 Yakit 执行页的参数表单(String/Int/Bool/Urls/Ports/StringSlice 下拉/File 等 + setRequired/ setDefault/setVerboseName/setCliGroup), 以及三个优秀案例: yak 原生插件用 cli 收用户输入、 mitm 原生插件被动扫描复杂内容并产出 risk、mitm + cli 交互式插件加载外部参数(关键词字典/作用域) 驱动扫描。当用户问\"怎么写带参数表单的 yak/mitm 插件、cli 怎么用、mitm 插件怎么做被动扫描\"时使用。",
+      "exampleCount": 3,
+      "extraDocs": [
+        {
+          "kind": "example",
+          "lines": 118,
+          "name": "mitm-cli-interactive.yak",
+          "path": "skills/yakit-native-plugin/examples/mitm-cli-interactive.yak",
+          "size": 4765
+        },
+        {
+          "kind": "example",
+          "lines": 95,
+          "name": "mitm-passive-scan.yak",
+          "path": "skills/yakit-native-plugin/examples/mitm-passive-scan.yak",
+          "size": 3689
+        },
+        {
+          "kind": "example",
+          "lines": 107,
+          "name": "yak-cli-input.yak",
+          "path": "skills/yakit-native-plugin/examples/yak-cli-input.yak",
+          "size": 4511
+        }
+      ],
+      "extraLines": 320,
+      "id": "yakit-native-plugin",
+      "name": "yakit-native-plugin",
+      "path": "skills/yakit-native-plugin/SKILL.md",
+      "rawUrl": "https://raw.githubusercontent.com/yaklang/yak-skills/main/skills/yakit-native-plugin/SKILL.md",
+      "skillLines": 185,
+      "skillSize": 9230,
+      "tier": "deep",
+      "totalLines": 505
+    },
+    {
       "blobUrl": "https://github.com/yaklang/yak-skills/blob/main/skills/yakit-rightclick-plugin/SKILL.md",
       "category": "tooling",
-      "description": "Yakit 右键插件 (codec 插件) 的使用与编程技巧。讲清 codec 插件只需要一个 handle(input) 函数, 配合插件类型 codec + 开关\"用于数据包右键\" (tag: allow-custom-context-menu-execute) 即可出现在 任意 HTTP 编辑器的右键菜单里; 还讲 Web Fuzzer 编辑器的两层右键 (Monaco 原生菜单 + 选区浮动菜单) 如何选中文本一键编码/解码/调用插件, 以及如何用 yak codec-plugin 命令验证。当用户问\"怎么写右键 插件 / codec 插件怎么用 / Web Fuzzer 右键怎么操作\"时使用。右键插件是编写小工具最快的方式。",
-      "exampleCount": 4,
+      "description": "Yakit 右键插件 (codec 插件) 的使用与编程技巧。讲清 codec 插件只需要一个 handle(input) 函数, 配合插件类型 codec + 开关\"用于数据包右键\" (tag: allow-custom-context-menu-execute) 即可出现在 任意 HTTP 编辑器的右键菜单里; 还讲 History 右键(单选/多选)时 input=flow id 的特殊契约(可由 id 反查数据包提取 host 全部 path/参数名, 带 yakit.SetProgress 进度条与 db Yield 通道), codec 插件 叠加 cli 参数做下拉选择(提取 Path/参数名/Cookie), Web Fuzzer 选区做\"奇怪变换\", 以及如何用 yak codec-plugin 命令验证。当用户问\"怎么写右键插件 / codec 插件怎么用 / History 右键提取数据 / Web Fuzzer 右键变换 / codec 带参数\"时使用。右键插件是编写小工具最快的方式。",
+      "exampleCount": 7,
       "extraDocs": [
         {
           "kind": "example",
@@ -895,6 +992,27 @@
           "name": "codec-base64-wrap.yak",
           "path": "skills/yakit-rightclick-plugin/examples/codec-base64-wrap.yak",
           "size": 1367
+        },
+        {
+          "kind": "example",
+          "lines": 195,
+          "name": "codec-cli-extract-selector.yak",
+          "path": "skills/yakit-rightclick-plugin/examples/codec-cli-extract-selector.yak",
+          "size": 7179
+        },
+        {
+          "kind": "example",
+          "lines": 79,
+          "name": "codec-fuzzer-transform.yak",
+          "path": "skills/yakit-rightclick-plugin/examples/codec-fuzzer-transform.yak",
+          "size": 3241
+        },
+        {
+          "kind": "example",
+          "lines": 194,
+          "name": "codec-history-extract-paths.yak",
+          "path": "skills/yakit-rightclick-plugin/examples/codec-history-extract-paths.yak",
+          "size": 7727
         },
         {
           "kind": "example",
@@ -918,15 +1036,15 @@
           "size": 1084
         }
       ],
-      "extraLines": 191,
+      "extraLines": 659,
       "id": "yakit-rightclick-plugin",
       "name": "yakit-rightclick-plugin",
       "path": "skills/yakit-rightclick-plugin/SKILL.md",
       "rawUrl": "https://raw.githubusercontent.com/yaklang/yak-skills/main/skills/yakit-rightclick-plugin/SKILL.md",
-      "skillLines": 145,
-      "skillSize": 7563,
+      "skillLines": 238,
+      "skillSize": 12683,
       "tier": "deep",
-      "totalLines": 336
+      "totalLines": 897
     },
     {
       "blobUrl": "https://github.com/yaklang/yak-skills/blob/main/skills/yaklang-database/SKILL.md",
@@ -1017,13 +1135,13 @@
   ],
   "tierCounts": {
     "category": 0,
-    "deep": 8,
+    "deep": 9,
     "master": 1
   },
   "totalCategories": 5,
-  "totalExamples": 47,
-  "totalLines": 4373,
-  "totalSize": 65807,
-  "totalSkills": 9,
+  "totalExamples": 53,
+  "totalLines": 5443,
+  "totalSize": 80838,
+  "totalSkills": 10,
   "version": "dev"
 }

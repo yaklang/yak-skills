@@ -3,9 +3,11 @@ name: yakit-rightclick-plugin
 description: >-
   Yakit 右键插件 (codec 插件) 的使用与编程技巧。讲清 codec 插件只需要一个 handle(input) 函数,
   配合插件类型 codec + 开关"用于数据包右键" (tag: allow-custom-context-menu-execute) 即可出现在
-  任意 HTTP 编辑器的右键菜单里; 还讲 Web Fuzzer 编辑器的两层右键 (Monaco 原生菜单 + 选区浮动菜单)
-  如何选中文本一键编码/解码/调用插件, 以及如何用 yak codec-plugin 命令验证。当用户问"怎么写右键
-  插件 / codec 插件怎么用 / Web Fuzzer 右键怎么操作"时使用。右键插件是编写小工具最快的方式。
+  任意 HTTP 编辑器的右键菜单里; 还讲 History 右键(单选/多选)时 input=flow id 的特殊契约(可由 id
+  反查数据包提取 host 全部 path/参数名, 带 yakit.SetProgress 进度条与 db Yield 通道), codec 插件
+  叠加 cli 参数做下拉选择(提取 Path/参数名/Cookie), Web Fuzzer 选区做"奇怪变换", 以及如何用
+  yak codec-plugin 命令验证。当用户问"怎么写右键插件 / codec 插件怎么用 / History 右键提取数据 /
+  Web Fuzzer 右键变换 / codec 带参数"时使用。右键插件是编写小工具最快的方式。
 ---
 
 # SKILL: Yakit 右键插件 (codec) 使用与编程
@@ -18,7 +20,10 @@ description: >-
 ## 0. 相关路由
 
 - 总入口: [yak](../yak/SKILL.md)
+- 原生插件(yak/mitm) + cli 参数体系: [yakit-native-plugin](../yakit-native-plugin/SKILL.md)
 - 验证工具链: [yaklang-toolchain](../yaklang-toolchain/SKILL.md)（`yak codec-plugin` 命令）
+- 历史数据提取/字典/发包: [yakit-data-extract-plugin](../yakit-data-extract-plugin/SKILL.md)
+- 数据库 / Payload 字典: [yaklang-database](../yaklang-database/SKILL.md)
 - 三类热加载: [mitm-hotpatch](../mitm-hotpatch/SKILL.md) / [webfuzzer-hotpatch](../webfuzzer-hotpatch/SKILL.md) / [global-hotpatch](../global-hotpatch/SKILL.md)
 
 ## 1. codec 插件的唯一契约: handle(input)
@@ -131,14 +136,102 @@ cd /Users/v1ll4n/Projects/yaklang && go build -o /tmp/yak ./common/yak/cmd/yak.g
 
 `yak codec-plugin` 与 Yakit 右键执行同样调用 `handle(input)`, 所以"命令跑通 == 右键也能跑通"。
 
-## 7. 示例 (examples/)
+## 7. History 右键: input 是 flow id, 不是文本(重要契约)
 
-| 文件 | handle 作用 | 验证 |
+普通 HTTP 编辑器右键时 `input` 是选中文本; 但在 **History 表格行右键** 跑 codec 插件时,
+Yakit 传进来的 `input` 是这条记录的 **flow id**(已核实, 见 yakit 源码
+`components/HTTPFlowTable/useHTTPFlowTableContextMenu.tsx`):
+
+| 场景 | tag(开关) | 传入 handle 的 input |
 | --- | --- | --- |
-| [codec-base64-wrap.yak](examples/codec-base64-wrap.yak) | 选中文本 Base64 编码 | `--input "admin:123456"` |
-| [codec-jwt-decode.yak](examples/codec-jwt-decode.yak) | JWT 一键解码 header+payload | `--input "eyJ...header.eyJ...payload.sig"` |
-| [codec-unicode-unescape.yak](examples/codec-unicode-unescape.yak) | `\uXXXX` 还原中文 | `--input '\u4e2d\u6587abc'` |
-| [codec-timestamp-to-date.yak](examples/codec-timestamp-to-date.yak) | Unix 时间戳转 UTC 日期 | `--input "1700000000"` |
+| History 单条右键 | `allow-custom-single-history-mutate`(用于history右键(单选)) | 单个 id, 如 `"1287"` |
+| History 多选右键 | `allow-custom-multiple-history-mutate`(用于history右键(多选)) | 逗号拼接 id, 如 `"1287,1290,1305"` |
 
-每个示例都带 `YAK_MAIN` 自测块, `yak <file>.yak` 即可自证; 全部能被
-`yak codec-plugin` 命令复现证据 (见 `scripts/validate-skills.yak`)。
+> 前端在 `onOpenFuzzerModal` 事件里: 单选 `text = \`${rowData.Id}\``, 多选
+> `text = selectedRowKeys.join(',')`, 同时携带脚本声明的 `params`(cli 参数)。
+
+拿到 id 后, 用 db 的 Yield 通道反查数据包、再做提取:
+
+```yak
+handle = func(input) {
+    ids = parseIds(input)                          // "1287,1290" -> [1287, 1290]
+    for flow in db.QueryHTTPFlowsByID(ids...) {     // Yield 通道, 底层 yakit.YieldHTTPFlows
+        host = hostOf(flow.Url)
+        for f in db.QueryHTTPFlowsByKeyword(host) { // 该 host 的全部历史流量
+            req = codec.StrconvUnquote(f.Request)~  // flow.Request 是 quote 后的, 需还原
+            // ... 提取 path / 参数名 / cookie
+        }
+    }
+}
+```
+
+### 进度条: yakit.SetProgress
+
+提取量大时, 用 `yakit.SetProgress(0~1)` 在执行面板显示进度(`SetProgressEx(id, f)` 可多条):
+
+```yak
+total = len(hosts); done = 0
+for host in hosts {
+    yakit.SetProgress(float(done) / float(total))   // 注意 yak 的 for i,v in slice 给的是(元素,nil), 索引要自己数
+    // ... 提取
+    done++
+}
+yakit.SetProgress(1.0)
+```
+
+> 完整可运行: [examples/codec-history-extract-paths.yak](examples/codec-history-extract-paths.yak)
+> (`yak <file>` 自测纯逻辑; `--real <id>` 用真实 History 跑 flow id -> 数据包 -> 提取全链路)。
+
+## 8. codec 插件 + cli 参数(让用户选"提取什么")
+
+codec 插件也能声明 `cli` 参数: History 右键时 Yakit 会先弹出参数表单, 用户填完再执行 `handle`。
+用 `cli.StringSlice + setSelectOption + setMultipleSelect(false)` 做一个"提取项"下拉:
+
+```yak
+MODE_SEL = cli.StringSlice("mode",
+    cli.setVerboseName("提取项"),
+    cli.setSelectOption("提取 Path", "path"),
+    cli.setSelectOption("提取 参数名", "param"),
+    cli.setSelectOption("提取 Cookie", "cookie"),
+    cli.setMultipleSelect(false), cli.setDefault("path"))
+cli.check()
+MODE = "path"
+if len(MODE_SEL) > 0 { MODE = MODE_SEL[0] }
+
+handle = func(input) {     // input 仍是 flow id; MODE 由表单决定提取什么
+    // ... 按 MODE 提取, 可选 db.SavePayload 落字典, db.YieldPayload 回读复用
+}
+```
+
+> 完整可运行: [examples/codec-cli-extract-selector.yak](examples/codec-cli-extract-selector.yak)
+> (三种模式自测 + Payload 字典 `SavePayload`/`YieldPayload` roundtrip; `--real <id> --mode param` 跑真实库)。
+> cli 参数体系详见 [yakit-native-plugin](../yakit-native-plugin/SKILL.md)。
+
+## 9. Web Fuzzer 选区做"奇怪变换"
+
+在 Web Fuzzer 选中一段(如 payload), 右键 -> 插件扩展 -> codec 插件, `input` 是选中文本,
+可做任意变换返回。一个实用例子: 逐字符混合编码(url `%xx` / html `&#d;` / unicode `\uXXXX` / 原文交替),
+得到"语义等价但形态怪异"的变体探测/绕过简单 WAF:
+
+```yak
+handle = func(input) { return weirdTransform(input) }   // "admin" -> a%64&#109;\u0069n
+```
+
+> 完整可运行: [examples/codec-fuzzer-transform.yak](examples/codec-fuzzer-transform.yak)。
+> 选区"编码成 fuzztag 并替换"用浮动条编码(见第 5 节 B); 跑复杂变换用右键插件扩展。
+> 提示: `log.info` 是 printf 风格, 打印含 `%` 的内容要用 `log.info("%s", x)` 占位, 不能直接字符串拼接。
+
+## 10. 示例 (examples/)
+
+| 文件 | handle 作用 | input | 验证 |
+| --- | --- | --- | --- |
+| [codec-base64-wrap.yak](examples/codec-base64-wrap.yak) | 选中文本 Base64 编码 | 选中文本 | `--input "admin:123456"` |
+| [codec-jwt-decode.yak](examples/codec-jwt-decode.yak) | JWT 一键解码 header+payload | 选中文本 | `--input "eyJ...header.eyJ...payload.sig"` |
+| [codec-unicode-unescape.yak](examples/codec-unicode-unescape.yak) | `\uXXXX` 还原中文 | 选中文本 | `--input '\u4e2d\u6587abc'` |
+| [codec-timestamp-to-date.yak](examples/codec-timestamp-to-date.yak) | Unix 时间戳转 UTC 日期 | 选中文本 | `--input "1700000000"` |
+| [codec-history-extract-paths.yak](examples/codec-history-extract-paths.yak) | flow id 反查包 -> 提取 host 全部 path/参数名(进度条) | flow id | `yak <file>` / `--real 1` |
+| [codec-cli-extract-selector.yak](examples/codec-cli-extract-selector.yak) | codec + cli 下拉选提取 Path/参数名/Cookie + 落字典 | flow id + cli | `yak <file>` / `--real 1 --mode param` |
+| [codec-fuzzer-transform.yak](examples/codec-fuzzer-transform.yak) | Web Fuzzer 选区逐字符混合编码变换 | 选中文本 | `--input "<script>alert(1)</script>"` |
+
+每个示例都带 `YAK_MAIN` 自测块, `yak <file>.yak` 即可自证; 编辑器选区类示例能被
+`yak codec-plugin` 命令复现证据。History 提取类示例用合成数据自测纯逻辑, `--real <id>` 可跑真实库链路。
