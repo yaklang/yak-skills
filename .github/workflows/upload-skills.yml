@@ -1,0 +1,255 @@
+name: Upload Yak Skills to OSS
+
+# =============================================================================
+# yak-skills 打包发布到 OSS
+# 关键词: yak-skills, ai-skills, AutoSkillLoader, thirdparty_bin, upload-oss
+#
+# 作用:
+#   把 skills/ 目录 + version.txt 打成普通 zip(yak-skills.zip), 上传到 yaklang OSS
+#   /yak-skills/latest/, 供 yaklang 引擎通过 thirdparty_bin (bin_cfg.yml 中的
+#   yak-skills 注册项) 自动下载安装到 ~/yakit-projects/ai-skills/yak-skills/,
+#   再由 AutoSkillLoader 扫描发现 SKILL.md。
+#
+# 与 hack-skills 的区别:
+#   hack-skills 用 AES-256 + 公开密码反 AV; yak-skills 是普通编程技能, 无需加密,
+#   使用明文 zip, 解压锚点同样是 version.txt。
+# =============================================================================
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'skills/**'
+      - '.github/workflows/upload-skills.yml'
+  workflow_dispatch:
+
+# 确保同一时间只跑一个上传任务, 避免覆盖竞争
+concurrency:
+  group: upload-skills
+  cancel-in-progress: false
+
+jobs:
+  build-and-upload:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Print trigger information
+        run: |
+          echo "============================================"
+          echo "Workflow triggered by: ${{ github.event_name }}"
+          echo "Branch: ${{ github.ref }}"
+          echo "Commit: ${{ github.sha }}"
+          echo "Actor: ${{ github.actor }}"
+          echo "============================================"
+
+      - name: Download Yaklang Engine (latest beta)
+        # 动态解析 yaklang/yaklang 最新 beta tag 并下载二进制, 仅用于 upload-oss 子命令。
+        # 与 upload-aikb.yml 保持一致, 避免硬编码版本踩二进制兼容坑。
+        run: |
+          set -e
+          echo "=== Resolving latest yaklang beta tag ==="
+          YAK_VERSION=$(gh api repos/yaklang/yaklang/tags --paginate -q '.[].name' 2>/dev/null \
+            | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+-beta[0-9]+$' \
+            | sort -V | tail -1 | sed 's/^v//')
+          if [ -z "${YAK_VERSION}" ]; then
+            echo "ERROR: failed to resolve latest beta tag from GitHub API"
+            echo "Falling back to known-good pinned version: 1.4.7-beta15"
+            YAK_VERSION="1.4.7-beta15"
+          fi
+          echo "Resolved latest beta yak version: ${YAK_VERSION}"
+
+          YAK_URL="https://yaklang.oss-accelerate.aliyuncs.com/yak/${YAK_VERSION}/yak_linux_amd64"
+          echo "Downloading from: ${YAK_URL}"
+          wget -q --show-progress -O ./yak "${YAK_URL}"
+
+          if [ ! -s ./yak ]; then
+            echo "ERROR: downloaded yak binary is empty or missing"
+            exit 1
+          fi
+
+          chmod +x ./yak
+          echo ""
+          echo "=== Downloaded file info ==="
+          ls -lh ./yak
+          file ./yak
+          ./yak version || echo "Note: yak version command may not be available in this version"
+          echo "YAK_VERSION=${YAK_VERSION}" >> "$GITHUB_ENV"
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Generate version.txt manifest
+        # version.txt 是 thirdparty_bin 的 IsInstalled 锚点(bin_path: yak-skills/version.txt)。
+        # 内容用 构建日期 + 短 SHA, 方便排查线上技能包来源。
+        run: |
+          set -e
+          BUILD_DATE=$(TZ=Asia/Shanghai date +%Y%m%d)
+          SHORT_SHA="${GITHUB_SHA:0:7}"
+          VERSION="${BUILD_DATE}-${SHORT_SHA}"
+          echo "${VERSION}" > version.txt
+          echo "=== version.txt ==="
+          cat version.txt
+          echo "VERSION=${VERSION}" >> "$GITHUB_ENV"
+
+      - name: Package yak-skills.zip
+        # 普通 zip(无加密): 根目录下放 skills/ 与 version.txt, 与 bin_cfg.yml 中
+        # pick: "*" / bin_dir: yak-skills / bin_path: yak-skills/version.txt 对齐。
+        run: |
+          set -e
+          echo "=== Packaging yak-skills.zip ==="
+          rm -f yak-skills.zip
+          zip -r -q yak-skills.zip skills version.txt
+          if [ ! -f yak-skills.zip ]; then
+            echo "ERROR: Failed to generate yak-skills.zip"
+            exit 1
+          fi
+
+          echo ""
+          echo "=== ZIP file info ==="
+          ls -lh yak-skills.zip
+
+          echo ""
+          echo "=== ZIP contents (first 30 entries) ==="
+          unzip -l yak-skills.zip | head -35
+
+          # 校验: version.txt 必须在 zip 根; SKILL.md 至少 1 个
+          if ! unzip -l yak-skills.zip | grep -qE '(^| )version\.txt$'; then
+            echo "ERROR: version.txt missing at zip root"
+            exit 1
+          fi
+          SKILL_COUNT=$(unzip -l yak-skills.zip | grep -c 'SKILL.md' || true)
+          echo "SKILL.md count in zip: ${SKILL_COUNT}"
+          if [ "${SKILL_COUNT}" -lt 1 ]; then
+            echo "ERROR: no SKILL.md found in zip"
+            exit 1
+          fi
+
+          FILE_SIZE=$(stat -c%s yak-skills.zip 2>/dev/null || stat -f%z yak-skills.zip)
+          echo "ZIP size: ${FILE_SIZE} bytes"
+          echo "✓ yak-skills.zip packaged successfully"
+
+      - name: Create upload timestamp file
+        run: |
+          set -e
+          UPLOAD_TIME=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          COMMIT_SHA="${{ github.sha }}"
+          COMMIT_SHORT="${COMMIT_SHA:0:7}"
+
+          echo "Upload Time: $UPLOAD_TIME" > yak-skills.updated_at.txt
+          echo "Version: ${VERSION}" >> yak-skills.updated_at.txt
+          echo "Commit: $COMMIT_SHORT ($COMMIT_SHA)" >> yak-skills.updated_at.txt
+          echo "Branch: ${{ github.ref_name }}" >> yak-skills.updated_at.txt
+          echo "Actor: ${{ github.actor }}" >> yak-skills.updated_at.txt
+          echo "Workflow Run: ${{ github.run_number }}" >> yak-skills.updated_at.txt
+
+          echo "=== Timestamp file content ==="
+          cat yak-skills.updated_at.txt
+
+      - name: Upload files to OSS
+        env:
+          OSS_KEY_ID: ${{ secrets.OSS_KEY_ID }}
+          OSS_KEY_SECRET: ${{ secrets.OSS_KEY_SECRET }}
+        run: |
+          set -e
+          echo "=== Uploading files to OSS ==="
+          if [ -z "$OSS_KEY_ID" ] || [ -z "$OSS_KEY_SECRET" ]; then
+            echo "ERROR: OSS credentials not found"
+            echo "Please ensure OSS_KEY_ID and OSS_KEY_SECRET secrets are set"
+            exit 1
+          fi
+
+          BUCKET="yaklang"
+          ENDPOINT="oss-accelerate.aliyuncs.com"
+
+          echo ""
+          echo "Uploading yak-skills.zip..."
+          ./yak upload-oss \
+            -b "$BUCKET" \
+            --endpoint "$ENDPOINT" \
+            -ak "$OSS_KEY_ID" \
+            -sk "$OSS_KEY_SECRET" \
+            -t 10 \
+            -f "yak-skills.zip:/yak-skills/latest/yak-skills.zip"
+          echo "✓ yak-skills.zip uploaded successfully"
+
+          echo ""
+          echo "Uploading yak-skills.updated_at.txt..."
+          ./yak upload-oss \
+            -b "$BUCKET" \
+            --endpoint "$ENDPOINT" \
+            -ak "$OSS_KEY_ID" \
+            -sk "$OSS_KEY_SECRET" \
+            -t 5 \
+            -f "yak-skills.updated_at.txt:/yak-skills/latest/yak-skills.updated_at.txt"
+          echo "✓ yak-skills.updated_at.txt uploaded successfully"
+
+      - name: Verify OSS upload with HEAD requests
+        run: |
+          set -e
+          echo "=== Verifying OSS uploads ==="
+          OSS_DOMAIN="yaklang.oss-accelerate.aliyuncs.com"
+          BASE_URL="https://${OSS_DOMAIN}/yak-skills/latest"
+
+          echo ""
+          echo "Verifying yak-skills.zip..."
+          ZIP_URL="${BASE_URL}/yak-skills.zip"
+          HTTP_CODE=$(curl -I -s -o /dev/null -w "%{http_code}" "$ZIP_URL")
+          CONTENT_LENGTH=$(curl -I -s "$ZIP_URL" | grep -i content-length | awk '{print $2}' | tr -d '\r')
+          echo "HTTP Status: $HTTP_CODE"
+          echo "Content-Length: $CONTENT_LENGTH bytes"
+
+          if [ "$HTTP_CODE" != "200" ]; then
+            echo "ERROR: yak-skills.zip verification failed (HTTP $HTTP_CODE)"
+            echo "URL: $ZIP_URL"
+            exit 1
+          fi
+          if [ -z "$CONTENT_LENGTH" ] || [ "$CONTENT_LENGTH" -lt 1000 ]; then
+            echo "ERROR: yak-skills.zip size is suspiciously small ($CONTENT_LENGTH bytes)"
+            exit 1
+          fi
+          echo "✓ yak-skills.zip verified successfully"
+
+          echo ""
+          echo "Verifying yak-skills.updated_at.txt..."
+          TIMESTAMP_URL="${BASE_URL}/yak-skills.updated_at.txt"
+          HTTP_CODE=$(curl -I -s -o /dev/null -w "%{http_code}" "$TIMESTAMP_URL")
+          echo "HTTP Status: $HTTP_CODE"
+          if [ "$HTTP_CODE" != "200" ]; then
+            echo "ERROR: yak-skills.updated_at.txt verification failed (HTTP $HTTP_CODE)"
+            exit 1
+          fi
+          echo "✓ yak-skills.updated_at.txt verified successfully"
+
+          echo ""
+          echo "============================================"
+          echo "✓ All verifications passed!"
+          echo "============================================"
+          echo "yak-skills files are now available at:"
+          echo "  ZIP: $ZIP_URL"
+          echo "  Timestamp: $TIMESTAMP_URL"
+
+      - name: Summary
+        if: success()
+        run: |
+          echo "## ✅ Yak Skills Upload Successful" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "The Yak Skills pack has been packaged and uploaded to OSS." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📦 Files" >> $GITHUB_STEP_SUMMARY
+          echo "- \`yak-skills.zip\` - Skills archive (plain zip)" >> $GITHUB_STEP_SUMMARY
+          echo "- \`yak-skills.updated_at.txt\` - Upload timestamp" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 🔗 Access URLs" >> $GITHUB_STEP_SUMMARY
+          echo "- ZIP: https://yaklang.oss-accelerate.aliyuncs.com/yak-skills/latest/yak-skills.zip" >> $GITHUB_STEP_SUMMARY
+          echo "- Timestamp: https://yaklang.oss-accelerate.aliyuncs.com/yak-skills/latest/yak-skills.updated_at.txt" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📊 Build Info" >> $GITHUB_STEP_SUMMARY
+          echo "- Version: \`${VERSION}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- Commit: \`${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- Branch: \`${{ github.ref_name }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- Actor: @${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
