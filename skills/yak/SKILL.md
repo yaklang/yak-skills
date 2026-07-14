@@ -1,7 +1,7 @@
 ---
 name: yak
 description: >-
-  yak-skills 总入口与路由。当用户要做 Yaklang 编程、Yak 热加载（MITM / Web Fuzzer / 全局）、Yakit 二次开发或 MCP 测试时，先从这里判断该进入哪个专题 skill。本页讲清三层热加载体系、YAK_MAIN 调试约定、go run 测试方法，并把请求路由到 mitm-hotpatch / webfuzzer-hotpatch / global-hotpatch / yaklang-syntax / yaklang-database / yakit-rightclick-plugin / yaklang-toolchain / yakit-data-extract-plugin。
+  yak-skills 总入口与路由。当用户要做 Yaklang 编程、Yak 热加载（MITM / Web Fuzzer / 全局）、Yakit 二次开发或 MCP 测试时，先从这里判断该进入哪个专题 skill。本页讲清三层热加载体系、YAK_MAIN 调试约定、go run 测试方法，并把请求路由到 yakit-basic / yakit-ui-binding / mitm-hotpatch / webfuzzer-hotpatch / global-hotpatch / yaklang-syntax / yaklang-database / yakit-native-plugin / yakit-rightclick-plugin / yaklang-toolchain / yakit-data-extract-plugin。
 ---
 
 # SKILL: yak-skills 总入口
@@ -12,6 +12,8 @@ description: >-
 
 | 任务信号 | 进入 skill |
 |---|---|
+| Yakit 是什么、怎么安装、界面各功能区干什么、引擎怎么连、新手怎么上手 | [yakit-basic](../yakit-basic/SKILL.md) |
+| yak 脚本怎么让 Yakit 显示表格/图表/进度条/卡片/网站树：yakit.* 库函数与 UI 交互机制 | [yakit-ui-binding](../yakit-ui-binding/SKILL.md) |
 | MITM 代理里劫持/修改请求响应、镜像分析流量、入库打标签染色、危险操作 mock | [mitm-hotpatch](../mitm-hotpatch/SKILL.md) |
 | Web Fuzzer 单 Tab 发包加解密、签名注入、智能重试、业务失败判定、fuzztag、关联提参 | [webfuzzer-hotpatch](../webfuzzer-hotpatch/SKILL.md) |
 | 一处配置让 MITM 与所有 Fuzzer 共享：全站透明加解密、统一签名、动态 challenge、全站染色护栏 | [global-hotpatch](../global-hotpatch/SKILL.md) |
