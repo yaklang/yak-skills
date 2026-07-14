@@ -15,9 +15,11 @@ categories:
   - id: entry
     name: Entry & Routing
     order: 1
-    description: 总入口 / 全局路由 / 调试约定
+    description: 总入口 / 全局路由 / Yakit 基本使用 / UI 交互机制 / 调试约定
     skills:
       - yak
+      - yakit-basic
+      - yakit-ui-binding
 
   - id: hotpatch
     name: Hot Patch (HotReload)

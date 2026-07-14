@@ -38,12 +38,16 @@ Module Hot Patch
 | Skill | Tier | Description |
 |---|---|---|
 | [`yak`](skills/yak/SKILL.md) | master | three-layer routing, YAK_MAIN debug convention, test method |
+| [`yakit-basic`](skills/yakit-basic/SKILL.md) | topic | Yakit architecture overview, three UI modes, core feature routing, engine connection, quick-start guide |
+| [`yakit-ui-binding`](skills/yakit-ui-binding/SKILL.md) | topic | yakit.* lib functions and UI interaction: gRPC ExecResult stream pipeline, log/progress/table/graph/card/website-tree output APIs |
 | [`mitm-hotpatch`](skills/mitm-hotpatch/SKILL.md) | topic | MITM hooks: hijackHTTPRequest / hijackHTTPResponseEx / mirror* / hijackSaveHTTPFlow / mockHTTPRequest |
 | [`webfuzzer-hotpatch`](skills/webfuzzer-hotpatch/SKILL.md) | topic | beforeRequest / afterRequest / retryHandler / customFailureChecker / mirrorHTTPFlow / fuzztag; frontend-encryption combo recipes (AES-CBC / encrypt+sign / RSA+AES-GCM hybrid) to see plaintext |
 | [`global-hotpatch`](skills/global-hotpatch/SKILL.md) | topic | site-wide transparent crypto, dynamic challenge signing, unified auth, site-wide coloring |
 | [`yaklang-syntax`](skills/yaklang-syntax/SKILL.md) | topic | variables / control flow / functions / closures / f-string / error handling `~` |
 | [`yaklang-database`](skills/yaklang-database/SKILL.md) | topic | SQLite / key-value store / payload dictionaries / project config |
 | [`yakit-data-extract-plugin`](skills/yakit-data-extract-plugin/SKILL.md) | topic | collect History by domain, dedup URIs, extract login cookies, dictionary-driven path scan |
+| [`yakit-native-plugin`](skills/yakit-native-plugin/SKILL.md) | topic | yak/mitm native plugins + cli parameter forms; mitm passive scan, mitm+cli interactive external params |
+| [`yakit-rightclick-plugin`](skills/yakit-rightclick-plugin/SKILL.md) | topic | codec right-click plugin handle contract; History right-click flow-id reverse lookup (progress bar), codec+cli extract selector, Web Fuzzer selection transform |
 | [`yaklang-toolchain`](skills/yaklang-toolchain/SKILL.md) | topic | go run workflow, 4 validator commands, debugging MITM via the repo, how to verify your own plugins |
 
 Each topic directory ships several `example-*.yak` files, all independently runnable and self-testing.

@@ -38,6 +38,8 @@ Yak Skills 模仿目录式 SKILL 知识库范式，围绕 Yak 公众号文章（
 | Skill | 层级 | 说明 |
 |---|---|---|
 | [`yak`](skills/yak/SKILL.md) | 总入口 | 三层热加载路由、YAK_MAIN 调试约定、测试方法 |
+| [`yakit-basic`](skills/yakit-basic/SKILL.md) | 专题 | Yakit 架构概览、三种界面模式、核心功能区路由表、引擎连接与项目切换、新手快速上手 |
+| [`yakit-ui-binding`](skills/yakit-ui-binding/SKILL.md) | 专题 | yakit.* 库函数与 UI 交互机制：gRPC ExecResult 流链路、日志/进度条/表格/图表/卡片/网站树输出 API |
 | [`mitm-hotpatch`](skills/mitm-hotpatch/SKILL.md) | 专题 | MITM 六类 Hook：hijackHTTPRequest / hijackHTTPResponseEx / mirror* / hijackSaveHTTPFlow / mockHTTPRequest |
 | [`webfuzzer-hotpatch`](skills/webfuzzer-hotpatch/SKILL.md) | 专题 | beforeRequest / afterRequest / retryHandler / customFailureChecker / mirrorHTTPFlow / fuzztag；前端加密对抗组合配方（AES-CBC / 加密+验签 / RSA+AES-GCM 混合）让用户看到明文 |
 | [`global-hotpatch`](skills/global-hotpatch/SKILL.md) | 专题 | 全站透明加解密、动态 challenge 签名、统一认证、全站染色 |
